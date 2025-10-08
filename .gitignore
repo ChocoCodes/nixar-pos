@@ -1,0 +1,38 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+
+# PHP specific
+vendor/
+composer.lock
+composer.phar
+.env
+.env.*.local
+storage/logs/*.log
+/public/uploads/
+/public/assets/uploads/
+
+# Node.js (if used for build tools/dependencies)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+*.swp
+*~
+
+# Build artifacts (if any)
+/dist/
+/build/
+
+# Other common exclusions
+*cache*
+*.zip
+*.rar
