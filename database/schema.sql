@@ -9,7 +9,7 @@ CREATE DATABASE IF NOT EXISTS nixar_autoglass_db;
 
 CREATE TABLE IF NOT EXISTS users (
     user_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    role ENUM('admin', 'cashier'),
+    role VARCHAR(20),
     name VARCHAR(30) NOT NULL,
     password_hashed VARCHAR(255) NOT NULL
 );
@@ -19,10 +19,10 @@ CREATE TABLE IF NOT EXISTS transactions (
     issuer_id INTEGER,
     receipt_id INTEGER, 
     customer_id INTEGER, 
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    payment_method ENUM('Cash on Hand', 'GCash'),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP(),
+    payment_method VARCHAR(20),
 
-    FOREIGN KEY(issuer_id) REFERENCES users(user_id),
+    FOREIGN KEY (issuer_id) REFERENCES users(user_id),
     FOREIGN KEY (receipt_id) REFERENCES receipts(receipt_id),
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
 );
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS receipts (
     receipt_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     sale_date DATETIME NOT NULL,
     total_amount FLOAT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP()
 );
 
 CREATE TABLE IF NOT EXISTS receipt_details (
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS nixar_products (
     product_material_id INTEGER,
     product_variant_id INTEGER,
     product_name VARCHAR(30) NOT NULL,
-    price FLOAT NOT NULL,
+    base_price FLOAT NOT NULL,
     product_img_url VARCHAR(255) NOT NULL,
 
     FOREIGN KEY (product_material_id) REFERENCES product_materials(product_material_id),
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS inventory (
     nixar_product_sku VARCHAR(30),
     current_stock INTEGER NOT NULL,
     min_threshold INTEGER NOT NULL,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP(),
 
     FOREIGN KEY (nixar_product_sku) REFERENCES nixar_products(nixar_product_sku)
 );
@@ -115,11 +115,11 @@ CREATE TABLE IF NOT EXISTS product_suppliers (
     product_supplier_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     nixar_product_sku VARCHAR(30),
     supplier_id INTEGER,
-    unit_price FLOAT
+    mark_up_price FLOAT
 );
 
 CREATE TABLE IF NOT EXISTS suppliers (
     supplier_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(30) NOT NULL,
+    supplier_name VARCHAR(30) NOT NULL,
     contact_no VARCHAR(12) NOT NULL
 );
