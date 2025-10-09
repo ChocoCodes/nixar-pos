@@ -1,6 +1,91 @@
+/*
+	AUTHORS: Raean Chrissean R. Tamayo
+*/
+
 :root {
     --primary-red: #BF3B3B;
     --deep-red: #803737;
     --dark-red: #662C2C;
     --placeholder-gray: #8E8E8D;
+
+	--text-muted: #808080;
+
+	--input-border: #D9DCE0;
+	--input-background: rgba(115, 115, 115, 0.08);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	width: 100vw;
+	height: 100vh;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+	padding: 0;
+}
+
+/*Debug - Uncomment to see outlines*/
+/** {*/
+/*	outline: 1px solid red;*/
+/*}*/
+
+/* Utility classes */
+.text-muted {
+	color: var(--text-muted);
+}
+
+.color-primary-red {
+	color: var(--primary-red);
+}
+
+.color-deep-red {
+	color: var(--deep-red);
+}
+
+.color-dark-red {
+	color: var(--dark-red);
+}
+
+.color-placeholder-gray {
+	color: var(--placeholder-gray);
+}
+
+/* Login */
+.login-input {
+	border: 1px solid var(--input-border);
+	background-color: var(--input-background);
+	border-radius: 5px;
+	width: 100%;
+	transition: box-shadow 0.1s ease-in-out;
+	padding: 7px;
+}
+
+.login-input:focus {
+	box-shadow: 0 0 0 2px var(--input-border);
+	outline: none;
+}
+
+.login-submit {
+	background-color: var(--primary-red);
+	color: white;
+	border: none;
+	border-radius: 5px;
+	padding: 7px;
+	width: 100%;
+	cursor: pointer;
+	transition: background-color 0.3s ease-in-out;
+}
+
+.login-submit:hover {
+	background-color: #9a2f2f;
 }
