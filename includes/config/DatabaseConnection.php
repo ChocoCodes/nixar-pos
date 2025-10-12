@@ -17,7 +17,7 @@
             );
 
             if ($this->Connection->connect_error) {
-                die ("Failed to connect to the database: " . $this->Connection->connect_error);
+                throw new Exception("Failed to connect to the database: " . $this->Connection->connect_error);
             }
         }
 

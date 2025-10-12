@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS nixar_products (
     product_material_id INTEGER,
     product_variant_id INTEGER,
     product_name VARCHAR(30) NOT NULL,
-    base_price FLOAT NOT NULL,
+    markup FLOAT NOT NULL,
     product_img_url VARCHAR(255) NOT NULL,
 
     FOREIGN KEY (product_material_id) REFERENCES product_materials(product_material_id),
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS product_suppliers (
     product_supplier_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     nixar_product_sku VARCHAR(30),
     supplier_id INTEGER,
-    mark_up_price FLOAT
+    base_price FLOAT NOT NULL,
 );
 
 CREATE TABLE IF NOT EXISTS suppliers (
