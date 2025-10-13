@@ -5,34 +5,21 @@
     INSERT INTO 
         users (user_id, role, name, password_hashed)
     VALUES
-        (1, 'admin', 'Administrator 1', '$2y$10$pAf3CK.k5mvP0Ii2fzz4K.eQbH/iQskBlmv2XtN0mvmsgoTqRdxC2'),
-        (2, 'admin', 'Administrator 2', '$2y$10$MJuNvpt3hPxl9cBtBZ6qleC1GVJeuDBWwgqvmkNEt6KdkhMWFLHQ2'),
-        (3, 'admin', 'Administrator 3', '$2y$10$J78Kndy7Ol3Hw9wm7GmRculM4sxeBNBFLGQQ1KGSPyalUQOF56VIq'),
-        (4, 'cashier', 'Cashier 1', '$2y$10$WYefz0uFxo2f2OtLir7HY.9r5ku83giUa0UQ9O2Lw/I/GXhafYM4K'),
-        (5, 'cashier', 'Cashier 2', '$2y$10$wBeYa5dgX/X0jifqaiSduOS3gsWOK9L2f1fwg7.NTHtNGVdLWozCC'),
-        (6, 'cashier', 'Cashier 3', '$2y$10$PfcaUfteVZS1jkgB0AP06eH39KhPXYo8KG2XqRqKEFsO2Jv29TYgi'),
-        (7, 'cashier', 'Cashier 4', '$2y$10$QKcZHEcAmok4yfLj85YE8eknjHmmhW4dmw5dWgwBgidn7r8LG//X.'),
-        (8, 'cashier', 'Cashier 5', '$2y$10$02S213CyHGwveYZ3lPEeBuD3WuGKwaUJv.cnuh5PBq5lYAEe.tIPa');
+        (1, 'admin', 'Administrator_1', '$2y$10$pAf3CK.k5mvP0Ii2fzz4K.eQbH/iQskBlmv2XtN0mvmsgoTqRdxC2'),
+        (2, 'cashier', 'Cashier_1', '$2y$10$WYefz0uFxo2f2OtLir7HY.9r5ku83giUa0UQ9O2Lw/I/GXhafYM4K')
 
     -- TABLE: transactions
-    INSERT INTO
+    INSERT INTO 
         transactions (issuer_id, receipt_id, customer_id, payment_method)
     VALUES
         (1, 1001, 501, 'Cash on Hand'),
         (2, 1002, 502, 'GCash'),
-        (3, 1003, 503, 'Cash on Hand'),
-        (4, 1004, 504, 'GCash'),
-        (5, 1005, 505, 'Cash on Hand'),
-        (6, 1006, 506, 'GCash'),
-        (7, 1007, 507, 'Cash on Hand'),
-        (8, 1008, 508, 'GCash'),
-        (4, 1009, 509, 'Cash on Hand'),
-        (5, 1010, 510, 'GCash'),
-        (6, 1011, 511, 'Cash on Hand'),
-        (7, 1012, 512, 'GCash'),
-        (8, 1013, 513, 'Cash on Hand'),
-        (1, 1014, 514, 'GCash'),
-        (2, 1015, 515, 'Cash on Hand');
+        (1, 1003, 503, 'Cash on Hand'),
+        (2, 1004, 504, 'GCash'),
+        (1, 1005, 505, 'Cash on Hand'),
+        (2, 1006, 506, 'GCash'),
+        (1, 1007, 507, 'Cash on Hand'),
+        (2, 1008, 508, 'GCash');
         
     -- TABLE: customers
     INSERT INTO 
@@ -58,46 +45,28 @@
     INSERT INTO 
         receipts (receipt_id, sale_date, total_amount, created_at)
     VALUES
-        (1001, '2025-10-01',  250.75, '2025-10-01 09:15:23'),
-        (1002, '2025-10-01',  480.00, '2025-10-01 10:42:56'),
-        (1003, '2025-10-02',  315.50, '2025-10-02 11:08:19'),
-        (1004, '2025-10-02',  910.20, '2025-10-02 13:34:47'),
-        (1005, '2025-10-03',  150.00, '2025-10-03 09:25:10'),
-        (1006, '2025-10-03',  720.60, '2025-10-03 15:45:31'),
-        (1007, '2025-10-04',  420.90, '2025-10-04 10:13:44'),
-        (1008, '2025-10-04',  305.20, '2025-10-04 12:01:22'),
-        (1009, '2025-10-05',  875.00, '2025-10-05 14:50:55'),
-        (1010, '2025-10-05',  199.99, '2025-10-05 16:40:18'),
-        (1011, '2025-10-06',  665.30, '2025-10-06 09:33:11'),
-        (1012, '2025-10-06',  540.00, '2025-10-06 11:15:03'),
-        (1013, '2025-10-07',  380.75, '2025-10-07 13:20:17'),
-        (1014, '2025-10-07',  999.50, '2025-10-07 15:40:09'),
-        (1015, '2025-10-08',  250.00, '2025-10-08 10:58:34');
+        (1001, '2025-10-01', 8500.00, '2025-10-01 09:15:23'),
+        (1002, '2025-10-01', 3400.00, '2025-10-01 10:42:56'),
+        (1003, '2025-10-02', 2800.00, '2025-10-02 11:08:19'),
+        (1004, '2025-10-03', 580.00, '2025-10-03 14:15:00'),
+        (1005, '2025-10-03', 750.00, '2025-10-03 15:45:31'),
+        (1006, '2025-10-04', 7800.00, '2025-10-04 09:33:11'),
+        (1007, '2025-10-04', 3000.00, '2025-10-04 11:15:03'),
+        (1008, '2025-10-05', 3200.00, '2025-10-05 16:40:18');
 
     -- TABLE: receipt_details
     INSERT INTO 
         receipt_details (receipt_details_id, receipt_id, nixar_product_sku, quantity)
     VALUES
-        (1, 1001, 'NX-100-A', 2),
-        (2, 1002, 'NX-200-B', 1),
-        (3, 1003, 'NX-150-C', 3),
-        (4, 1004, 'NX-250-D', 1),
-        (5, 1005, 'NX-300-A', 4),
-        (6, 1006, 'NX-400-B', 2),
-        (7, 1007, 'NX-100-A', 1),
-        (8, 1008, 'NX-450-C', 2),
-        (9, 1009, 'NX-500-D', 3),
-        (10, 1010, 'NX-550-A', 2),
-        (11, 1011, 'NX-600-B', 1),
-        (12, 1012, 'NX-650-C', 2),
-        (13, 1013, 'NX-700-D', 1),
-        (14, 1014, 'NX-800-A', 3),
-        (15, 1015, 'NX-850-B', 2),
-        (16, 1002, 'NX-100-A', 2),
-        (17, 1004, 'NX-300-B', 1),
-        (18, 1007, 'NX-250-C', 1),
-        (19, 1010, 'NX-500-A', 1),
-        (20, 1013, 'NX-650-D', 2);
+        (1, 1001, 'NX-GLS-001', 1),
+        (2, 1002, 'NX-MIR-003', 1),
+        (3, 1003, 'NX-TNT-002', 1),
+        (4, 1004, 'NX-ACC-002', 1),
+        (5, 1005, 'NX-ACC-001', 1),
+        (6, 1006, 'NX-GLS-002', 1),
+        (7, 1007, 'NX-TNT-003', 1),
+        (8, 1008, 'NX-MIR-001', 1);
+
     -- TABLE: car_details
     INSERT INTO 
         car_details (car_detail_id, customer_id, car_model_id, plate_no)
@@ -127,121 +96,112 @@
     INSERT INTO 
         product_compatibility (product_compatibility_id, nixar_products_sku, car_model_id)
     VALUES
-        (1, 'NX-100-A', 1),
-        (2, 'NX-150-C', 2),
-        (3, 'NX-200-B', 1),
-        (4, 'NX-250-D', 3),
-        (5, 'NX-300-A', 2),
-        (6, 'NX-300-B', 4),
-        (7, 'NX-400-B', 1),
-        (8, 'NX-450-C', 3),
-        (9, 'NX-500-D', 5),
-        (10, 'NX-500-A', 2),
-        (11, 'NX-550-A', 4),
-        (12, 'NX-600-B', 5),
-        (13, 'NX-650-C', 1),
-        (14, 'NX-650-D', 3),
-        (15, 'NX-700-D', 2),
-        (16, 'NX-800-A', 5),
-        (17, 'NX-850-B', 4);
+        (1, 'NX-GLS-001', 1),
+        (2, 'NX-MIR-001', 1),
+        (3, 'NX-MIR-002', 1),
+        (4, 'NX-GLS-002', 2),
+        (5, 'NX-MIR-003', 2),
+        (6, 'NX-MIR-004', 2),
+        (7, 'NX-GLS-003', 3),
+        (8, 'NX-GLS-004', 4),
+        (9, 'NX-GLS-005', 4),
+        (10, 'NX-GLS-006', 5),
+        (11, 'NX-GLS-007', 5);
 
     -- TABLE: nixar_products
     INSERT INTO 
         nixar_products (nixar_product_sku, product_material_id, product_variant_id, product_name, base_price, product_image_url)
     VALUES
-        ('NX-100-A', 1, 1, 'Nixar Eco Bottle 500ml', 250.00, 'https://example.com/images/nx100a.jpg'),
-        ('NX-150-C', 1, 2, 'Nixar Eco Bottle 1L', 320.00, 'https://example.com/images/nx150c.jpg'),
-        ('NX-200-B', 2, 1, 'Nixar Tumbler 350ml', 280.00, 'https://example.com/images/nx200b.jpg'),
-        ('NX-250-D', 2, 2, 'Nixar Tumbler 500ml', 340.00, 'https://example.com/images/nx250d.jpg'),
-        ('NX-300-A', 3, 1, 'Nixar Stainless Straw Set', 150.00, 'https://example.com/images/nx300a.jpg'),
-        ('NX-300-B', 3, 2, 'Nixar Bamboo Straw Set', 120.00, 'https://example.com/images/nx300b.jpg'),
-        ('NX-400-B', 4, 1, 'Nixar Travel Mug', 390.00, 'https://example.com/images/nx400b.jpg'),
-        ('NX-450-C', 4, 2, 'Nixar Thermo Mug', 420.00, 'https://example.com/images/nx450c.jpg'),
-        ('NX-500-D', 5, 1, 'Nixar Coffee Cup 12oz', 250.00, 'https://example.com/images/nx500d.jpg'),
-        ('NX-500-A', 5, 2, 'Nixar Coffee Cup 16oz', 280.00, 'https://example.com/images/nx500a.jpg'),
-        ('NX-550-A', 6, 1, 'Nixar Glass Bottle', 310.00, 'https://example.com/images/nx550a.jpg'),
-        ('NX-600-B', 6, 2, 'Nixar Mini Bottle 250ml', 200.00, 'https://example.com/images/nx600b.jpg'),
-        ('NX-650-C', 7, 1, 'Nixar Smart Bottle', 750.00, 'https://example.com/images/nx650c.jpg'),
-        ('NX-650-D', 7, 2, 'Nixar Smart Bottle Pro', 890.00, 'https://example.com/images/nx650d.jpg'),
-        ('NX-700-D', 8, 1, 'Nixar Hydro Flask 750ml', 950.00, 'https://example.com/images/nx700d.jpg'),
-        ('NX-800-A', 9, 1, 'Nixar Thermal Bottle XL', 1100.00, 'https://example.com/images/nx800a.jpg'),
-        ('NX-850-B', 10, 1, 'Nixar Cup Set (4pcs)', 650.00, 'https://example.com/images/nx850b.jpg');
+        -- Glass
+        ('NX-GLS-001', 1, 1, 'Toyota Fortuner 2016 Windshield Glass', 8500.00, 'https://example.com/images/fortuner_windshield.jpg'),
+        ('NX-GLS-002', 1, 1, 'Honda Civic 2018 Windshield Glass', 7800.00, 'https://example.com/images/civic_windshield.jpg'),
+        ('NX-GLS-003', 1, 1, 'Mitsubishi Montero Sport 2020 Windshield Glass', 9200.00, 'https://example.com/images/montero_windshield.jpg'),
+        ('NX-GLS-004', 2, 2, 'Nissan Navara 2022 Front Door Glass (LH)', 4300.00, 'https://example.com/images/navara_front_glass_lh.jpg'),
+        ('NX-GLS-005', 2, 2, 'Nissan Navara 2022 Front Door Glass (RH)', 4300.00, 'https://example.com/images/navara_front_glass_rh.jpg'),
+        ('NX-GLS-006', 2, 1, 'Ford Ranger 2023 Rear Door Glass (LH)', 4100.00, 'https://example.com/images/ranger_rear_glass_lh.jpg'),
+        ('NX-GLS-007', 2, 1, 'Ford Ranger 2023 Rear Door Glass (RH)', 4100.00, 'https://example.com/images/ranger_rear_glass_rh.jpg'),
+
+        -- Mirrors
+        ('NX-MIR-001', 4, 1, 'Toyota Fortuner 2016 Side Mirror (LH)', 3200.00, 'https://example.com/images/fortuner_mirror_lh.jpg'),
+        ('NX-MIR-002', 4, 1, 'Toyota Fortuner 2016 Side Mirror (RH)', 3200.00, 'https://example.com/images/fortuner_mirror_rh.jpg'),
+        ('NX-MIR-003', 4, 2, 'Honda Civic 2018 Side Mirror with Signal (LH)', 3400.00, 'https://example.com/images/civic_mirror_lh.jpg'),
+        ('NX-MIR-004', 4, 2, 'Honda Civic 2018 Side Mirror with Signal (RH)', 3400.00, 'https://example.com/images/civic_mirror_rh.jpg'),
+
+        -- Universal Tints (no model dependency)
+        ('NX-TNT-001', 3, 3, '3M Ceramic Tint Medium Shade', 2500.00, 'https://example.com/images/3m_tint_medium.jpg'),
+        ('NX-TNT-002', 3, 3, '3M Ceramic Tint Dark Shade', 2800.00, 'https://example.com/images/3m_tint_dark.jpg'),
+        ('NX-TNT-003', 3, 4, 'Llumar Platinum Tint 50%', 3000.00, 'https://example.com/images/llumar_tint_50.jpg'),
+        ('NX-TNT-004', 3, 4, 'Llumar Platinum Tint 35%', 3100.00, 'https://example.com/images/llumar_tint_35.jpg'),
+
+        -- Accessories
+        ('NX-ACC-001', 5, 3, 'Universal Wiper Blade Set 22”', 750.00, 'https://example.com/images/wiper_set.jpg'),
+        ('NX-ACC-002', 5, 4, 'Defogger Repair Kit', 580.00, 'https://example.com/images/defogger_kit.jpg');
 
     -- TABLE: product_variants
-    INSERT INTO product_variants 
-        (product_variant_id, variant_name)
+    INSERT INTO 
+        product_variants (product_variant_id, variant_name)
     VALUES
-        (1, 'Small'),
-        (2, 'Medium'),
-        (3, 'Large'),
-        (4, 'Extra Large'),
-        (5, 'Family Pack');
+        (1, 'Standard'),
+        (2, 'OEM'),
+        (3, 'Premium'),
+        (4, 'Universal');
 
     -- TABLE: product_materials
     INSERT INTO 
         product_materials (product_material_id, material)
     VALUES
-        (1, 'Stainless Steel'),
-        (2, 'Plastic'),
-        (3, 'Bamboo'),
-        (4, 'Ceramic'),
-        (5, 'Glass'),
-        (6, 'Aluminum'),
-        (7, 'Smart Alloy'),
-        (8, 'Titanium'),
-        (9, 'Insulated Metal'),
-        (10, 'Composite Blend');
+        (1, 'Laminated Glass'),
+        (2, 'Tempered Glass'),
+        (3, 'Ceramic Film'),
+        (4, 'Plastic Composite'),
+        (5, 'Rubber and Metal Composite');
 
     -- TABLE: inventory
     INSERT INTO 
         inventory (inventory_id, nixar_product_sku, current_stock, min_threshold, updated_at)
     VALUES
-        (1, 'NX-100-A', 120, 20, '2025-10-08 09:15:00'),
-        (2, 'NX-150-C', 85, 15, '2025-10-08 09:20:00'),
-        (3, 'NX-200-B', 60, 10, '2025-10-08 09:25:00'),
-        (4, 'NX-250-D', 45, 10, '2025-10-08 09:30:00'),
-        (5, 'NX-300-A', 150, 25, '2025-10-08 09:35:00'),
-        (6, 'NX-300-B', 110, 20, '2025-10-08 09:40:00'),
-        (7, 'NX-400-B', 70, 15, '2025-10-08 09:45:00'),
-        (8, 'NX-450-C', 50, 10, '2025-10-08 09:50:00'),
-        (9, 'NX-500-D', 90, 20, '2025-10-08 09:55:00'),
-        (10, 'NX-500-A', 75, 15, '2025-10-08 10:00:00'),
-        (11, 'NX-550-A', 40, 10, '2025-10-08 10:05:00'),
-        (12, 'NX-600-B', 200, 30, '2025-10-08 10:10:00'),
-        (13, 'NX-650-C', 35, 8, '2025-10-08 10:15:00'),
-        (14, 'NX-650-D', 20, 5, '2025-10-08 10:20:00'),
-        (15, 'NX-700-D', 18, 5, '2025-10-08 10:25:00'),
-        (16, 'NX-800-A', 12, 4, '2025-10-08 10:30:00'),
-        (17, 'NX-850-B', 25, 6, '2025-10-08 10:35:00');
+        (1, 'NX-GLS-001', 8, 2, '2025-10-13 09:00:00'),
+        (2, 'NX-GLS-002', 10, 3, '2025-10-13 09:05:00'),
+        (3, 'NX-GLS-003', 6, 2, '2025-10-13 09:10:00'),
+        (4, 'NX-GLS-004', 15, 4, '2025-10-13 09:15:00'),
+        (5, 'NX-GLS-005', 14, 4, '2025-10-13 09:20:00'),
+        (6, 'NX-MIR-001', 20, 5, '2025-10-13 09:25:00'),
+        (7, 'NX-MIR-002', 18, 5, '2025-10-13 09:30:00'),
+        (8, 'NX-MIR-003', 12, 3, '2025-10-13 09:35:00'),
+        (9, 'NX-MIR-004', 10, 3, '2025-10-13 09:40:00'),
+        (10, 'NX-TNT-001', 30, 8, '2025-10-13 09:45:00'),
+        (11, 'NX-TNT-002', 28, 8, '2025-10-13 09:50:00'),
+        (12, 'NX-TNT-003', 25, 8, '2025-10-13 09:55:00'),
+        (13, 'NX-TNT-004', 22, 8, '2025-10-13 10:00:00'),
+        (14, 'NX-ACC-001', 40, 10, '2025-10-13 10:05:00'),
+        (15, 'NX-ACC-002', 35, 8, '2025-10-13 10:10:00');
 
     -- TABLE: product_suppliers
     INSERT INTO 
         product_suppliers (product_supplier_id, nixar_product_sku, supplier_id, mark_up_price)
     VALUES
-        (1, 'NX-100-A', 1, 275.00),
-        (2, 'NX-150-C', 1, 345.00),
-        (3, 'NX-200-B', 2, 310.00),
-        (4, 'NX-250-D', 2, 365.00),
-        (5, 'NX-300-A', 3, 165.00),
-        (6, 'NX-300-B', 3, 140.00),
-        (7, 'NX-400-B', 4, 420.00),
-        (8, 'NX-450-C', 4, 450.00),
-        (9, 'NX-500-D', 4, 275.00),
-        (10, 'NX-500-A', 4, 295.00),
-        (11, 'NX-550-A', 5, 340.00),
-        (12, 'NX-600-B', 5, 225.00),
-        (13, 'NX-650-C', 5, 820.00),
-        (14, 'NX-650-D', 5, 950.00),
-        (15, 'NX-700-D', 2, 1020.00),
-        (16, 'NX-800-A', 2, 1180.00),
-        (17, 'NX-850-B', 3, 690.00);
+        (1, 'NX-GLS-001', 1, 8900.00),
+        (2, 'NX-GLS-002', 1, 8200.00),
+        (3, 'NX-GLS-003', 2, 9600.00),
+        (4, 'NX-GLS-004', 2, 4600.00),
+        (5, 'NX-GLS-005', 2, 4600.00),
+        (6, 'NX-MIR-001', 3, 3400.00),
+        (7, 'NX-MIR-002', 3, 3400.00),
+        (8, 'NX-MIR-003', 3, 3700.00),
+        (9, 'NX-MIR-004', 3, 3700.00),
+        (10, 'NX-TNT-001', 4, 2700.00),
+        (11, 'NX-TNT-002', 4, 3000.00),
+        (12, 'NX-TNT-003', 4, 3250.00),
+        (13, 'NX-TNT-004', 4, 3350.00),
+        (14, 'NX-ACC-001', 5, 850.00),
+        (15, 'NX-ACC-002', 5, 620.00);
 
     -- TABLE: suppliers
     INSERT INTO 
-        suppliers (supplier_id, name, contact_no) 
+        suppliers (supplier_id, name, contact_no)
     VALUES
-        (1, 'FreshMart Distributors', '09171234567'),
-        (2, 'AgroPrime Supplies', '09283456789'),
-        (3, 'EcoTrade Ventures', '09394561234'),
-        (4, 'GlobalFarm Imports', '09505672345'),
-        (5, 'PrimeSource Retail', '09616783456');
+        (1, 'AutoGlass Depot PH', '09171234567'),
+        (2, 'CarPro Distributors', '09283456789'),
+        (3, 'TintTech Supplies', '09394561234'),
+        (4, 'VisionParts Imports', '09505672345'),
+        (5, 'ClearView Enterprise', '09616783456');
