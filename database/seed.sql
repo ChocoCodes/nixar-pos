@@ -1,4 +1,8 @@
--- Author: Ignatius Warren Benjamin Javelona
+/*
+    Author: Ignatius Warren Benjamin Javelons
+
+    `seed.sql` inserts sample records into the database tables of nixar
+*/
 
 --DATABASE: nixar_autoglass_db
     -- TABLE: users
