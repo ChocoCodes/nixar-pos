@@ -84,21 +84,18 @@ CREATE TABLE IF NOT EXISTS nixar_products (
     product_material_id INTEGER,
     product_variant_id INTEGER,
     product_name VARCHAR(30) NOT NULL,
-    markup FLOAT NOT NULL,
     product_img_url VARCHAR(255) NOT NULL,
+    mark_up FLOAT NOT NULL,
+    is_deleted TINYINT NOT NULL,
 
     FOREIGN KEY (product_material_id) REFERENCES product_materials(product_material_id),
     FOREIGN KEY (product_variant_id) REFERENCES product_variants(product_variant_id)
 );
 
-CREATE TABLE IF NOT EXISTS product_variants (
-    product_variant_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    variant_name VARCHAR(30) NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS product_materials (
     product_material_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    material_name VARCHAR(30) NOT NULL
+    material_name VARCHAR(30) NOT NULL,
+    category VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS inventory (
@@ -115,11 +112,11 @@ CREATE TABLE IF NOT EXISTS product_suppliers (
     product_supplier_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     nixar_product_sku VARCHAR(30),
     supplier_id INTEGER,
-    base_price FLOAT NOT NULL,
+    unit_price FLOAT NOT NULL,
 );
 
 CREATE TABLE IF NOT EXISTS suppliers (
     supplier_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     supplier_name VARCHAR(30) NOT NULL,
-    contact_no VARCHAR(12) NOT NULL
+    contact_no VARCHAR(12) NOT NULL,
 );
