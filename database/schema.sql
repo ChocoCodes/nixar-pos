@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS product_variants (
 );
 
 CREATE TABLE IF NOT EXISTS product_materials (
-    product_variant_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    product_material_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     material_name VARCHAR(30) NOT NULL
 );
 
