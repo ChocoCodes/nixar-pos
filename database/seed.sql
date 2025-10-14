@@ -4,26 +4,33 @@
     `seed.sql` inserts sample records into the database tables of nixar
 */
 
---DATABASE: nixar_autoglass_db
+-- DATABASE: nixar_autoglass_db
     -- TABLE: users
     INSERT INTO 
         users (user_id, role, name, password_hashed)
     VALUES
         (1, 'admin', 'Administrator_1', '$2y$10$pAf3CK.k5mvP0Ii2fzz4K.eQbH/iQskBlmv2XtN0mvmsgoTqRdxC2'),
-        (2, 'cashier', 'Cashier_1', '$2y$10$WYefz0uFxo2f2OtLir7HY.9r5ku83giUa0UQ9O2Lw/I/GXhafYM4K')
+        (2, 'cashier', 'Cashier_1', '$2y$10$WYefz0uFxo2f2OtLir7HY.9r5ku83giUa0UQ9O2Lw/I/GXhafYM4K');
 
-    -- TABLE: transactions
+    -- TABLE: receipts
     INSERT INTO 
-        transactions (issuer_id, receipt_id, customer_id, payment_method)
+        receipts (receipt_id, sale_date, total_amount, created_at)
     VALUES
-        (1, 1001, 501, 'Cash on Hand'),
-        (2, 1002, 502, 'GCash'),
-        (1, 1003, 503, 'Cash on Hand'),
-        (2, 1004, 504, 'GCash'),
-        (1, 1005, 505, 'Cash on Hand'),
-        (2, 1006, 506, 'GCash'),
-        (1, 1007, 507, 'Cash on Hand'),
-        (2, 1008, 508, 'GCash');
+        (1001, '2025-10-01', 11600.00, '2025-10-01 09:15:23'),
+        (1002, '2025-10-01', 6700.00, '2025-10-01 10:42:56'),
+        (1003, '2025-10-02', 6250.00, '2025-10-02 11:08:19'),
+        (1004, '2025-10-03', 3970.00, '2025-10-03 14:15:00'),
+        (1005, '2025-10-03', 4550.00, '2025-10-03 15:45:31'),
+        (1006, '2025-10-04', 10900.00, '2025-10-04 09:33:11'),
+        (1007, '2025-10-04', 6950.00, '2025-10-04 11:15:03'),
+        (1008, '2025-10-05', 6400.00, '2025-10-05 16:40:18'),
+        (1009, '2025-10-06', 5200.00, '2025-10-06 10:20:00'),
+        (1010, '2025-10-06', 4100.00, '2025-10-06 13:45:12'),
+        (1011, '2025-10-07', 7800.00, '2025-10-07 09:30:45'),
+        (1012, '2025-10-07', 3500.00, '2025-10-07 15:10:33'),
+        (1013, '2025-10-08', 9200.00, '2025-10-08 11:22:18'),
+        (1014, '2025-10-08', 2900.00, '2025-10-08 16:05:50'),
+        (1015, '2025-10-09', 6600.00, '2025-10-09 10:15:00');
         
     -- TABLE: customers
     INSERT INTO 
@@ -45,18 +52,64 @@
         (514, 'Bea Navarro', 'bea.navarro@example.com', '99 Pioneer St., Mandaluyong', '09304568901'),
         (515, 'Miguel Ramos', 'miguel.ramos@example.com', '150 Katipunan Ext., QC', '09315679012');
 
-    -- TABLE: receipts
+    -- TABLE: transactions
     INSERT INTO 
-        receipts (receipt_id, sale_date, total_amount, created_at)
+        transactions (transaction_id, issuer_id, receipt_id, customer_id, created_at, payment_method)
     VALUES
-        (1001, '2025-10-01', 11600.00, '2025-10-01 09:15:23'),
-        (1002, '2025-10-01', 6700.00, '2025-10-01 10:42:56'),
-        (1003, '2025-10-02', 6250.00, '2025-10-02 11:08:19'),
-        (1004, '2025-10-03', 3970.00, '2025-10-03 14:15:00'),
-        (1005, '2025-10-03', 4550.00, '2025-10-03 15:45:31'),
-        (1006, '2025-10-04', 10900.00, '2025-10-04 09:33:11'),
-        (1007, '2025-10-04', 6950.00, '2025-10-04 11:15:03'),
-        (1008, '2025-10-05', 6400.00, '2025-10-05 16:40:18');
+        (1,  2, 1001, 501, '2025-10-01 09:15:23', 'Cash'),
+        (2,  2, 1002, 502, '2025-10-01 10:42:56', 'GCash'),
+        (3,  2, 1003, 503, '2025-10-02 11:08:19', 'GCash'),
+        (4,  1, 1004, 504, '2025-10-03 14:15:00', 'Cash'),
+        (5,  2, 1005, 505, '2025-10-03 15:45:31', 'GCash'),
+        (6,  1, 1006, 506, '2025-10-04 09:33:11', 'Cash'),
+        (7,  2, 1007, 507, '2025-10-04 11:15:03', 'Cash'),
+        (8,  1, 1008, 508, '2025-10-05 16:40:18', 'GCash'),
+        (9,  2, 1009, 509, '2025-10-06 10:20:00', 'Cash'),
+        (10, 2, 1010, 510, '2025-10-06 13:45:12', 'GCash'),
+        (11, 1, 1011, 511, '2025-10-07 09:30:45', 'GCash'),
+        (12, 1, 1012, 512, '2025-10-07 15:10:33', 'Cash'),
+        (13, 2, 1013, 513, '2025-10-08 11:22:18', 'GCash'),
+        (14, 2, 1014, 514, '2025-10-08 16:05:50', 'Cash'),
+        (15, 2, 1015, 515, '2025-10-09 10:15:00', 'Cash');
+        
+    -- TABLE: product_materials
+    INSERT INTO 
+        product_materials (product_material_id, material_name, category)
+    VALUES
+        (1, 'Laminated Glass', 'Glass'),
+        (2, 'Tempered Glass', 'Glass'),
+        (3, 'Ceramic Film', 'Tints'),
+        (4, 'Plastic Composite', 'Mirrors'),
+        (5, 'Rubber and Metal Composite', 'Accessories');
+
+	-- TABLE: nixar_products
+	INSERT INTO 
+		nixar_products (nixar_product_sku, product_material_id, product_name, product_img_url, mark_up, is_deleted)
+	VALUES
+		-- Glass
+		('NX-GLS-001', 1, 'Toyota Fortuner 2016 Windshield Glass', 'https://example.com/images/fortuner_windshield.jpg', 8900.00, 1),
+		('NX-GLS-002', 1, 'Honda Civic 2018 Windshield Glass', 'https://example.com/images/civic_windshield.jpg', 8200.00, 1),
+		('NX-GLS-003', 1, 'Mitsubishi Montero Sport 2020 Windshield Glass', 'https://example.com/images/montero_windshield.jpg', 9600.00, 1),
+		('NX-GLS-004', 2, 'Nissan Navara 2022 Front Door Glass (LH)', 'https://example.com/images/navara_front_glass_lh.jpg', 4600.00, 1),
+		('NX-GLS-005', 2, 'Nissan Navara 2022 Front Door Glass (RH)', 'https://example.com/images/navara_front_glass_rh.jpg', 4600.00, 1),
+		('NX-GLS-006', 2, 'Ford Ranger 2023 Rear Door Glass (LH)', 'https://example.com/images/ranger_rear_glass_lh.jpg', 4400.00, 1),
+		('NX-GLS-007', 2, 'Ford Ranger 2023 Rear Door Glass (RH)', 'https://example.com/images/ranger_rear_glass_rh.jpg', 4400.00, 1),
+
+		-- Mirrors
+		('NX-MIR-001', 4, 'Toyota Fortuner 2016 Side Mirror (LH)', 'https://example.com/images/fortuner_mirror_lh.jpg', 3400.00, 1),
+		('NX-MIR-002', 4, 'Toyota Fortuner 2016 Side Mirror (RH)', 'https://example.com/images/fortuner_mirror_rh.jpg', 3400.00, 1),
+		('NX-MIR-003', 4, 'Honda Civic 2018 Side Mirror with Signal (LH)', 'https://example.com/images/civic_mirror_lh.jpg', 3700.00, 1),
+		('NX-MIR-004', 4, 'Honda Civic 2018 Side Mirror with Signal (RH)', 'https://example.com/images/civic_mirror_rh.jpg', 3700.00, 1),
+
+		-- Universal Tints (no model dependency)
+		('NX-TNT-001', 3, '3M Ceramic Tint Medium Shade', 'https://example.com/images/3m_tint_medium.jpg', 2700.00, 1),
+		('NX-TNT-002', 3, '3M Ceramic Tint Dark Shade', 'https://example.com/images/3m_tint_dark.jpg', 3000.00, 1),
+		('NX-TNT-003', 3, 'Llumar Platinum Tint 50%', 'https://example.com/images/llumar_tint_50.jpg', 3250.00, 1),
+		('NX-TNT-004', 3, 'Llumar Platinum Tint 35%', 'https://example.com/images/llumar_tint_35.jpg', 3350.00, 1),
+
+		-- Accessories
+		('NX-ACC-001', 5, 'Universal Wiper Blade Set 22”', 'https://example.com/images/wiper_set.jpg', 850.00, 1),
+		('NX-ACC-002', 5, 'Defogger Repair Kit', 'https://example.com/images/defogger_kit.jpg', 620.00, 1);
 
     -- TABLE: receipt_details
     INSERT INTO 
@@ -77,7 +130,28 @@
         (13, 1007, 'NX-TNT-003', 1),
         (14, 1007, 'NX-MIR-003', 1),
         (15, 1008, 'NX-MIR-001', 1),
-        (16, 1008, 'NX-TNT-002', 1);
+        (16, 1008, 'NX-TNT-002', 1),
+		(17, 1009, 'NX-MIR-001', 1),
+        (18, 1009, 'NX-TNT-002', 1),
+        (19, 1010, 'NX-ACC-002', 1),
+        (20, 1010, 'NX-TNT-001', 1),
+        (21, 1011, 'NX-GLS-003', 1),
+        (22, 1012, 'NX-TNT-003', 1),
+        (23, 1013, 'NX-GLS-001', 1),
+        (24, 1013, 'NX-MIR-002', 1),
+        (25, 1014, 'NX-TNT-004', 1),
+        (26, 1015, 'NX-MIR-003', 1),
+        (27, 1015, 'NX-ACC-001', 1);
+
+    -- TABLE: car_models
+    INSERT INTO 
+        car_models (car_model_id, make, model, year, type)
+    VALUES
+        (1, 'Toyota', 'Fortuner', 2016, 'SUV'),
+        (2, 'Honda', 'Civic', 2018, 'Sedan'),
+        (3, 'Mitsubishi', 'Montero Sport', 2020, 'SUV'),
+        (4, 'Nissan', 'Navara', 2022, 'Pickup'),
+        (5, 'Ford', 'Ranger', 2023, 'Pickup');
 
     -- TABLE: car_details
     INSERT INTO 
@@ -138,16 +212,6 @@
         -- Miguel Ramos 
         (25, 515, 5, 'QRS-7890'),
         (26, 515, 1, 'QRS-7891');
-
-    -- TABLE: car_models
-    INSERT INTO 
-        car_models (car_model_id, make, model, year, type)
-    VALUES
-        (1, 'Toyota', 'Fortuner', 2016, 'SUV'),
-        (2, 'Honda', 'Civic', 2018, 'Sedan'),
-        (3, 'Mitsubishi', 'Montero Sport', 2020, 'SUV'),
-        (4, 'Nissan', 'Navara', 2022, 'Pickup'),
-        (5, 'Ford', 'Ranger', 2023, 'Pickup');
 
     -- TABLE: product_compatibility
     INSERT INTO 
@@ -212,46 +276,7 @@
         (50, 'NX-ACC-002', 3), -- Montero
         (51, 'NX-ACC-002', 4), -- Navara
         (52, 'NX-ACC-002', 5); -- Ranger
-
-    -- TABLE: nixar_products
-    INSERT INTO 
-        nixar_products (nixar_product_sku, product_material_id, product_name, mark_up, product_image_url)
-    VALUES
-        -- Glass
-        ('NX-GLS-001', 1, 'Toyota Fortuner 2016 Windshield Glass', 8900.00, 'https://example.com/images/fortuner_windshield.jpg'),
-        ('NX-GLS-002', 1, 'Honda Civic 2018 Windshield Glass', 8200.00, 'https://example.com/images/civic_windshield.jpg'),
-        ('NX-GLS-003', 1, 'Mitsubishi Montero Sport 2020 Windshield Glass', 9600.00, 'https://example.com/images/montero_windshield.jpg'),
-        ('NX-GLS-004', 2, 'Nissan Navara 2022 Front Door Glass (LH)', 4600.00, 'https://example.com/images/navara_front_glass_lh.jpg'),
-        ('NX-GLS-005', 2, 'Nissan Navara 2022 Front Door Glass (RH)', 4600.00, 'https://example.com/images/navara_front_glass_rh.jpg'),
-        ('NX-GLS-006', 2, 'Ford Ranger 2023 Rear Door Glass (LH)', 4400.00, 'https://example.com/images/ranger_rear_glass_lh.jpg'),
-        ('NX-GLS-007', 2, 'Ford Ranger 2023 Rear Door Glass (RH)', 4400.00, 'https://example.com/images/ranger_rear_glass_rh.jpg'),
-
-        -- Mirrors
-        ('NX-MIR-001', 4, 'Toyota Fortuner 2016 Side Mirror (LH)', 3400.00, 'https://example.com/images/fortuner_mirror_lh.jpg'),
-        ('NX-MIR-002', 4, 'Toyota Fortuner 2016 Side Mirror (RH)', 3400.00, 'https://example.com/images/fortuner_mirror_rh.jpg'),
-        ('NX-MIR-003', 4, 'Honda Civic 2018 Side Mirror with Signal (LH)', 3700.00, 'https://example.com/images/civic_mirror_lh.jpg'),
-        ('NX-MIR-004', 4, 'Honda Civic 2018 Side Mirror with Signal (RH)', 3700.00, 'https://example.com/images/civic_mirror_rh.jpg'),
-
-        -- Universal Tints (no model dependency)
-        ('NX-TNT-001', 3, '3M Ceramic Tint Medium Shade', 2700.00, 'https://example.com/images/3m_tint_medium.jpg'),
-        ('NX-TNT-002', 3, '3M Ceramic Tint Dark Shade', 3000.00, 'https://example.com/images/3m_tint_dark.jpg'),
-        ('NX-TNT-003', 3, 'Llumar Platinum Tint 50%', 3250.00, 'https://example.com/images/llumar_tint_50.jpg'),
-        ('NX-TNT-004', 3, 'Llumar Platinum Tint 35%', 3350.00, 'https://example.com/images/llumar_tint_35.jpg'),
-
-        -- Accessories
-        ('NX-ACC-001', 5, 'Universal Wiper Blade Set 22”', 850.00, 'https://example.com/images/wiper_set.jpg'),
-        ('NX-ACC-002', 5, 'Defogger Repair Kit', 620.00, 'https://example.com/images/defogger_kit.jpg');
-
-    -- TABLE: product_materials
-    INSERT INTO 
-        product_materials (product_material_id, material, category)
-    VALUES
-        (1, 'Laminated Glass', 'Glass'),
-        (2, 'Tempered Glass', 'Glass'),
-        (3, 'Ceramic Film', 'Tints'),
-        (4, 'Plastic Composite', 'Mirrors'),
-        (5, 'Rubber and Metal Composite', 'Accessories');
-
+        
     -- TABLE: inventory
     INSERT INTO 
         inventory (inventory_id, nixar_product_sku, current_stock, min_threshold, updated_at)
@@ -274,7 +299,7 @@
         (16, 'NX-ACC-001', 40, 10, '2025-10-13 10:10:00'),
         (17, 'NX-ACC-002', 35, 8, '2025-10-13 10:15:00');
 
-    -- TABLE: product_suppliers
+ --    -- TABLE: product_suppliers
     INSERT INTO 
         product_suppliers (product_supplier_id, nixar_product_sku, supplier_id, unit_price)
     VALUES
@@ -313,7 +338,7 @@
 
     -- TABLE: suppliers
     INSERT INTO 
-        suppliers (supplier_id, name, contact_no)
+        suppliers (supplier_id, supplier_name, contact_no)
     VALUES
         (1, 'AutoGlass Depot PH', '09171234567'),
         (2, 'CarPro Distributors', '09283456789'),
