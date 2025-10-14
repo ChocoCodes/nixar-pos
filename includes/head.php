@@ -9,7 +9,7 @@
     <script src="https://kit.fontawesome.com/a0f7dcf96e.js" crossorigin="anonymous"></script>
     <!-- Append modified timestamp after js/css file path - 
     fix browser caching issues that prevents the js/css file to update --> 
-    <link rel="stylesheet" href='assets/css/styles.css?v=<?=filemtime('assets/css/styles.css')?>'>
+    <link rel="stylesheet" href='<?=$CssPath ?>?v=<?=filemtime($CssPath)?>'>
     <script defer src="assets/js/script.js?v=<?=filemtime('assets/js/script.js')?>"></script>
 </head>
 <body>
