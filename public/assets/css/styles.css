@@ -89,3 +89,23 @@ h6 {
 .login-submit:hover {
 	background-color: #9a2f2f;
 }
+
+.navbar {
+    background-color: var(--primary-red);
+}
+
+.logout-btn {
+    background-color: var(--dark-red);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 7px 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.nav-links {
+    background-color: var(--dark-red);
+    color: white;
+    text-decoration: none;
+}
