@@ -10,6 +10,6 @@
     <!-- Append modified timestamp after js/css file path - 
     fix browser caching issues that prevents the js/css file to update --> 
     <link rel="stylesheet" href='<?=$CssPath ?>?v=<?=filemtime($CssPath)?>'>
-    <script defer src="assets/js/script.js?v=<?=filemtime('assets/js/script.js')?>"></script>
+    <script defer src="<?= $JSPath ?>?v=<?=filemtime($JSPath)?>"></script>
 </head>
 <body>
