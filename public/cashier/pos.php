@@ -1,9 +1,14 @@
 <?php
+    include_once __DIR__ . '/../handlers/check_session.php';
+
     $PageTitle = "Transaction | NIXAR POS";
     $CssPath = "../assets/css/styles.css";
     $JSPath = "../assets/js/scripts.js";
+
+    include_once '../../includes/head.php'; 
+    
+    checkSession();
 ?>
-<?php include_once '../../includes/head.php'; ?>
     <div class="container-fluid pt-2 pb-1 d-flex flex-column align-items-center gap-2" style="height: 100vh; overflow: hidden;">
         <?php include_once '../../includes/components/nav.php'; ?>
         <div class="w-100 flex-grow-1 d-sm-none d-flex justify-content-center align-items-center">

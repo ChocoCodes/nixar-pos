@@ -22,7 +22,12 @@
             $User = $Result->fetch_assoc();
             $ValidPassword = password_verify($Password, $User['password_hashed']);
             if($ValidPassword) {
-                SessionManager::createUser($User['user_id'], $Username, $User['role']);
+                $UserInfo = [
+                    "user_id" => $User['user_id'],
+                    "user_name" => $Username,
+                    "role" => $User['role']
+                ];
+                SessionManager::createUser($UserInfo);
                 
                 switch($User['role']) {
                     case 'admin': 
@@ -32,7 +37,7 @@
                         header('Location: /nixar-pos/public/cashier/pos.php');
                         break;
                     default:
-                        header('Location: index.php');
+                        header('Location: /nixar-pos/public/index.php');
                         break;
                 }
                 exit;  
