@@ -22,30 +22,50 @@
         <div class="mb-4">
           <h6 class="fw-semibold mb-3">Product Category</h6>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="category" id="glass">
-            <label class="form-check-label" for="glass">Glass</label>
+            <input class="form-check-input" type="radio" name="category" id="laminatedGlass">
+            <label class="form-check-label" for="laminatedGlass">Laminated Glass</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="category" id="rubber">
-            <label class="form-check-label" for="rubber">Rubber</label>
+            <input class="form-check-input" type="radio" name="category" id="temperedGlass">
+            <label class="form-check-label" for="temperedGlass">Tempered Glass</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="category" id="tire">
-            <label class="form-check-label" for="tire">Tire</label>
+            <input class="form-check-input" type="radio" name="category" id="tints">
+            <label class="form-check-label" for="tints">Tints</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="category" id="plasticComposite">
+            <label class="form-check-label" for="plasticComposite">Plastic/Acrylic Composite</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="category" id="rubberMetalComposite">
+            <label class="form-check-label" for="rubberMetalComposite">Rubber and Metal Composite</label>
           </div>
         </div>
         
         <!-- Car Model -->
         <div class="mb-4">
-          <h6 class="fw-semibold mb-3">Car Model</h6>
-          <input type="text" placeholder="e.g., Fortuner, Toyota, ..." class="text-input">
+          <label for="carModel" class="fw-semibold mb-3">Car Model</label>
+          <input type="text" placeholder="e.g., Fortuner, Toyota, ..." class="text-input" id="carModel">
         </div>
         
         <!-- Car Type -->
         <div class="mb-4">
-          <h6 class="fw-semibold mb-3">Car Type</h6>
-          <select class="form-select">
-            <option selected>Select Car Type</option>
+          <label for="carType" class="fw-semibold mb-3">Car Type</label>
+          <select id="carType" class="form-select">
+            <option selected disabled>Select Car Type</option>
+            <option value="sedan">Sedan</option>
+            <option value="hatchback">Hatchback</option>
+            <option value="suv">SUV</option>
+            <option value="pickup">Pick-up Truck</option>
+            <option value="coupe">Coupe</option>
+            <option value="convertible">Convertible</option>
+            <option value="van">Van</option>
+            <option value="minivan">Minivan</option>
+            <option value="wagon">Wagon</option>
+            <option value="jeep">Jeep</option>
+            <option value="truck">Truck</option>
+            <option value="electric">Electric Vehicle</option>
           </select>
         </div>
         
