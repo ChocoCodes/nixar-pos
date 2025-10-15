@@ -1,245 +1,175 @@
-<?php
-$date_from = date('Y-m-01');            
-$date_to   = date('Y-m-d');            
+<?php 
+    include_once __DIR__ . '/../handlers/check_session.php';
+    
+    $PageTitle = "Dashboard | NIXAR POS";
+    $CssPath = "../assets/css/styles.css";
+    $JSPath = "../assets/js/scripts.js";
+
+    include_once '../../includes/head.php'; 
+    include_once '../../includes/components/nav.php';
+    checkSession();
 ?>
-<!doctype html>
+
+<?php
+
+require_once __DIR__ . '/../../includes/config/DatabaseConnection.php'; 
+$dbInstance = DatabaseConnection::getInstance();
+$conn = $dbInstance->getConnection();
+
+//dates
+$start_date = $_POST['start_date'] ?? date('Y-m-01'); 
+$end_date   = $_POST['end_date'] ?? date('Y-m-d');
+
+//inventory data
+$inventory_data = [];
+if (isset($_POST['generate'])) {
+  $sql = "SELECT current_stock, min_threshold, updated_at 
+          FROM inventory
+          WHERE DATE(updated_at) BETWEEN ? AND ?
+          ORDER BY updated_at DESC";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("ss", $start_date, $end_date);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $inventory_data = $result->fetch_all(MYSQLI_ASSOC);
+  $stmt->close();
+}
+
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nixar Reports</title>
-
+  <meta charset="UTF-8">
+  <title>Reports | Nixar Auto Glass & Car Tint</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-
   <style>
-    :root{
-      --brand:#b53a3a;      
-      --brand-dark:#8b2b2b; 
-      --muted-card:#f8f8f8;
-    }
     body {
-      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: #ffffff;
-      color: #111;
-      padding: 32px;
+      background-color: #f5f5f5;
     }
-
-    .topbar {
-      background: var(--brand);
-      border-radius: 16px;
-      padding: 20px 28px;
-      display:flex;
-      align-items:center;
-      gap: 24px;
-      box-shadow: 0 2px 0 rgba(0,0,0,0.02);
+    .report-container {
+      margin: 40px auto;
+      width: 90%;
+      max-width: 1200px;
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    .topbar .logo {
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 220px;
+    .date-input {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .topbar .logo img {
-      height:48px;
+    .report-tabs {
+      margin-top: 20px;
     }
-    .topbar .logo small { color: #f6eaea; display:block; margin-top:-6px; font-size:13px; opacity:.95; }
-
-    .topbar .center-nav {
-      margin: 0 auto;
-      max-width: 560px;
-      width:100%;
-      display:flex;
-      justify-content:center;
-    }
-    .nav-pill {
-      background: rgba(0,0,0,0.12);
-      border-radius: 999px;
-      padding: 8px;
-      display:flex;
-      gap:8px;
-      align-items:center;
-      box-shadow: inset 0 -6px 0 rgba(0,0,0,0.03);
-    }
-    .nav-pill .btn {
-      border-radius: 999px;
-      padding: 10px 28px;
-      font-weight:600;
-      color: #fff;
-      background: transparent;
+    .report-tabs .btn {
       border: none;
-      opacity: .85;
+      background: none;
+      font-weight: bold;
+      font-size: 18px;
+      color: #000;
     }
-    .nav-pill .btn.active {
-      background: var(--brand-dark);
-      box-shadow: 0 4px 0 rgba(0,0,0,0.05);
-      opacity:1;
+    .report-tabs .btn.active {
+      color: #b92b2b;
     }
-
+    .report-display {
+      background: #f1f1f1;
+      min-height: 400px;
+      border-radius: 10px;
+      margin-top: 20px;
+      padding: 20px;
+      overflow-x: auto;
+    }
     .generate-btn {
-      min-width:160px;
-    }
-
-    .page {
-      margin-top: 26px;
-    }
-
-    .filters {
-      display:flex;
-      gap:16px;
-      align-items:center;
-      margin-bottom:18px;
-    }
-
-    .report-tabs .nav-link {
-      background:#f5f5f5;
-      border-radius:8px;
-      margin-right:8px;
-      color:#111;
-      font-weight:600;
-    }
-    .report-tabs .nav-link.active {
-      background:#ffffff;
-      box-shadow: 0 1px 0 rgba(0,0,0,0.03);
-      border: 1px solid rgba(0,0,0,0.03);
-    }
-
-    h1.overview {
-      font-size:64px;
-      font-weight:800;
-      margin-top:8px;
-      margin-bottom:22px;
-    }
-
-    .stat-card {
-      border-radius:12px;
-      padding:22px;
-      background: #fff;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.04);
-      margin-bottom:18px;
-    }
-    .stat-card .label {
-      color:#444;
-      font-size:16px;
-      margin-bottom:6px;
-    }
-    .stat-card .value {
-      font-size:34px;
-      font-weight:800;
-    }
-    .stat-card .sub {
-      margin-top:10px;
-      font-size:13px;
-      color: #6b6b6b;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .stat-card .sub .up { color:#22b573; }
-    .stat-card .sub .down { color:#df4b4b; }
-
-    @media (max-width: 768px){
-      h1.overview { font-size:40px; }
-      .topbar { padding:14px; }
-      .topbar .logo img { height:40px; }
-      .nav-pill .btn { padding:8px 18px; font-size:14px;}
-      body { padding:16px; }
+      background-color: #b92b2b;
+      border: none;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container-fluid">
-
-    <div class="topbar mb-4">
-      <div class="logo">
-        
-        <div>
-          <div style="font-weight:800;color:#fff;font-size:22px;letter-spacing:1px;">NIXAR</div>
-          <small>Auto Glass &amp; Car Tint</small>
-        </div>
+<div class="report-container">
+  <form method="POST" action="">
+    <div class="d-flex align-items-center gap-3">
+      <div class="date-input">
+        <input type="date" name="start_date" class="form-control" value="<?php echo $start_date; ?>">
+        <span>to</span>
+        <input type="date" name="end_date" class="form-control" value="<?php echo $end_date; ?>">
       </div>
-
-      <div class="center-nav">
-        <div class="nav-pill">
-          <button class="btn">Inventory</button>
-          <button class="btn">Transaction</button>
-          <button class="btn active">Reports</button>
-        </div>
-      </div>
-
-      
+      <button type="submit" name="generate" class="generate-btn">Generate Report</button>
     </div>
+  </form>
 
-    <div class="page">
-      <form class="row g-2 align-items-center mb-3">
-        <div class="col-auto">
-          <div class="input-group">
-            <input type="date" class="form-control" name="from" value="<?= htmlspecialchars($date_from) ?>">
-          </div>
-        </div>
-        <div class="col-auto align-self-center">to</div>
-        <div class="col-auto">
-          <div class="input-group">
-            <input type="date" class="form-control" name="to" value="<?= htmlspecialchars($date_to) ?>">
-          </div>
-        </div>
-        <div class="col-auto ms-auto">
-          <button type="submit" class="btn btn-danger">Generate Report</button>
-        </div>
-      </form>
-
-      <ul class="nav report-tabs mb-3">
-        <li class="nav-item">
-          <a class="nav-link" href="#"> <i class="bi bi-wallet2 me-1"></i> Sales Report</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="#"> <i class="bi bi-bag me-1"></i> Inventory Report</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"> <i class="bi bi-currency-dollar me-1"></i> Financial Report</a>
-        </li>
-      </ul>
-
-      <h1 class="overview">Overview</h1>
-
-      <div class="row">
-
-        <div class="col-12 col-md-8">
-          <div class="stat-card">
-            <div class="label">In Stock</div>
-            <div class="value">1,234 Items</div>
-            <div class="sub">
-              <span class="up"><i class="bi bi-arrow-up-right"></i> 12.3 %</span>
-              <small class="text-muted">vs last period</small>
-            </div>
-          </div>
-
-          <div class="stat-card mt-3">
-            <div class="label">Out of Stock</div>
-            <div class="value">5 Products</div>
-            <div class="sub">
-              <span class="down"><i class="bi bi-arrow-down-right"></i> 6.3 %</span>
-              <small class="text-muted">vs last period</small>
-            </div>
-          </div>
-
-          <div class="stat-card mt-3">
-            <div class="label">Low Stock</div>
-            <div class="value">13 Products</div>
-            <div class="sub">
-              <span class="down"><i class="bi bi-arrow-down-right"></i> 2.4 %</span>
-              <small class="text-muted">vs last period</small>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
+  <div class="report-tabs mt-4">
+    <button type="button" class="btn" id="salesBtn">📄 Sales Report</button>
+    <button type="button" class="btn active" id="inventoryBtn">📦 Inventory Report</button>
+    <button type="button" class="btn" id="financialBtn">💲 Financial Report</button>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <div class="report-display" id="reportArea">
+    <?php if (isset($_POST['generate'])): ?>
+      <h5>Inventory Report (<?php echo htmlspecialchars($start_date); ?> to <?php echo htmlspecialchars($end_date); ?>)</h5>
+      <?php if (!empty($inventory_data)): ?>
+        <table class="table table-striped mt-3">
+          <thead class="table-danger">
+            <tr>
+              <th>Current Stock</th>
+              <th>Min Threshold</th>
+              <th>Last Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($inventory_data as $row): ?>
+              <tr>
+                <td><?php echo htmlspecialchars($row['current_stock']); ?></td>
+                <td><?php echo htmlspecialchars($row['min_threshold']); ?></td>
+                <td><?php echo htmlspecialchars($row['updated_at']); ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php else: ?>
+        <p class="mt-3 text-muted">No inventory records found for this date range.</p>
+      <?php endif; ?>
+    <?php else: ?>
+      <p class="text-muted">Select a date range and click <b>Generate Report</b> to view inventory data.</p>
+    <?php endif; ?>
+  </div>
+</div>
+
+<script>
+  const salesBtn = document.getElementById("salesBtn");
+  const inventoryBtn = document.getElementById("inventoryBtn");
+  const financialBtn = document.getElementById("financialBtn");
+  const reportArea = document.getElementById("reportArea");
+
+  function clearActive() {
+    [salesBtn, inventoryBtn, financialBtn].forEach(btn => btn.classList.remove("active"));
+  }
+
+  salesBtn.onclick = () => {
+    clearActive();
+    salesBtn.classList.add("active");
+    reportArea.innerHTML = "<p>No sales recorded for the selected period.</p>";
+  }
+
+  inventoryBtn.onclick = () => {
+    clearActive();
+    inventoryBtn.classList.add("active");
+    reportArea.innerHTML = `<p>Reloading Inventory Report...</p>`;
+    setTimeout(() => location.reload(), 400);
+  }
+
+  financialBtn.onclick = () => {
+    clearActive();
+    financialBtn.classList.add("active");
+    reportArea.innerHTML = "<p>No finances recorded for the selected period</p>";
+  }
+</script>
+
 </body>
 </html>
