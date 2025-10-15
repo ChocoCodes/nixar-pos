@@ -32,7 +32,7 @@
                         header('Location: /nixar-pos/public/cashier/pos.php');
                         break;
                     default:
-                        header('Location: index.php');
+                        header('Location: /nixar-pos/public/index.php');
                         break;
                 }
                 exit;  
