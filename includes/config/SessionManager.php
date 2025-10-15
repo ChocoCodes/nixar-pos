@@ -9,12 +9,12 @@
             }
         }
 
-        public static function createUser($UserId, $Username, $Role) {
+        public static function createUser(array $User) {
             self::getInstance();
 
-            $_SESSION['user_id'] = $UserId;
-            $_SESSION['username'] = $Username;
-            $_SESSION['role'] = $Role;
+            foreach($User as $Key => $Value) {
+                $_SESSION[$Key] = $Value;
+            }
             $_SESSION['logged_in'] = true;
         }
 
