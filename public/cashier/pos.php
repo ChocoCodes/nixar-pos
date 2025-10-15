@@ -5,7 +5,7 @@
     $CssPath = "../assets/css/styles.css";
     $JSPath = "../assets/js/scripts.js";
 
-    include_once '../../includes/head.php'; 
+    include_once '../../includes/head.php';
     
     checkSession();
 ?>
@@ -19,11 +19,13 @@
                 <div class="w-100 h-100 d-flex flex-column gap-2">
                     <div class="w-100 d-flex flex-shrink-0 justify-content-between align-items-center">
                         <h2>Product List</h2>
+                      <div class="input-wrapper">
                         <input
-                                type="text"
-                                placeholder="Search"
-                                class="transaction-search-input"
+                          type="text"
+                          placeholder="Search"
+                          class="text-input"
                         />
+                      </div>
                     </div>
                     <div class="w-full d-flex flex-shrink-0 justify-content-between align-items-center gap-2">
                         <div class="filter-tile">
@@ -82,7 +84,7 @@
                     <div class="flex-grow-1 border shadow-sm rounded-2">
 
                     </div>
-                    <button class="checkout-btn">
+                    <button class="btn">
                         Proceed to Payment
                         <i class="fa-solid fa-chevron-right text-white"></i>
                     </button>
