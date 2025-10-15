@@ -6,15 +6,19 @@
     />
 
     <!--desktop menu-->
-    <ul class="nav-links d-none d-md-flex gap-2 list-unstyled justify-content-evenly align-items-center m-0 p-1 rounded-pill">
-        <li class="nav-link py-2 px-4 rounded-pill">Inventory</li>
-        <li class="nav-link py-2 px-4 rounded-pill">Transaction</li>
-        <?php if(SessionManager::get('role') === 'admin'): ?>
-           <li class="nav-link py-2 px-4 rounded-pill">
-                <a href="../../public/admin/reports.php">Reports</a>
-           </li>         
-        <?php endif; ?>
-    </ul>
+  <ul class="nav-links d-none d-md-flex gap-2 list-unstyled justify-content-evenly align-items-center m-0 p-1 rounded-pill">
+    <li class="nav-link py-2 px-4 rounded-pill">
+      <a href="../../public/admin/inventory.php">Inventory</a>
+    </li>
+    <li class="nav-link py-2 px-4 rounded-pill">
+      <a href="../../public/admin/transaction.php">Transaction</a>
+    </li>
+    <?php if(SessionManager::get('role') === 'admin'): ?>
+      <li class="nav-link py-2 px-4 rounded-pill">
+        <a href="../../public/admin/reports.php">Reports</a>
+      </li>
+    <?php endif; ?>
+  </ul>
     <a class="logout-btn d-none d-md-block" href="../../public/handlers/handle_logout.php">
         Log Out
     </a>

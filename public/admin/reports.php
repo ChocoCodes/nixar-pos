@@ -173,3 +173,4 @@ if (isset($_POST['generate'])) {
 
 </body>
 </html>
+<?php echo "admin reports"; ?>

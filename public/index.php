@@ -1,6 +1,7 @@
 <?php
     $PageTitle = "Login | NIXAR POS";
     $CssPath = "assets/css/styles.css";
+    $JSPath = "assets/js/scripts.js";
 ?>
 <?php include_once '../includes/head.php'; ?>
 <div class="container-fluid p-0 m-0 row h-100">
