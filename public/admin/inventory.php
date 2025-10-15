@@ -1,15 +1,40 @@
 <?php
   include_once __DIR__ . '/../handlers/check_session.php';
-  
+
   $PageTitle = "Admin - Inventory | NIXAR POS";
   $CssPath = "../assets/css/styles.css";
   $JSPath = "../assets/js/scripts.js";
+  $CarTypes = [
+      'Sedan',
+      'Hatchback',
+      'SUV',
+      'Pick-up Truck',
+      'Coupe',
+      'Convertible',
+      'Van',
+      'Minivan',
+      'Wagon',
+      'Jeep',
+      'Truck',
+      'Electric Vehicle'
+  ];
   
   include_once '../../includes/head.php';
   
   checkSession();
+
+  $Conn = DatabaseConnection::getInstance()->getConnection();
+  $Inventory = new Inventory($Conn);
+
+  // Setup Pagination
+  $Limit = 10;
+  $Page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+  $Offset = ($Page - 1) * $Limit;
+
+  $TotalInventoryRecords = $Inventory->getInventoryCount();
+  $TotalPages = ceil($TotalInventoryRecords / $Limit);
+  $InventoryData = $Inventory->fetchInventory($Limit, $Offset);
 ?>
-<?php include_once '../../includes/head.php'; ?>
   <div class="container-fluid p-0 m-0 h-100 px-4 pt-4 d-flex flex-column">
     <?php include_once '../../includes/components/nav.php'; ?>
     
@@ -54,18 +79,11 @@
           <label for="carType" class="fw-semibold mb-3">Car Type</label>
           <select id="carType" class="form-select">
             <option selected disabled>Select Car Type</option>
-            <option value="sedan">Sedan</option>
-            <option value="hatchback">Hatchback</option>
-            <option value="suv">SUV</option>
-            <option value="pickup">Pick-up Truck</option>
-            <option value="coupe">Coupe</option>
-            <option value="convertible">Convertible</option>
-            <option value="van">Van</option>
-            <option value="minivan">Minivan</option>
-            <option value="wagon">Wagon</option>
-            <option value="jeep">Jeep</option>
-            <option value="truck">Truck</option>
-            <option value="electric">Electric Vehicle</option>
+            <?php foreach($CarTypes as $Type): ?>
+              <option value="<?= $Type ?>">
+                <?= $Type; ?>
+              </option>
+            <?php endforeach; ?>
           </select>
         </div>
         
@@ -92,7 +110,7 @@
               id="priceValue"
               class="text-input"
               min="0"
-              max="25000"
+              max="10000"
               step="100"
               value="0"
               oninput="document.getElementById('priceRange').value = this.value"
@@ -142,46 +160,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>Windshield Glass</td>
-              <td>Toyota Corolla</td>
-              <td>Sedan</td>
-              <td>Glass</td>
-              <td>3</td>
-              <td>₱ 5,000.00</td>
-            </tr>
-            <tr>
-              <td>Rear Window Glass</td>
-              <td>Honda Civic</td>
-              <td>Sedan</td>
-              <td>Glass</td>
-              <td>5</td>
-              <td>₱ 6,500.00</td>
-            </tr>
-            <tr>
-              <td>Side Window Glass</td>
-              <td>Ford Ranger</td>
-              <td>Pick-up Truck</td>
-              <td>Glass</td>
-              <td>1</td>
-              <td>₱ 3,500.00</td>
-            </tr>
-            <tr>
-              <td>Door Rubber Seal</td>
-              <td>Toyota Hilux</td>
-              <td>Pick-up Truck</td>
-              <td>Rubber</td>
-              <td>1</td>
-              <td>₱ 3,500.00</td>
-            </tr>
-            <tr>
-              <td>Magic Tint Film - Windsh...</td>
-              <td>Toyota Rush</td>
-              <td>SUV</td>
-              <td>Tint</td>
-              <td>1</td>
-              <td>₱ 900.00</td>
-            </tr>
+            <?php foreach($InventoryData as $Data): ?>
+              <tr>
+                <td><?= $Data['product_name'] ?></td>
+                <td><?= $Data['make'] . ' ' . $Data['model'] . ' '. $Data['year'] ?></td>
+                <td><?= $Data['type'] ?></td>
+                <td><?= $Data['category'] ?></td>
+                <td><?= $Data['current_stock'] ?></td>
+                <td>₱<?= $Data['final_price'] ?></td>
+              </tr>
+            <?php endforeach; ?>
             </tbody>
           </table>
         </div>

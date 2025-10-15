@@ -2,7 +2,7 @@
     class NixarProduct {
         private mysqli $Conn;
 
-        private function __construct(mysqli $Conn) {
+        public function __construct(mysqli $Conn) {
             $this->Conn = $Conn;
         }
         public function fetchAll() {
@@ -59,10 +59,6 @@
             $Stmt->close();
 
             return $Status;
-        }
-        // TODO: fetchInventory
-        public function fetchInventory() {
-            $Sql = "SELECT * FROM product_inventory_view ORDER BY stocks DESC";
         }
     }
 

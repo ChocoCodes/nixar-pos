@@ -89,29 +89,29 @@
 		nixar_products (nixar_product_sku, product_material_id, product_name, product_img_url, mark_up, is_deleted)
 	VALUES
 		-- Glass
-		('NX-GLS-001', 1, 'Toyota Fortuner 2016 Windshield Glass', 'https://example.com/images/fortuner_windshield.jpg', 8900.00, 1),
-		('NX-GLS-002', 1, 'Honda Civic 2018 Windshield Glass', 'https://example.com/images/civic_windshield.jpg', 8200.00, 1),
-		('NX-GLS-003', 1, 'Mitsubishi Montero Sport 2020 Windshield Glass', 'https://example.com/images/montero_windshield.jpg', 9600.00, 1),
-		('NX-GLS-004', 2, 'Nissan Navara 2022 Front Door Glass (LH)', 'https://example.com/images/navara_front_glass_lh.jpg', 4600.00, 1),
-		('NX-GLS-005', 2, 'Nissan Navara 2022 Front Door Glass (RH)', 'https://example.com/images/navara_front_glass_rh.jpg', 4600.00, 1),
-		('NX-GLS-006', 2, 'Ford Ranger 2023 Rear Door Glass (LH)', 'https://example.com/images/ranger_rear_glass_lh.jpg', 4400.00, 1),
-		('NX-GLS-007', 2, 'Ford Ranger 2023 Rear Door Glass (RH)', 'https://example.com/images/ranger_rear_glass_rh.jpg', 4400.00, 1),
+		('NX-GLS-001', 1, 'Toyota Fortuner 2016 Windshield Glass', 'https://example.com/images/fortuner_windshield.jpg', 8900.00, 0),
+		('NX-GLS-002', 1, 'Honda Civic 2018 Windshield Glass', 'https://example.com/images/civic_windshield.jpg', 8200.00, 0),
+		('NX-GLS-003', 1, 'Mitsubishi Montero Sport 2020 Windshield Glass', 'https://example.com/images/montero_windshield.jpg', 9600.00, 0),
+		('NX-GLS-004', 2, 'Nissan Navara 2022 Front Door Glass (LH)', 'https://example.com/images/navara_front_glass_lh.jpg', 4600.00, 0),
+		('NX-GLS-005', 2, 'Nissan Navara 2022 Front Door Glass (RH)', 'https://example.com/images/navara_front_glass_rh.jpg', 4600.00, 0),
+		('NX-GLS-006', 2, 'Ford Ranger 2023 Rear Door Glass (LH)', 'https://example.com/images/ranger_rear_glass_lh.jpg', 4400.00, 0),
+		('NX-GLS-007', 2, 'Ford Ranger 2023 Rear Door Glass (RH)', 'https://example.com/images/ranger_rear_glass_rh.jpg', 4400.00, 0),
 
 		-- Mirrors
-		('NX-MIR-001', 4, 'Toyota Fortuner 2016 Side Mirror (LH)', 'https://example.com/images/fortuner_mirror_lh.jpg', 3400.00, 1),
-		('NX-MIR-002', 4, 'Toyota Fortuner 2016 Side Mirror (RH)', 'https://example.com/images/fortuner_mirror_rh.jpg', 3400.00, 1),
-		('NX-MIR-003', 4, 'Honda Civic 2018 Side Mirror with Signal (LH)', 'https://example.com/images/civic_mirror_lh.jpg', 3700.00, 1),
-		('NX-MIR-004', 4, 'Honda Civic 2018 Side Mirror with Signal (RH)', 'https://example.com/images/civic_mirror_rh.jpg', 3700.00, 1),
+		('NX-MIR-001', 4, 'Toyota Fortuner 2016 Side Mirror (LH)', 'https://example.com/images/fortuner_mirror_lh.jpg', 3400.00, 0),
+		('NX-MIR-002', 4, 'Toyota Fortuner 2016 Side Mirror (RH)', 'https://example.com/images/fortuner_mirror_rh.jpg', 3400.00, 0),
+		('NX-MIR-003', 4, 'Honda Civic 2018 Side Mirror with Signal (LH)', 'https://example.com/images/civic_mirror_lh.jpg', 3700.00, 0),
+		('NX-MIR-004', 4, 'Honda Civic 2018 Side Mirror with Signal (RH)', 'https://example.com/images/civic_mirror_rh.jpg', 3700.00, 0),
 
 		-- Universal Tints (no model dependency)
-		('NX-TNT-001', 3, '3M Ceramic Tint Medium Shade', 'https://example.com/images/3m_tint_medium.jpg', 2700.00, 1),
-		('NX-TNT-002', 3, '3M Ceramic Tint Dark Shade', 'https://example.com/images/3m_tint_dark.jpg', 3000.00, 1),
-		('NX-TNT-003', 3, 'Llumar Platinum Tint 50%', 'https://example.com/images/llumar_tint_50.jpg', 3250.00, 1),
-		('NX-TNT-004', 3, 'Llumar Platinum Tint 35%', 'https://example.com/images/llumar_tint_35.jpg', 3350.00, 1),
+		('NX-TNT-001', 3, '3M Ceramic Tint Medium Shade', 'https://example.com/images/3m_tint_medium.jpg', 2700.00, 0),
+		('NX-TNT-002', 3, '3M Ceramic Tint Dark Shade', 'https://example.com/images/3m_tint_dark.jpg', 3000.00, 0),
+		('NX-TNT-003', 3, 'Llumar Platinum Tint 50%', 'https://example.com/images/llumar_tint_50.jpg', 3250.00, 0),
+		('NX-TNT-004', 3, 'Llumar Platinum Tint 35%', 'https://example.com/images/llumar_tint_35.jpg', 3350.00, 0),
 
 		-- Accessories
-		('NX-ACC-001', 5, 'Universal Wiper Blade Set 22', 'https://example.com/images/wiper_set.jpg', 850.00, 1),
-		('NX-ACC-002', 5, 'Defogger Repair Kit', 'https://example.com/images/defogger_kit.jpg', 620.00, 1);
+		('NX-ACC-001', 5, 'Universal Wiper Blade Set 22', 'https://example.com/images/wiper_set.jpg', 850.00, 0),
+		('NX-ACC-002', 5, 'Defogger Repair Kit', 'https://example.com/images/defogger_kit.jpg', 620.00, 0);
 
     -- TABLE: receipt_details
     INSERT INTO 
