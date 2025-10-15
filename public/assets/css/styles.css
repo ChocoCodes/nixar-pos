@@ -6,6 +6,7 @@
     --primary-red: #BF3B3B;
     --deep-red: #803737;
     --dark-red: #662C2C;
+    --light-red: #FDE7E7;
     --placeholder-gray: #8E8E8D;
 
 	--text-muted: #808080;
@@ -88,4 +89,104 @@ h6 {
 
 .login-submit:hover {
 	background-color: #9a2f2f;
+}
+
+.navbar {
+    background-color: var(--primary-red);
+}
+
+.logout-btn {
+    background-color: var(--dark-red);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 7px 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.logout-btn:hover {
+    background-color: var(--deep-red);
+}
+
+.nav-links {
+    background-color: var(--dark-red);
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    background-color: var(--primary-red);
+}
+
+.menu-icon {
+    background-color: var(--primary-red);
+    color: white;
+    padding: 7px 15px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.menu-icon:hover {
+    cursor: pointer;
+    background-color: var(--dark-red);
+}
+
+.mobile-nav-link {
+    width: 100%;
+    text-align: center;
+    padding: 6px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.mobile-nav-link:hover {
+    background-color: lightgray;
+}
+
+.checkout-btn {
+    background-color: var(--primary-red);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 7px 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.checkout-btn:hover {
+    background-color: var(--deep-red);
+}
+
+.transaction-search-input {
+    border: 1px solid var(--input-border);
+    background-color: var(--input-background);
+    width: 250px;
+    border-radius: 5px;
+    transition: box-shadow 0.1s ease-in-out;
+    padding: 5px;
+}
+
+.transaction-search-input:focus {
+    box-shadow: 0 0 0 2px var(--input-border);
+    outline: none;
+}
+
+.filter-tile {
+    border: 1px solid var(--input-border);
+    background-color: white;
+    border-radius: 10px;
+    flex-grow: 1;
+    padding: 7px;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.filter-tile:hover {
+    cursor: pointer;
+    background-color: var(--light-red);
+    border-color: var(--primary-red);
+}
+
+.filter-tile > p {
+    font-size: 14px;
 }
