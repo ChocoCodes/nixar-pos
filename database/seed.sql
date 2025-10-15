@@ -110,7 +110,7 @@
 		('NX-TNT-004', 3, 'Llumar Platinum Tint 35%', 'https://example.com/images/llumar_tint_35.jpg', 3350.00, 1),
 
 		-- Accessories
-		('NX-ACC-001', 5, 'Universal Wiper Blade Set 22”', 'https://example.com/images/wiper_set.jpg', 850.00, 1),
+		('NX-ACC-001', 5, 'Universal Wiper Blade Set 22', 'https://example.com/images/wiper_set.jpg', 850.00, 1),
 		('NX-ACC-002', 5, 'Defogger Repair Kit', 'https://example.com/images/defogger_kit.jpg', 620.00, 1);
 
     -- TABLE: receipt_details
