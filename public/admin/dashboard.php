@@ -1,11 +1,4 @@
 <?php 
-<<<<<<< HEAD
-    include_once "../handlers/check_session.php";
-
-    checkSession();
-    echo "admin dashboard"; 
-?>
-=======
     include_once __DIR__ . '/../handlers/check_session.php';
     
     $PageTitle = "Dashboard | NIXAR POS";
@@ -18,4 +11,3 @@
 ?>
 
 <p>sample</p>
->>>>>>> master
