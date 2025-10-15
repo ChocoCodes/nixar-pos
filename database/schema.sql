@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS product_suppliers (
     product_supplier_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     nixar_product_sku VARCHAR(30),
     supplier_id INTEGER,
-    unit_price FLOAT NOT NULL
+    base_price FLOAT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS suppliers (

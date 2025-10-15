@@ -6,11 +6,13 @@
 
 -- DATABASE: nixar_autoglass_db
     -- TABLE: users
+    USE nixar_autoglass_db;
+
     INSERT INTO 
         users (user_id, role, name, password_hashed)
     VALUES
-        (1, 'admin', 'Administrator_1', '$2y$10$pAf3CK.k5mvP0Ii2fzz4K.eQbH/iQskBlmv2XtN0mvmsgoTqRdxC2'),
-        (2, 'cashier', 'Cashier_1', '$2y$10$WYefz0uFxo2f2OtLir7HY.9r5ku83giUa0UQ9O2Lw/I/GXhafYM4K');
+        (1, 'admin', 'raeantamayo', '$2y$10$pAf3CK.k5mvP0Ii2fzz4K.eQbH/iQskBlmv2XtN0mvmsgoTqRdxC2'),
+        (2, 'cashier', 'sunny123', '$2y$10$WYefz0uFxo2f2OtLir7HY.9r5ku83giUa0UQ9O2Lw/I/GXhafYM4K');
 
     -- TABLE: receipts
     INSERT INTO 
@@ -301,7 +303,7 @@
 
  --    -- TABLE: product_suppliers
     INSERT INTO 
-        product_suppliers (product_supplier_id, nixar_product_sku, supplier_id, unit_price)
+        product_suppliers (product_supplier_id, nixar_product_sku, supplier_id, base_price)
     VALUES
         -- Glass products
         (1, 'NX-GLS-001', 1, 8500.00),
