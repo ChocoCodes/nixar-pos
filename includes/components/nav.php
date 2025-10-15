@@ -1,4 +1,4 @@
-<nav class="navbar d-flex justify-content-between align-items-center rounded-4 px-4">
+<nav class="navbar w-100 d-flex justify-content-between align-items-center rounded-4 px-4">
     <img
             src="../assets/svg/nixar-logo-white.svg"
             alt="nixar-logo-white"
