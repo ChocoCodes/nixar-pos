@@ -1,4 +1,4 @@
-<? 
+<?php 
     class Inventory {
         private mysqli $Conn;
 
@@ -8,7 +8,7 @@
 
         // TODO: fetchInventory
         public function fetchInventory($Limit = 10, $Offset = 0) {
-            $Sql = "SELECT * FROM product_inventory_view ORDER BY current_stock DESC LIMIT ?, ?";
+            $Sql = "SELECT * FROM product_inventory_view ORDER BY current_stock DESC, final_price ASC LIMIT ?, ?";
             $Stmt = $this->Conn->prepare($Sql);
             if(!$Stmt) {
                 throw new Exception("Failed to execute query: ". $this->Conn->error);
