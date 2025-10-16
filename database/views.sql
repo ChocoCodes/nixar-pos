@@ -1,6 +1,9 @@
--- Author: John Roland L. Octavio, Toby Javelona, Josh Dane Labistre
--- `views.sql` is intended to simplify PHP queries by creating database VIEWS
--- that perform multiple table JOINs when retrieving data in different tables.
+/*
+    Author: John Roland L. Octavio, Josh Dane M. Labistre, Ignatius Warren Benjamin D. Javelona
+
+    `views.sql` is intended to simplify PHP queries by creating database VIEWS 
+    that perform multiple table JOINs when retrieving data in different tables.
+*/
 
 USE nixar_autoglass_db;
 
@@ -20,3 +23,18 @@ JOIN product_materials pm ON np.product_material_id = pm.product_material_id
 JOIN inventory i ON np.nixar_product_sku = i.nixar_product_sku
 JOIN product_suppliers ps ON np.nixar_product_sku = ps.nixar_product_sku
 WHERE np.is_deleted = 0;
+
+CREATE OR REPLACE VIEW inventory_report AS
+SELECT 
+    SUM(current_stock) AS total_stock,
+    SUM(CASE WHEN current_stock = 0 THEN 1 ELSE 0 END) AS out_of_stock,
+    SUM(CASE WHEN current_stock < min_threshold THEN 1 ELSE 0 END) AS low_stock
+FROM inventory;
+
+CREATE OR REPLACE VIEW sales_report AS
+SELECT
+    ROUND(SUM(total_amount), 2)AS total_revenue,
+    COUNT(receipt_id) AS total_transactions,
+    ROUND(SUM(total_amount) / COUNT(receipt_id), 2) AS average_order_value
+FROM receipts;
+

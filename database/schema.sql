@@ -10,7 +10,7 @@ CREATE DATABASE IF NOT EXISTS nixar_autoglass_db;
 CREATE TABLE IF NOT EXISTS users (
     user_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     role VARCHAR(20),
-    name VARCHAR(30) NOT NULL,
+    name VARCHAR(60) NOT NULL,
     password_hashed VARCHAR(255) NOT NULL
 );
 
@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS receipts (
 
 CREATE TABLE IF NOT EXISTS customers (
     customer_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL,
+    name VARCHAR(60) NOT NULL,
+    email VARCHAR(60) NOT NULL,
     address VARCHAR(128) NOT NULL,
     phone_no VARCHAR(12) NOT NULL
 );
@@ -44,14 +44,14 @@ CREATE TABLE IF NOT EXISTS transactions (
 
 CREATE TABLE IF NOT EXISTS product_materials (
     product_material_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    material_name VARCHAR(30) NOT NULL,
+    material_name VARCHAR(60) NOT NULL,
     category VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS nixar_products (
     nixar_product_sku VARCHAR(30) PRIMARY KEY NOT NULL,
     product_material_id INTEGER,
-    product_name VARCHAR(30) NOT NULL,
+    product_name VARCHAR(60) NOT NULL,
     product_img_url VARCHAR(255) NOT NULL,
     mark_up FLOAT NOT NULL,
     is_deleted TINYINT(1) DEFAULT 0,
@@ -116,6 +116,6 @@ CREATE TABLE IF NOT EXISTS product_suppliers (
 
 CREATE TABLE IF NOT EXISTS suppliers (
     supplier_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    supplier_name VARCHAR(30) NOT NULL,
+    supplier_name VARCHAR(60) NOT NULL,
     contact_no VARCHAR(12) NOT NULL
 );
