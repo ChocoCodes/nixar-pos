@@ -7,10 +7,6 @@
 
     include_once '../../includes/head.php'; 
     include_once '../../includes/components/nav.php';
-    checkSession();
-?>
-
-<?php
 
 require_once __DIR__ . '/../../includes/config/DatabaseConnection.php'; 
 $dbInstance = DatabaseConnection::getInstance();
@@ -36,61 +32,6 @@ if (isset($_POST['generate'])) {
 }
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Reports | Nixar Auto Glass & Car Tint</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #f5f5f5;
-    }
-    .report-container {
-      margin: 40px auto;
-      width: 90%;
-      max-width: 1200px;
-      background-color: white;
-      border-radius: 12px;
-      padding: 20px 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .date-input {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .report-tabs {
-      margin-top: 20px;
-    }
-    .report-tabs .btn {
-      border: none;
-      background: none;
-      font-weight: bold;
-      font-size: 18px;
-      color: #000;
-    }
-    .report-tabs .btn.active {
-      color: #b92b2b;
-    }
-    .report-display {
-      background: #f1f1f1;
-      min-height: 400px;
-      border-radius: 10px;
-      margin-top: 20px;
-      padding: 20px;
-      overflow-x: auto;
-    }
-    .generate-btn {
-      background-color: #b92b2b;
-      border: none;
-      color: white;
-      padding: 8px 20px;
-      border-radius: 6px;
-    }
-  </style>
-</head>
-<body>
 
 <div class="report-container">
   <form method="POST" action="">
@@ -140,37 +81,7 @@ if (isset($_POST['generate'])) {
     <?php endif; ?>
   </div>
 </div>
-
-<script>
-  const salesBtn = document.getElementById("salesBtn");
-  const inventoryBtn = document.getElementById("inventoryBtn");
-  const financialBtn = document.getElementById("financialBtn");
-  const reportArea = document.getElementById("reportArea");
-
-  function clearActive() {
-    [salesBtn, inventoryBtn, financialBtn].forEach(btn => btn.classList.remove("active"));
-  }
-
-  salesBtn.onclick = () => {
-    clearActive();
-    salesBtn.classList.add("active");
-    reportArea.innerHTML = "<p>No sales recorded for the selected period.</p>";
-  }
-
-  inventoryBtn.onclick = () => {
-    clearActive();
-    inventoryBtn.classList.add("active");
-    reportArea.innerHTML = `<p>Reloading Inventory Report...</p>`;
-    setTimeout(() => location.reload(), 400);
-  }
-
-  financialBtn.onclick = () => {
-    clearActive();
-    financialBtn.classList.add("active");
-    reportArea.innerHTML = "<p>No finances recorded for the selected period</p>";
-  }
-</script>
-
 </body>
 </html>
-<?php echo "admin reports"; ?>
+
+<?php include_once '../../includes/footer.php'; ?>
