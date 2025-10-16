@@ -1,15 +1,40 @@
 <?php
   include_once __DIR__ . '/../handlers/check_session.php';
-  
+
   $PageTitle = "Admin - Inventory | NIXAR POS";
   $CssPath = "../assets/css/styles.css";
   $JSPath = "../assets/js/scripts.js";
+  $CarTypes = [
+      'Sedan',
+      'Hatchback',
+      'SUV',
+      'Pick-up Truck',
+      'Coupe',
+      'Convertible',
+      'Van',
+      'Minivan',
+      'Wagon',
+      'Jeep',
+      'Truck',
+      'Electric Vehicle'
+  ];
   
   include_once '../../includes/head.php';
   
   checkSession();
+
+  $Conn = DatabaseConnection::getInstance()->getConnection();
+  $Inventory = new Inventory($Conn);
+
+  // Setup Pagination
+  $Limit = 10;
+  $Page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+  $Offset = ($Page - 1) * $Limit;
+
+  $TotalInventoryRecords = $Inventory->getInventoryCount();
+  $TotalPages = ceil($TotalInventoryRecords / $Limit);
+  $InventoryData = $Inventory->fetchInventory($Limit, $Offset);
 ?>
-<?php include_once '../../includes/head.php'; ?>
   <div class="container-fluid p-0 m-0 h-100 px-4 pt-4 d-flex flex-column">
     <?php include_once '../../includes/components/nav.php'; ?>
     
@@ -22,30 +47,43 @@
         <div class="mb-4">
           <h6 class="fw-semibold mb-3">Product Category</h6>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="category" id="glass">
-            <label class="form-check-label" for="glass">Glass</label>
+            <input class="form-check-input" type="radio" name="category" id="laminatedGlass">
+            <label class="form-check-label" for="laminatedGlass">Laminated Glass</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="category" id="rubber">
-            <label class="form-check-label" for="rubber">Rubber</label>
+            <input class="form-check-input" type="radio" name="category" id="temperedGlass">
+            <label class="form-check-label" for="temperedGlass">Tempered Glass</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="category" id="tire">
-            <label class="form-check-label" for="tire">Tire</label>
+            <input class="form-check-input" type="radio" name="category" id="tints">
+            <label class="form-check-label" for="tints">Tints</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="category" id="plasticComposite">
+            <label class="form-check-label" for="plasticComposite">Plastic/Acrylic Composite</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="category" id="rubberMetalComposite">
+            <label class="form-check-label" for="rubberMetalComposite">Rubber and Metal Composite</label>
           </div>
         </div>
         
         <!-- Car Model -->
         <div class="mb-4">
-          <h6 class="fw-semibold mb-3">Car Model</h6>
-          <input type="text" placeholder="e.g., Fortuner, Toyota, ..." class="text-input">
+          <label for="carModel" class="fw-semibold mb-3">Car Model</label>
+          <input type="text" placeholder="e.g., Fortuner, Toyota, ..." class="text-input" id="carModel">
         </div>
         
         <!-- Car Type -->
         <div class="mb-4">
-          <h6 class="fw-semibold mb-3">Car Type</h6>
-          <select class="form-select">
-            <option selected>Select Car Type</option>
+          <label for="carType" class="fw-semibold mb-3">Car Type</label>
+          <select id="carType" class="form-select">
+            <option selected disabled>Select Car Type</option>
+            <?php foreach($CarTypes as $Type): ?>
+              <option value="<?= $Type ?>">
+                <?= $Type; ?>
+              </option>
+            <?php endforeach; ?>
           </select>
         </div>
         
@@ -72,7 +110,7 @@
               id="priceValue"
               class="text-input"
               min="0"
-              max="25000"
+              max="10000"
               step="100"
               value="0"
               oninput="document.getElementById('priceRange').value = this.value"
@@ -122,46 +160,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>Windshield Glass</td>
-              <td>Toyota Corolla</td>
-              <td>Sedan</td>
-              <td>Glass</td>
-              <td>3</td>
-              <td>₱ 5,000.00</td>
-            </tr>
-            <tr>
-              <td>Rear Window Glass</td>
-              <td>Honda Civic</td>
-              <td>Sedan</td>
-              <td>Glass</td>
-              <td>5</td>
-              <td>₱ 6,500.00</td>
-            </tr>
-            <tr>
-              <td>Side Window Glass</td>
-              <td>Ford Ranger</td>
-              <td>Pick-up Truck</td>
-              <td>Glass</td>
-              <td>1</td>
-              <td>₱ 3,500.00</td>
-            </tr>
-            <tr>
-              <td>Door Rubber Seal</td>
-              <td>Toyota Hilux</td>
-              <td>Pick-up Truck</td>
-              <td>Rubber</td>
-              <td>1</td>
-              <td>₱ 3,500.00</td>
-            </tr>
-            <tr>
-              <td>Magic Tint Film - Windsh...</td>
-              <td>Toyota Rush</td>
-              <td>SUV</td>
-              <td>Tint</td>
-              <td>1</td>
-              <td>₱ 900.00</td>
-            </tr>
+            <?php foreach($InventoryData as $Data): ?>
+              <tr>
+                <td><?= $Data['product_name'] ?></td>
+                <td><?= $Data['make'] . ' ' . $Data['model'] . ' '. $Data['year'] ?></td>
+                <td><?= $Data['type'] ?></td>
+                <td><?= $Data['category'] ?></td>
+                <td><?= $Data['current_stock'] ?></td>
+                <td>₱<?= $Data['final_price'] ?></td>
+              </tr>
+            <?php endforeach; ?>
             </tbody>
           </table>
         </div>
