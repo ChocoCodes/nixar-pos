@@ -9,28 +9,6 @@
     include_once '../../includes/components/nav.php';
 
 require_once __DIR__ . '/../../includes/config/DatabaseConnection.php'; 
-$dbInstance = DatabaseConnection::getInstance();
-$conn = $dbInstance->getConnection();
-
-//dates
-$start_date = $_POST['start_date'] ?? date('Y-m-01'); 
-$end_date   = $_POST['end_date'] ?? date('Y-m-d');
-
-//inventory data
-$inventory_data = [];
-if (isset($_POST['generate'])) {
-  $sql = "SELECT current_stock, min_threshold, updated_at 
-          FROM inventory
-          WHERE DATE(updated_at) BETWEEN ? AND ?
-          ORDER BY updated_at DESC";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("ss", $start_date, $end_date);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $inventory_data = $result->fetch_all(MYSQLI_ASSOC);
-  $stmt->close();
-}
-
 ?>
 
 <div class="report-container">
@@ -85,3 +63,4 @@ if (isset($_POST['generate'])) {
 </html>
 
 <?php include_once '../../includes/footer.php'; ?>
+
