@@ -35,10 +35,10 @@
   $TotalPages = ceil($TotalInventoryRecords / $Limit);
   $InventoryData = $Inventory->fetchInventory($Limit, $Offset);
 ?>
-  <div class="container-fluid p-0 m-0 h-100 px-4 pt-4 d-flex flex-column">
+  <div class="container-fluid p-0 m-0 h-100 px-4 pt-1 d-flex flex-column">
     <?php include_once '../../includes/components/nav.php'; ?>
     
-    <div class="row container-fluid mt-3 flex-fill mb-3 gap-3">
+    <div class="row container-fluid p-0 m-0 mt-3 flex-fill mb-3 gap-3">
       <!-- Left Sidebar - Filters -->
       <div class="col-md-2 bg-white p-4 border border-3 shadow-sm rounded-3">
         <h4 class="fw-bold mb-4">Filter Search</h4>
@@ -164,7 +164,7 @@
             <?php foreach($InventoryData as $Data): ?>
               <tr>
                 <td><?= $Data['product_name'] ?></td>
-                <td><?= $Data['make'] . ' ' . $Data['model'] ?></td>
+                <td><?= $Data['make'] . ' ' . $Data['model']?></td>
                 <td><?= $Data['year'] ?></td>
                 <td><?= $Data['type'] ?></td>
                 <td><?= $Data['category'] ?></td>
