@@ -1,14 +1,14 @@
 <?php 
-    include_once __DIR__ . '/../handlers/check_session.php';
-    
-    $PageTitle = "Dashboard | NIXAR POS";
-    $CssPath = "../assets/css/styles.css";
-    $JSPath = "../assets/js/scripts.js";
+  include_once __DIR__ . '/../handlers/check_session.php';
+  
+  $PageTitle = "Dashboard | NIXAR POS";
+  $CssPath = "../assets/css/styles.css";
+  $JSPath = "../assets/js/scripts.js";
 
-    include_once '../../includes/head.php'; 
-    include_once '../../includes/components/nav.php';
+  include_once '../../includes/head.php'; 
+  include_once '../../includes/components/nav.php';
 
-require_once __DIR__ . '/../../includes/config/DatabaseConnection.php'; 
+  require_once __DIR__ . '/../../includes/config/DatabaseConnection.php'; 
 ?>
 
 <div class="report-container">
@@ -59,8 +59,7 @@ require_once __DIR__ . '/../../includes/config/DatabaseConnection.php';
     <?php endif; ?>
   </div>
 </div>
-</body>
-</html>
-
+<!-- =============== REPORT PAGE SPECIFIC SCRIPT =============== -->
+<script src="../assets/js/reports.js?v=<?=filemtime('../assets/js/reports.js')?>"></script>
 <?php include_once '../../includes/footer.php'; ?>
 

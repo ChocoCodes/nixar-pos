@@ -3,8 +3,6 @@
     include_once 'check_session.php';
 
     checkSession();
-    // Let the browser know that we are sending JSON as response
-    header("Content-Type: application/json");
 
     $Conn = DatabaseConnection::getInstance()->getConnection();
 
@@ -14,9 +12,21 @@
         exit;
     }
 
-    $Inventory = new Inventory($Conn);
-    $Rows = $Inventory->searchInventoryByKeyword($Query);
+    $Limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $Page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $Offset = ($Page - 1) * $Limit;
 
-    echo json_encode($Rows);
-    exit;
+    $Inventory = new Inventory($Conn);
+    $Rows = $Inventory->searchInventoryByKeyword($Query, $Limit, $Offset);
+    $Count = $Inventory->countBySearchKeyword($Query);
+    $TotalPages = ceil($Count / $Limit);
+
+    $Response = [
+        'inventory' => $Rows,
+        'totalPages' => $TotalPages,
+        'currentPage' => $Page
+    ];
+    // Let the browser know that we are sending JSON as response
+    header("Content-Type: application/json");
+    echo json_encode($Response);
 ?>
