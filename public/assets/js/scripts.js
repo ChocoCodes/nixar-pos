@@ -14,10 +14,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!anchor) return;
 
     const href = anchor.getAttribute('href');
+    const PAGES = ['inventory', 'transaction', 'reports'];
 
-    if ((currentPath.includes('inventory') && href.includes('inventory')) ||
-      (currentPath.includes('transaction') && href.includes('transaction')) ||
-      (currentPath.includes('reports') && href.includes('reports'))) {
+    const isIncluded = PAGES.find(keyword => 
+        currentPath.includes(keyword) && href.includes(keyword)
+    );
+
+    if (isIncluded) {
       link.classList.add('nav-selected');
     }
   });
@@ -31,24 +34,24 @@ const financialBtn = document.getElementById("financialBtn");
 const reportArea = document.getElementById("reportArea");
 
 function clearActive() {
-[salesBtn, inventoryBtn, financialBtn].forEach(btn => btn.classList.remove("active"));
+    [salesBtn, inventoryBtn, financialBtn].forEach(btn => btn.classList.remove("active"));
 }
 
 salesBtn.onclick = () => {
-clearActive();
-salesBtn.classList.add("active");
-reportArea.innerHTML = "<p>No sales recorded for the selected period.</p>";
+    clearActive();
+    salesBtn.classList.add("active");
+    reportArea.innerHTML = "<p>No sales recorded for the selected period.</p>";
 }
 
 inventoryBtn.onclick = () => {
-clearActive();
-inventoryBtn.classList.add("active");
-reportArea.innerHTML = `<p>Reloading Inventory Report...</p>`;
-setTimeout(() => location.reload(), 400);
+    clearActive();
+    inventoryBtn.classList.add("active");
+    reportArea.innerHTML = `<p>Reloading Inventory Report...</p>`;
+    setTimeout(() => location.reload(), 400);
 }
 
 financialBtn.onclick = () => {
-clearActive();
-financialBtn.classList.add("active");
-reportArea.innerHTML = "<p>No finances recorded for the selected period</p>";
+    clearActive();
+    financialBtn.classList.add("active");
+    reportArea.innerHTML = "<p>No finances recorded for the selected period</p>";
 }
