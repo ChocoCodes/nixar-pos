@@ -26,6 +26,25 @@
             return $Rows;
         }
 
+        public function searchInventoryByKeyword(string $Query) {
+            $Like = "%{$Query}%";
+            $Sql = "SELECT * FROM product_inventory_view 
+                WHERE model LIKE ? 
+                  OR type LIKE ? 
+                  OR product_name LIKE ?
+                ORDER BY product_name ASC, model ASC, type ASC";
+            $Stmt = $this->Conn->prepare($Sql);
+            if(!$Stmt) {
+                throw new Exception("Failed to execute query: ". $this->Conn->error);
+            }
+            $Stmt->bind_param("sss", $Like, $Like, $Like);
+            $Stmt->execute();
+            
+            $Result = $Stmt->get_result();
+            $Rows = $Result->fetch_all(MYSQLI_ASSOC);
+            return $Rows;
+        }
+
         public function getInventoryCount() {
             $Sql = "SELECT COUNT(*) AS total FROM product_inventory_view";
             $Result = $this->Conn->query($Sql);

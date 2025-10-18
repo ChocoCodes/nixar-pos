@@ -142,8 +142,8 @@
         </div>
         
         <div class="d-flex gap-2 mb-4">
-          <input type="text" class="text-input" placeholder="Search by car model, type, or product...">
-          <button class="btn">Search</button>
+          <input type="text" class="text-input" id="search-input" placeholder="Search by car model, type, or product...">
+          <button class="btn" onClick="searchProducts()">Search</button>
         </div>
         
 <!--=================  Placeholder for Inventory Table  =================-->
@@ -153,17 +153,19 @@
             <tr>
               <th>Product Name</th>
               <th>Car Model</th>
+              <th>Year</th>
               <th>Car Type</th>
               <th>Category</th>
               <th>Stocks</th>
               <th>Price</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="container-inventory-data">
             <?php foreach($InventoryData as $Data): ?>
               <tr>
                 <td><?= $Data['product_name'] ?></td>
-                <td><?= $Data['make'] . ' ' . $Data['model'] . ' '. $Data['year'] ?></td>
+                <td><?= $Data['make'] . ' ' . $Data['model'] ?></td>
+                <td><?= $Data['year'] ?></td>
                 <td><?= $Data['type'] ?></td>
                 <td><?= $Data['category'] ?></td>
                 <td><?= $Data['current_stock'] ?></td>
