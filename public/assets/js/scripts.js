@@ -4,6 +4,26 @@ const toggleMenu = () => {
     menu.classList.toggle('d-none');
 }
 
+// nav selected
+document.addEventListener('DOMContentLoaded', function() {
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  navLinks.forEach(link => {
+    const anchor = link.querySelector('a');
+    if (!anchor) return;
+
+    const href = anchor.getAttribute('href');
+
+    if ((currentPath.includes('inventory') && href.includes('inventory')) ||
+      (currentPath.includes('transaction') && href.includes('transaction')) ||
+      (currentPath.includes('reports') && href.includes('reports'))) {
+      link.classList.add('nav-selected');
+    }
+  });
+});
+
+
 //for reports
 const salesBtn = document.getElementById("salesBtn");
 const inventoryBtn = document.getElementById("inventoryBtn");
@@ -32,4 +52,3 @@ clearActive();
 financialBtn.classList.add("active");
 reportArea.innerHTML = "<p>No finances recorded for the selected period</p>";
 }
-//

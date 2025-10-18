@@ -54,7 +54,7 @@ a {
 }
 
 .color-primary-red {
-	background-color: var(--primary-red) !important;
+	background-color: var(--primary-red);
 }
 
 .color-deep-red {
@@ -160,8 +160,7 @@ a {
 	background-color: #9a2f2f;
 }
 
-
-/*Navbar*/
+/* Navbar */
 .navbar {
     background-color: var(--primary-red);
 }
@@ -187,7 +186,7 @@ a {
     transition: background-color 0.3s ease-in-out;
 }
 
-.nav-link:hover {
+.nav-link:hover, .nav-selected {
     background-color: var(--primary-red);
 }
 
@@ -213,10 +212,6 @@ a {
 
 .mobile-nav-link:hover {
     background-color: lightgray;
-}
-
-.input-wrapper {
-	width: 250px;
 }
 
 .filter-tile {
@@ -302,6 +297,7 @@ a {
 .report-tabs .btn.active {
     color: #b92b2b;
 }
+
 .report-display {
     background: #f1f1f1;
     min-height: 400px;
@@ -371,6 +367,7 @@ a {
 .form-range::-webkit-slider-thumb:hover {
 	background-color: var(--deep-red);
 }
+
 
 .page-link {
 	color: var(--primary-red);
