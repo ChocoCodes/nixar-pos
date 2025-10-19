@@ -5,40 +5,19 @@
   $CssPath = "../assets/css/styles.css";
   $JSPath = "../assets/js/scripts.js";
   $CarTypes = [
-      'Sedan',
-      'Hatchback',
-      'SUV',
-      'Pick-up Truck',
-      'Coupe',
-      'Convertible',
-      'Van',
-      'Minivan',
-      'Wagon',
-      'Jeep',
-      'Truck',
-      'Electric Vehicle'
+      'Sedan', 'Hatchback', 'SUV', 'Pick-up Truck', 'Coupe',
+      'Convertible', 'Van', 'Minivan', 'Wagon', 'Jeep', 
+      'Truck', 'Electric Vehicle'
   ];
   
   include_once '../../includes/head.php';
   
   checkSession();
-
-  $Conn = DatabaseConnection::getInstance()->getConnection();
-  $Inventory = new Inventory($Conn);
-
-  // Setup Pagination
-  $Limit = 10;
-  $Page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-  $Offset = ($Page - 1) * $Limit;
-
-  $TotalInventoryRecords = $Inventory->getInventoryCount();
-  $TotalPages = ceil($TotalInventoryRecords / $Limit);
-  $InventoryData = $Inventory->fetchInventory($Limit, $Offset);
 ?>
-  <div class="container-fluid p-0 m-0 h-100 px-4 pt-4 d-flex flex-column">
+  <div class="container-fluid p-0 m-0 h-100 px-4 pt-1 d-flex flex-column">
     <?php include_once '../../includes/components/nav.php'; ?>
     
-    <div class="row container-fluid mt-3 flex-fill mb-3 gap-3">
+    <div class="row container-fluid p-0 m-0 mt-3 flex-fill mb-3 gap-3">
       <!-- Left Sidebar - Filters -->
       <div class="col-md-2 bg-white p-4 border border-3 shadow-sm rounded-3">
         <h4 class="fw-bold mb-4">Filter Search</h4>
@@ -142,50 +121,38 @@
         </div>
         
         <div class="d-flex gap-2 mb-4">
-          <input type="text" class="text-input" placeholder="Search by car model, type, or product...">
-          <button class="btn">Search</button>
+          <input type="text" class="text-input" id="search-input" placeholder="Search by car model, type, or product...">
+          <button class="btn" onClick="searchProducts()">Search</button>
         </div>
         
-<!--=================  Placeholder for Inventory Table  =================-->
-        <div class="table-responsive">
+<!--=================  INVENTORY TABLE  =================-->
+        <div class="table-responsive" id="container-inventory-tbl">
           <table class="table table-striped bg-white">
             <thead class="color-primary-red">
             <tr>
               <th>Product Name</th>
               <th>Car Model</th>
+              <th>Year</th>
               <th>Car Type</th>
               <th>Category</th>
               <th>Stocks</th>
               <th>Price</th>
             </tr>
             </thead>
-            <tbody>
-            <?php foreach($InventoryData as $Data): ?>
-              <tr>
-                <td><?= $Data['product_name'] ?></td>
-                <td><?= $Data['make'] . ' ' . $Data['model'] . ' '. $Data['year'] ?></td>
-                <td><?= $Data['type'] ?></td>
-                <td><?= $Data['category'] ?></td>
-                <td><?= $Data['current_stock'] ?></td>
-                <td>₱<?= $Data['final_price'] ?></td>
-              </tr>
-            <?php endforeach; ?>
+            <tbody id="container-inventory-data">
+              <!-- ===== HOST ALL INVENTORY ROWS FETCHED FROM JS ===== -->
             </tbody>
           </table>
         </div>
         
-        <!-- Pagination -->
+        <!-- =============== PAGINATION CONTROLS =============== -->
         <nav>
-          <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="#">← Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">...</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next →</a></li>
-          </ul>
+          <ul class="pagination justify-content-center" id="pagination-container"></ul>
         </nav>
       </div>
     </div>
   </div>
+
+<!-- =============== INVENTORY PAGE SPECIFIC SCRIPT =============== -->
+<script src="../assets/js/inventory.js?v=<?=filemtime('../assets/js/inventory.js')?>"></script>
 <?php include_once '../../includes/footer.php'; ?>
