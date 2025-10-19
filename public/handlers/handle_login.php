@@ -31,7 +31,7 @@
                 
                 switch($User['role']) {
                     case 'admin': 
-                        header('Location: /nixar-pos/public/admin/dashboard.php');
+                        header('Location: /nixar-pos/public/admin/inventory.php');
                         break;
                     case 'cashier':
                         header('Location: /nixar-pos/public/cashier/pos.php');

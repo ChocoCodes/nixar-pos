@@ -5,11 +5,104 @@
     $CssPath = "../assets/css/styles.css";
     $JSPath = "../assets/js/scripts.js";
 
-    include_once '../../includes/head.php'; 
-    
+    include_once '../../includes/head.php';
+
     checkSession();
+
+    $dummyProducts = [
+            [
+                    'name' => 'Glass Cleaner',
+                    'price' => 120,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Car Care'
+            ],
+            [
+                    'name' => 'Wiper Blade',
+                    'price' => 250,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Accessories'
+            ],
+            [
+                    'name' => 'Car Tint',
+                    'price' => 3000,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Exterior'
+            ],
+            [
+                    'name' => 'Air Freshener',
+                    'price' => 80,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Interior'
+            ],
+            [
+                    'name' => 'Engine Oil',
+                    'price' => 550,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Maintenance'
+            ],
+            [
+                    'name' => 'Air Freshener',
+                    'price' => 80,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Interior'
+            ],
+            [
+                    'name' => 'Engine Oil',
+                    'price' => 550,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Maintenance'
+            ],
+            [
+                    'name' => 'Air Freshener',
+                    'price' => 80,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Interior'
+            ],
+            [
+                    'name' => 'Engine Oil',
+                    'price' => 550,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Maintenance'
+            ],
+            [
+                    'name' => 'Air Freshener',
+                    'price' => 80,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Interior'
+            ],
+            [
+                    'name' => 'Engine Oil',
+                    'price' => 550,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Maintenance'
+            ],
+            [
+                    'name' => 'Air Freshener',
+                    'price' => 80,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Interior'
+            ],
+            [
+                    'name' => 'Engine Oil',
+                    'price' => 550,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Maintenance'
+            ],
+            [
+                    'name' => 'Air Freshener',
+                    'price' => 80,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Interior'
+            ],
+            [
+                    'name' => 'Engine Oil',
+                    'price' => 550,
+                    'pic' => '../assets/img/sample.png',
+                    'category' => 'Maintenance'
+            ]
+    ];
 ?>
-    <div class="container-fluid pt-2 pb-1 d-flex flex-column align-items-center gap-2" style="height: 100vh; overflow: hidden;">
+    <div class="container-fluid pt-2 pb-3 px-4 d-flex flex-column align-items-center gap-2" style="height: 100vh; overflow: hidden;">
         <?php include_once '../../includes/components/nav.php'; ?>
         <div class="w-100 flex-grow-1 d-sm-none d-flex justify-content-center align-items-center">
             <p class="text-center">Transaction Functionalities are only available on larger devices.</p>
@@ -19,13 +112,15 @@
                 <div class="w-100 h-100 d-flex flex-column gap-2">
                     <div class="w-100 d-flex flex-shrink-0 justify-content-between align-items-center">
                         <h2>Product List</h2>
+                      <div class="input-wrapper">
                         <input
-                                type="text"
-                                placeholder="Search"
-                                class="transaction-search-input"
+                          type="text"
+                          placeholder="Search"
+                          class="text-input"
                         />
+                      </div>
                     </div>
-                    <div class="w-full d-flex flex-shrink-0 justify-content-between align-items-center gap-2">
+                    <div class="w-full d-flex flex-shrink-0 justify-content-between align-items-center gap-2 z-1 bg-white pb-2">
                         <div class="filter-tile">
                             <h6>All Items</h6>
                             <p class="text-muted">0 Items</p>
@@ -43,35 +138,10 @@
                             <p class="text-muted">0 Items</p>
                         </div>
                     </div>
-                    <div class="w-full flex-grow-1 overflow-y-auto" style="min-height: 0;">
-                        <div class="filter-tile">
-                            <h6>Rubber</h6>
-                            <p class="text-muted">0 Items</p>
-                        </div><div class="filter-tile">
-                            <h6>Rubber</h6>
-                            <p class="text-muted">0 Items</p>
-                        </div><div class="filter-tile">
-                            <h6>Rubber</h6>
-                            <p class="text-muted">0 Items</p>
-                        </div><div class="filter-tile">
-                            <h6>Rubber</h6>
-                            <p class="text-muted">0 Items</p>
-                        </div><div class="filter-tile">
-                            <h6>Rubber</h6>
-                            <p class="text-muted">0 Items</p>
-                        </div><div class="filter-tile">
-                            <h6>Rubber</h6>
-                            <p class="text-muted">0 Items</p>
-                        </div><div class="filter-tile">
-                            <h6>Rubber</h6>
-                            <p class="text-muted">0 Items</p>
-                        </div><div class="filter-tile">
-                            <h6>Rubber</h6>
-                            <p class="text-muted">0 Items</p>
-                        </div><div class="filter-tile">
-                            <h6>Rubber</h6>
-                            <p class="text-muted">0 Items</p>
-                        </div>
+                    <div class="w-full overflow-y-auto row g-3" style="min-height: 0;">
+                        <?php foreach ($dummyProducts as $dummyProduct): ?>
+                            <?php include '../../includes/components/transaction-product-card.php'; ?>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -82,7 +152,7 @@
                     <div class="flex-grow-1 border shadow-sm rounded-2">
 
                     </div>
-                    <button class="checkout-btn">
+                    <button class="btn">
                         Proceed to Payment
                         <i class="fa-solid fa-chevron-right text-white"></i>
                     </button>

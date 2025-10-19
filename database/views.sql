@@ -12,7 +12,7 @@ SELECT np.product_name,
        cm.type,
        pm.category,
        i.current_stock,
-       ps.base_price + (ps.base_price * np.mark_up / 100) AS final_price
+       ROUND(ps.base_price + (ps.base_price * (np.mark_up / 100)), 2) AS final_price
 FROM nixar_products np
 JOIN product_compatibility pc ON np.nixar_product_sku = pc.nixar_product_sku
 JOIN car_models cm ON pc.car_model_id = cm.car_model_id
