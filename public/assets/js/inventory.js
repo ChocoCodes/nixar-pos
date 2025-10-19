@@ -62,6 +62,7 @@ const renderRows = (data) => {
     `).join('\n');
     inventoryTbl.innerHTML = htmlString;
 }
+
 /* ================= INVENTORY PAGINATION FUNCTIONS ================= */
 const fetchInventory = async (page = 1) => {
     try {
@@ -136,6 +137,39 @@ const updatePagination = (totalPages, currentPage) => {
     })
 }
 
+/* ================= FILTER SEARCH FUNCTIONS ================= */
+const searchByFilters = () => {
+    const productCategory = document.querySelector('input[name="category"]:checked')?.value || null;
+    const carModel = document.getElementById('carModel').value.trim() || null;
+    const carType = document.getElementById('carType').value !== "default" ? 
+                    document.getElementById('carType').value : null;
+    const isInStock = document.querySelector('input[name="stockStatus"]:checked')?.value || null;
+    const priceRange = document.getElementById('priceValue').value || null;
+
+    const filterValues = {
+        productCategory, 
+        carModel, 
+        carType, 
+        isInStock, 
+        priceRange
+    }
+
+    const filter = buildFilter({ ...filterValues });
+
+    console.log(filter);
+}
+
+const buildFilter = ({ productCategory, carModel, carType, isInStock, priceRange }) => {
+    const filter = {};
+
+    if(productCategory) filter.category = productCategory;
+    if(carModel) filter.model = carModel;
+    if(carType) filter.type = carType;
+    if(isInStock) filter.stock = isInStock === "inStock";
+    if(priceRange) filter.maxRange = priceRange;
+    
+    return filter;
+} 
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchInventory();
