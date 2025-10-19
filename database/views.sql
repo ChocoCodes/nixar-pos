@@ -11,7 +11,7 @@ SELECT np.product_name,
        cm.year,
        cm.type,
        pm.category,
-       i.stocks,
+       i.current_stock,
        ps.base_price + (ps.base_price * np.mark_up / 100) AS final_price
 FROM nixar_products np
 JOIN product_compatibility pc ON np.nixar_product_sku = pc.nixar_product_sku
