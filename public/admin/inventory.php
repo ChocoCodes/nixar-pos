@@ -4,12 +4,21 @@
   $PageTitle = "Admin - Inventory | NIXAR POS";
   $CssPath = "../assets/css/styles.css";
   $JSPath = "../assets/js/scripts.js";
+
   $CarTypes = [
       'Sedan', 'Hatchback', 'SUV', 'Pick-up Truck', 'Coupe',
       'Convertible', 'Van', 'Minivan', 'Wagon', 'Jeep', 
       'Truck', 'Electric Vehicle'
   ];
   
+  $ProductMaterials = [
+    'laminatedGlass' => 'Laminated Glass', 
+    'temperedGlass' => 'Tempered Glass', 
+    'ceramicFilm' => 'Ceramic Film', 
+    'plasticAcrylicComposite' => 'Plastic/Acrylic Composite', 
+    'rubberMetalComposite' => 'Rubber and Metal Composite'
+  ];
+
   include_once '../../includes/head.php';
   
   checkSession();
@@ -24,27 +33,19 @@
         
         <!-- Product Category -->
         <div class="mb-4">
-          <h6 class="fw-semibold mb-3">Product Category</h6>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="category" id="laminatedGlass">
-            <label class="form-check-label" for="laminatedGlass">Laminated Glass</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="category" id="temperedGlass">
-            <label class="form-check-label" for="temperedGlass">Tempered Glass</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="category" id="tints">
-            <label class="form-check-label" for="tints">Tints</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="category" id="plasticComposite">
-            <label class="form-check-label" for="plasticComposite">Plastic/Acrylic Composite</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="category" id="rubberMetalComposite">
-            <label class="form-check-label" for="rubberMetalComposite">Rubber and Metal Composite</label>
-          </div>
+          <h6 class="fw-semibold mb-3">Product Materials</h6>
+          <?php foreach($ProductMaterials as $Id => $Material): ?>
+            <div class="form-check">
+              <input 
+                class="form-check-input" 
+                type="radio" 
+                name="category" 
+                id="<?= $Id ?>"
+                value="<?= $Material ?>"
+              >
+              <label class="form-check-label" for="<?= $Id ?>"><?= $Material ?></label>
+            </div>
+          <?php endforeach; ?>
         </div>
         
         <!-- Car Model -->
@@ -57,7 +58,7 @@
         <div class="mb-4">
           <label for="carType" class="fw-semibold mb-3">Car Type</label>
           <select id="carType" class="form-select">
-            <option selected disabled>Select Car Type</option>
+            <option selected value="default" disabled>Select Car Type</option>
             <?php foreach($CarTypes as $Type): ?>
               <option value="<?= $Type ?>">
                 <?= $Type; ?>
@@ -70,11 +71,11 @@
         <div class="mb-4">
           <h6 class="fw-semibold mb-3">Stock Availability</h6>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="stock">
+            <input class="form-check-input" type="radio" name="stockStatus" id="stock" value="inStock">
             <label class="form-check-label" for="stock">Stock</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="outOfStock">
+            <input class="form-check-input" type="radio" name="stockStatus" id="outOfStock" value="notInStock">
             <label class="form-check-label" for="outOfStock">Out of Stock</label>
           </div>
         </div>
@@ -108,7 +109,7 @@
           oninput="document.getElementById('priceValue').value = this.value"
         />
         
-        <button class="btn w-100">Apply Filter</button>
+        <button class="btn w-100" onClick="searchByFilters()">Apply Filter</button>
       </div>
       
       <!-- Right Content - Inventory Table -->

@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS product_materials (
 );
 
 CREATE TABLE IF NOT EXISTS nixar_products (
-    nixar_product_sku VARCHAR(30) PRIMARY KEY NOT NULL,
+    nixar_product_sku VARCHAR(50) PRIMARY KEY NOT NULL,
     product_material_id INTEGER,
     product_name VARCHAR(30) NOT NULL,
     product_img_url VARCHAR(255) NOT NULL,

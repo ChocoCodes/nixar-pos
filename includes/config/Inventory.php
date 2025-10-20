@@ -7,7 +7,7 @@
         }
 
         // TODO: fetchInventory
-        public function fetchInventory($Limit = 10, $Offset = 0) {
+        public function fetchInventory($Limit = 10, $Offset = 0): array {
             $Sql = "SELECT * FROM product_inventory_view ORDER BY current_stock DESC, product_name ASC LIMIT ?, ?";
             $Stmt = $this->Conn->prepare($Sql);
             if(!$Stmt) {
