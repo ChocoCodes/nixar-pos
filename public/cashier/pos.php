@@ -102,7 +102,7 @@
             ]
     ];
 ?>
-    <div class="container-fluid pt-2 pb-3 px-4 d-flex flex-column align-items-center gap-2" style="height: 100vh; overflow: hidden;">
+    <div class="container-fluid p-0 m-0 pt-2 pb-3 px-4 d-flex flex-column align-items-center gap-2" style="height: 100vh; overflow: hidden;">
         <?php include_once '../../includes/components/nav.php'; ?>
         <div class="w-100 flex-grow-1 d-sm-none d-flex justify-content-center align-items-center">
             <p class="text-center">Transaction Functionalities are only available on larger devices.</p>

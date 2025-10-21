@@ -11,6 +11,10 @@
       'Truck', 'Electric Vehicle'
   ];
   
+  $ProductCategories = [
+    'Glass', 'Accessories', 'Tints', 'Mirrors'
+  ];
+  
   $ProductMaterials = [
     'laminatedGlass' => 'Laminated Glass', 
     'temperedGlass' => 'Tempered Glass', 
@@ -109,7 +113,10 @@
           oninput="document.getElementById('priceValue').value = this.value"
         />
         
-        <button class="btn w-100" onClick="searchByFilters()">Apply Filter</button>
+        <div class="d-flex flex-column gap-1 mt-2">
+          <button class="btn w-100" onClick="searchByFilters()">Apply Filter</button>
+          <button class="btn w-100" onclick="resetFilters()">Reset Filter</button>
+        </div>
       </div>
       
       <!-- Right Content - Inventory Table -->
@@ -117,7 +124,9 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h2 class="fw-bold">Inventory</h2>
           <?php if(SessionManager::get('role') === 'admin'): ?>
-            <button class="btn">Add Product</button>
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addProductModal">
+              Add Product
+            </button>
           <?php endif; ?>
         </div>
         
@@ -138,6 +147,7 @@
               <th>Category</th>
               <th>Stocks</th>
               <th>Price</th>
+              <th>Actions</th>
             </tr>
             </thead>
             <tbody id="container-inventory-data">
@@ -153,6 +163,8 @@
       </div>
     </div>
   </div>
+  <!-- =============== MODAL =============== -->
+  <?php include_once '../../includes/components/add-product-modal.php'; ?>
 
 <!-- =============== INVENTORY PAGE SPECIFIC SCRIPT =============== -->
 <script src="../assets/js/inventory.js?v=<?=filemtime('../assets/js/inventory.js')?>"></script>
