@@ -7,6 +7,8 @@
 
 USE nixar_autoglass_db;
 
+-- ================================== INVENTORY ==================
+
 CREATE OR REPLACE VIEW product_inventory_view AS
 SELECT np.product_name,
        cm.make,
@@ -24,17 +26,29 @@ JOIN inventory i ON np.nixar_product_sku = i.nixar_product_sku
 JOIN product_suppliers ps ON np.nixar_product_sku = ps.nixar_product_sku
 WHERE np.is_deleted = 0;
 
-CREATE OR REPLACE VIEW inventory_report AS
+-- ============== SALES REPORT METRICS ==================
+CREATE OR REPLACE VIEW sales_report_metrics AS 
 SELECT 
-    SUM(current_stock) AS total_stock,
-    SUM(CASE WHEN current_stock = 0 THEN 1 ELSE 0 END) AS out_of_stock,
-    SUM(CASE WHEN current_stock < min_threshold THEN 1 ELSE 0 END) AS low_stock
-FROM inventory;
+	SUM(total_amount) AS total_revenue, 
+	COUNT(receipt_id) AS total_transactions,
+	AVG(total_amount) AS avg_transaction_value,
+    0 AS profit_performance
+FROM receipts AS r;
 
-CREATE OR REPLACE VIEW sales_report AS
+-- ============== SALES REPORT LIST METRICS ==============
+
+CREATE OR REPLACE VIEW category_performance_list_metrics AS 
+SELECT category, COUNT(category) AS category_performance
+FROM product_materials
+GROUP BY category
+ORDER BY category_performance DESC
+LIMIT 5;
+
+CREATE OR REPLACE VIEW sales_by_time_list_metrics AS 
 SELECT
-    ROUND(SUM(total_amount), 2)AS total_revenue,
-    COUNT(receipt_id) AS total_transactions,
-    ROUND(SUM(total_amount) / COUNT(receipt_id), 2) AS average_order_value
-FROM receipts;
-
+	DATE_FORMAT(created_at, '%l %p') AS hour_label,  
+	COUNT(*) AS total_orders
+FROM receipts
+GROUP BY hour_label, HOUR(created_at)
+ORDER BY HOUR(created_at)
+LIMIT 5;
