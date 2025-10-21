@@ -38,7 +38,9 @@ FROM receipts AS r;
 -- ============== SALES REPORT LIST METRICS ==============
 
 CREATE OR REPLACE VIEW category_performance_list_metrics AS 
-SELECT category, COUNT(category) AS category_performance
+SELECT 
+    category, 
+    COUNT(category) AS category_performance
 FROM product_materials
 GROUP BY category
 ORDER BY category_performance DESC
