@@ -20,3 +20,16 @@ JOIN product_materials pm ON np.product_material_id = pm.product_material_id
 JOIN inventory i ON np.nixar_product_sku = i.nixar_product_sku
 JOIN product_suppliers ps ON np.nixar_product_sku = ps.nixar_product_sku
 WHERE np.is_deleted = 0;
+
+CREATE OR REPLACE VIEW most_sold_item_by_qty AS
+SELECT 
+    np.nixar_product_sku,
+    np.product_name,
+    pm.category,
+    SUM(rd.quantity) AS total_quantity_sold
+FROM receipt_details rd
+JOIN nixar_products np ON rd.nixar_product_sku = np.nixar_product_sku
+JOIN product_materials pm ON np.product_material_id = pm.product_material_id
+GROUP BY np.nixar_product_sku, np.product_name, pm.category
+ORDER BY total_quantity_sold DESC
+LIMIT 5;
