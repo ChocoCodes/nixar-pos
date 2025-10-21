@@ -33,3 +33,16 @@ JOIN product_materials pm ON np.product_material_id = pm.product_material_id
 GROUP BY np.nixar_product_sku, np.product_name, pm.category
 ORDER BY total_quantity_sold DESC
 LIMIT 5;
+
+CREATE OR REPLACE VIEW best_selling_item_by_revenue AS
+SELECT 
+    np.nixar_product_sku, 
+    np.product_name, pm.category, 
+    SUM(rd.quantity) AS total_quantity_sold, 
+    ROUND(SUM(rd.quantity * np.mark_up), 2) AS total_revenue 
+FROM receipt_details rd 
+JOIN nixar_products np ON rd.nixar_product_sku = np.nixar_product_sku 
+JOIN product_materials pm ON np.product_material_id = pm.product_material_id 
+GROUP BY np.nixar_product_sku, np.product_name, pm.category 
+ORDER BY total_revenue DESC 
+LIMIT 5;
