@@ -58,6 +58,10 @@ const renderRows = (data) => {
             <td>${ product.category }</td>
             <td>${ product.current_stock }</td>
             <td>₱${ product.final_price }</td>
+            <td>
+              <button class="btn"><i class="fa-regular fa-pen-to-square"></i></button>
+              <button class="btn"><i class="fa-solid fa-trash"></i></button>
+           </td>
         </tr>
     `).join('\n');
     inventoryTbl.innerHTML = htmlString;
@@ -191,6 +195,14 @@ const buildFilterParams = ({ productMaterial, carModel, carType, isInStock, pric
     params = new URLSearchParams(filter).toString();
     return params;
 } 
+
+const resetFilters = () => {
+  document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+  document.getElementById('carModel').value = '';
+  document.getElementById('carType').value = 'default';
+  document.getElementById('priceValue').value = '';
+  searchProducts();
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchInventory();
