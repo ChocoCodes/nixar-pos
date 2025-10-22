@@ -1,5 +1,5 @@
 /*
-	AUTHORS: Raean Chrissean R. Tamayo
+	AUTHORS: Raean Chrissean R. Tamayo, Jared Ramon A. Elizan
 */
 
 :root {
@@ -294,6 +294,7 @@ a {
     font-size: 18px;
     color: #000;
 }
+
 .report-tabs .btn.active {
     color: #b92b2b;
 }
@@ -409,6 +410,13 @@ a {
 	border-color: #dee2e6;
 }
 
+/* Cards in Reports*/
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
 td .btn {
 	padding: 0.1rem 0.3rem;
 }
@@ -417,6 +425,36 @@ td .btn {
 	background-color: #838383 !important;
 }
 
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.2rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: flex-start; 
+  min-height: 170px; 
+}
 
+.card-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.card-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
+.metric {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
