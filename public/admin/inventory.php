@@ -1,6 +1,5 @@
 <?php
-  include_once __DIR__ . '/../handlers/check_session.php';
-
+  include_once __DIR__ . '/../../includes/config/_init.php';  
   $PageTitle = "Admin - Inventory | NIXAR POS";
   $CssPath = "../assets/css/styles.css";
   $JSPath = "../assets/js/scripts.js";
@@ -9,6 +8,10 @@
       'Sedan', 'Hatchback', 'SUV', 'Pick-up Truck', 'Coupe',
       'Convertible', 'Van', 'Minivan', 'Wagon', 'Jeep', 
       'Truck', 'Electric Vehicle'
+  ];
+  
+  $ProductCategories = [
+    'Glass', 'Accessories', 'Tints', 'Mirrors'
   ];
   
   $ProductMaterials = [
@@ -21,9 +24,9 @@
 
   include_once '../../includes/head.php';
   
-  checkSession();
+  SessionManager::checkSession();
 ?>
-  <div class="container-fluid p-0 m-0 h-100 px-4 pt-1 d-flex flex-column">
+  <div class="container-fluid p-0 m-0 h-100 px-4 pt-1 d-flex flex-column overflow-x-hidden">
     <?php include_once '../../includes/components/nav.php'; ?>
     
     <div class="row container-fluid p-0 m-0 mt-3 flex-fill mb-3 gap-3">
@@ -109,7 +112,10 @@
           oninput="document.getElementById('priceValue').value = this.value"
         />
         
-        <button class="btn w-100" onClick="searchByFilters()">Apply Filter</button>
+        <div class="d-flex flex-column gap-1 mt-2">
+          <button class="btn w-100" onClick="searchByFilters()">Apply Filter</button>
+          <button class="btn w-100" onclick="resetFilters()">Reset Filter</button>
+        </div>
       </div>
       
       <!-- Right Content - Inventory Table -->
@@ -117,7 +123,9 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h2 class="fw-bold">Inventory</h2>
           <?php if(SessionManager::get('role') === 'admin'): ?>
-            <button class="btn">Add Product</button>
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addProductModal">
+              Add Product
+            </button>
           <?php endif; ?>
         </div>
         
@@ -138,6 +146,7 @@
               <th>Category</th>
               <th>Stocks</th>
               <th>Price</th>
+              <th>Actions</th>
             </tr>
             </thead>
             <tbody id="container-inventory-data">
@@ -153,6 +162,8 @@
       </div>
     </div>
   </div>
+  <!-- =============== MODAL =============== -->
+  <?php include_once '../../includes/components/add-product-modal.php'; ?>
 
 <!-- =============== INVENTORY PAGE SPECIFIC SCRIPT =============== -->
 <script src="../assets/js/inventory.js?v=<?=filemtime('../assets/js/inventory.js')?>"></script>

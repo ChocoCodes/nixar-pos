@@ -47,5 +47,14 @@
             self::getInstance();
             return isset($_SESSION[$Key]);
         }
+
+        public static function checkSession() {
+            self::getInstance();
+
+            if (!SessionManager::has('logged_in') || SessionManager::get('logged_in') !== true) {
+                header("Location: /nixar-pos/public/index.php");
+                exit;
+            }
+        }
     }
 ?>
