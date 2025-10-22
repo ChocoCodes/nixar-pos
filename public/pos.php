@@ -122,10 +122,10 @@
                     <div class="flex-grow-1 border shadow-sm rounded-2">
 
                     </div>
-                    <button class="btn">
+                    <a href="/nixar-pos/public/checkout.php" class="btn d-inline-flex align-items-center justify-content-center gap-2">
                         Proceed to Payment
                         <i class="fa-solid fa-chevron-right text-white"></i>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
