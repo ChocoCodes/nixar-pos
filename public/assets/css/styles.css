@@ -91,7 +91,7 @@ a {
 }
 
 .btn:active {
-	background-color: var(--deep-red);
+	background-color: var(--deep-red) !important;
 }
 
 .btn:focus {
@@ -314,6 +314,11 @@ a {
     border-radius: 6px;
 }
 
+/* ===== PRODUCT MODALS ===== */
+.custom-modal-w {
+	width: 30%;
+}
+
 /* ===== BOOTSTRAP OVERRIDES ===== */
 /* Table header styling */
 .table thead.color-primary-red th {
@@ -347,7 +352,7 @@ a {
 
 /* Bootsrap focus styling Gray instead of blue */
 .form-select:focus,
-.form-check-input:focus{
+.form-check-input:focus, .form-control:focus{
 	color: #212529;
 	background-color: #fff;
 	border-color: #6c757d;
@@ -406,6 +411,10 @@ a {
 
 td .btn {
 	padding: 0.1rem 0.3rem;
+}
+
+.btn-secondary {
+	background-color: #838383 !important;
 }
 
 

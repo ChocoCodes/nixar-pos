@@ -5,7 +5,7 @@
   $JSPath = "../assets/js/scripts.js";
 
   $CarTypes = [
-      'Sedan', 'Hatchback', 'SUV', 'Pick-up Truck', 'Coupe',
+      'Sedan', 'Hatchback', 'SUV', 'Pickup', 'Coupe',
       'Convertible', 'Van', 'Minivan', 'Wagon', 'Jeep', 
       'Truck', 'Electric Vehicle'
   ];
@@ -74,11 +74,11 @@
         <div class="mb-4">
           <h6 class="fw-semibold mb-3">Stock Availability</h6>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="stockStatus" id="stock" value="inStock">
+            <input class="form-check-input" type="checkbox" name="stockStatus" id="stock" value="inStock">
             <label class="form-check-label" for="stock">Stock</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="stockStatus" id="outOfStock" value="notInStock">
+            <input class="form-check-input" type="checkbox" name="stockStatus" id="outOfStock" value="notInStock">
             <label class="form-check-label" for="outOfStock">Out of Stock</label>
           </div>
         </div>
@@ -162,8 +162,10 @@
       </div>
     </div>
   </div>
-  <!-- =============== MODAL =============== -->
+  <!-- =============== MODALS =============== -->
   <?php include_once '../../includes/components/add-product-modal.php'; ?>
+  <?php include_once '../../includes/components/edit-product-modal.php'; ?>
+  <?php include_once '../../includes/components/delete-product-modal.php'; ?>
 
 <!-- =============== INVENTORY PAGE SPECIFIC SCRIPT =============== -->
 <script src="../assets/js/inventory.js?v=<?=filemtime('../assets/js/inventory.js')?>"></script>
