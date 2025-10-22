@@ -15,6 +15,7 @@ SELECT np.product_name,
        cm.year,
        cm.type,
        pm.category,
+       pm.material_name,
        i.current_stock,
        ROUND(ps.base_price + (ps.base_price * (np.mark_up / 100)), 2) AS final_price
 FROM nixar_products np

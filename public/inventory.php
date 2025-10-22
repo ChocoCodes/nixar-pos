@@ -1,8 +1,8 @@
 <?php
-  include_once __DIR__ . '/../../includes/config/_init.php';  
+  include_once __DIR__ . '/../includes/config/_init.php';  
   $PageTitle = "Admin - Inventory | NIXAR POS";
-  $CssPath = "../assets/css/styles.css";
-  $JSPath = "../assets/js/scripts.js";
+  $CssPath = "assets/css/styles.css";
+  $JSPath = "assets/js/scripts.js";
 
   $CarTypes = [
       'Sedan', 'Hatchback', 'SUV', 'Pickup', 'Coupe',
@@ -22,12 +22,12 @@
     'rubberMetalComposite' => 'Rubber and Metal Composite'
   ];
 
-  include_once '../../includes/head.php';
+  include_once '../includes/head.php';
   
   SessionManager::checkSession();
 ?>
-  <div class="container-fluid p-0 m-0 h-100 px-4 pt-1 d-flex flex-column overflow-x-hidden">
-    <?php include_once '../../includes/components/nav.php'; ?>
+  <div class="container-fluid p-0 m-0 h-100 px-4 py-3  d-flex flex-column overflow-x-hidden">
+    <?php include_once '../includes/components/nav.php'; ?>
     
     <div class="row container-fluid p-0 m-0 mt-3 flex-fill mb-3 gap-3">
       <!-- Left Sidebar - Filters -->
@@ -163,10 +163,10 @@
     </div>
   </div>
   <!-- =============== MODALS =============== -->
-  <?php include_once '../../includes/components/add-product-modal.php'; ?>
-  <?php include_once '../../includes/components/edit-product-modal.php'; ?>
-  <?php include_once '../../includes/components/delete-product-modal.php'; ?>
+  <?php include_once '../includes/components/add-product-modal.php'; ?>
+  <?php include_once '../includes/components/edit-product-modal.php'; ?>
+  <?php include_once '../includes/components/delete-product-modal.php'; ?>
 
 <!-- =============== INVENTORY PAGE SPECIFIC SCRIPT =============== -->
-<script src="../assets/js/inventory.js?v=<?=filemtime('../assets/js/inventory.js')?>"></script>
-<?php include_once '../../includes/footer.php'; ?>
+<script src="assets/js/inventory.js?v=<?=filemtime('assets/js/inventory.js')?>"></script>
+<?php include_once '../includes/footer.php'; ?>
