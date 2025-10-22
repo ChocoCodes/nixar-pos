@@ -1,65 +1,84 @@
 <?php 
   include_once __DIR__ . '/../handlers/check_session.php';
   
-  $PageTitle = "Dashboard | NIXAR POS";
+  $PageTitle = "Admin |Reports | NIXAR POS";
   $CssPath = "../assets/css/styles.css";
   $JSPath = "../assets/js/scripts.js";
 
   include_once '../../includes/head.php'; 
-  include_once '../../includes/components/nav.php';
-
-  require_once __DIR__ . '/../../includes/config/DatabaseConnection.php'; 
+  checkSession();
 ?>
 
-<div class="report-container">
-  <form method="POST" action="">
-    <div class="d-flex align-items-center gap-3">
-      <div class="date-input">
-        <input type="date" name="start_date" class="form-control" value="<?php echo $start_date; ?>">
-        <span>to</span>
-        <input type="date" name="end_date" class="form-control" value="<?php echo $end_date; ?>">
+  <div class="container-fluid p-0 m-0 h-100 px-4 pt-1 d-flex flex-column">
+    <?php include_once '../../includes/components/nav.php'; ?>
+    
+    <div class="row container-fluid p-0 m-0 mt-3 flex-fill mb-3 gap-3">
+      <div class="col-12 bg-light p-4 rounded-3">
+        <div class="report-dashboard">
+
+          <section class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="fw-bold mb-0">Reports</h2>
+              <div class="d-flex align-items-center gap-2">
+                <input type="date" class="form-control" value="2025-01-01">
+                <span>to</span>
+                <input type="date" class="form-control" value="2025-02-02">
+                <button class="btn w-100">Generate Report</button>
+              </div>
+            </div>
+            <div class="card-grid">
+              <div class="card text-left">
+                <div class="card-image"> <img src="../assets/svg/nixar-logo-red.svg" class="card-img" alt="Placeholder Image"></div>
+                <h6>Total Revenue</h6>
+                <p class="metric">₱99,999</p>
+              </div>
+              <div class="card text-left">
+                <div class="card-image"> <img src="../assets/svg/nixar-logo-red.svg" class="card-img" alt="Placeholder Image"></div>
+                <h6>Number of Transactions</h6>
+                <p class="metric">67</p>
+              </div>
+              <div class="card text-left">
+                <div class="card-image"> <img src="../assets/svg/nixar-logo-red.svg" class="card-img" alt="Placeholder Image"></div>
+                <h6>Average Transaction Value</h6>
+                <p class="metric">₱200</p>
+              </div>
+              <div class="card text-left">
+                <div class="card-image"> <img src="../assets/svg/nixar-logo-red.svg" class="card-img" alt="Placeholder Image"></div>
+                <h6>Profit Performance (vs. last month)</h6>
+                <p class="metric">30% ↑</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="fw-bold">Inventory</h2>
+            <div class="card-grid">
+              <div class="card text-left">
+                <div class="card-image"> <img src="../assets/svg/nixar-logo-red.svg" class="card-img" alt="Placeholder Image"></div>
+                <h6>Most Sold Item</h6>
+                <p class="metric">Windshield Glass</p>
+              </div>
+              <div class="card text-left">
+                <div class="card-image"> <img src="../assets/svg/nixar-logo-red.svg" class="card-img" alt="Placeholder Image"></div>
+                <h6>Best-selling Item (by revenue)</h6>
+                <p class="metric">Wiper</p>
+              </div>
+              <div class="card text-left">
+                <div class="card-image"> <img src="../assets/svg/nixar-logo-red.svg" class="card-img" alt="Placeholder Image"></div>
+                <h6>Best-selling Category</h6>
+                <p class="metric">Glass</p>
+              </div>
+              <div class="card text-left">
+                <div class="card-image"> <img src="../assets/svg/nixar-logo-red.svg" class="card-img" alt="Placeholder Image"></div>
+                <h6>Low Stock Items</h6>
+                <p class="metric">9</p>
+              </div>
+            </div>
+          </section>
+
+        </div>
       </div>
-      <button type="submit" name="generate" class="generate-btn">Generate Report</button>
     </div>
-  </form>
-
-  <div class="report-tabs mt-4">
-    <button type="button" class="btn" id="salesBtn">📄 Sales Report</button>
-    <button type="button" class="btn active" id="inventoryBtn">📦 Inventory Report</button>
-    <button type="button" class="btn" id="financialBtn">💲 Financial Report</button>
   </div>
 
-  <div class="report-display" id="reportArea">
-    <?php if (isset($_POST['generate'])): ?>
-      <h5>Inventory Report (<?php echo htmlspecialchars($start_date); ?> to <?php echo htmlspecialchars($end_date); ?>)</h5>
-      <?php if (!empty($inventory_data)): ?>
-        <table class="table table-striped mt-3">
-          <thead class="table-danger">
-            <tr>
-              <th>Current Stock</th>
-              <th>Min Threshold</th>
-              <th>Last Updated</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($inventory_data as $row): ?>
-              <tr>
-                <td><?php echo htmlspecialchars($row['current_stock']); ?></td>
-                <td><?php echo htmlspecialchars($row['min_threshold']); ?></td>
-                <td><?php echo htmlspecialchars($row['updated_at']); ?></td>
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-      <?php else: ?>
-        <p class="mt-3 text-muted">No inventory records found for this date range.</p>
-      <?php endif; ?>
-    <?php else: ?>
-      <p class="text-muted">Select a date range and click <b>Generate Report</b> to view inventory data.</p>
-    <?php endif; ?>
-  </div>
-</div>
-<!-- =============== REPORT PAGE SPECIFIC SCRIPT =============== -->
-<script src="../assets/js/reports.js?v=<?=filemtime('../assets/js/reports.js')?>"></script>
 <?php include_once '../../includes/footer.php'; ?>
-
