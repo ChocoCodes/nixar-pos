@@ -1,5 +1,5 @@
 <?php
-    include_once __DIR__ . '/../handlers/check_session.php';
+    include_once __DIR__ . '/../../includes/config/_init.php';  
 
     $PageTitle = "Transaction | NIXAR POS";
     $CssPath = "../assets/css/styles.css";
@@ -7,7 +7,7 @@
 
     include_once '../../includes/head.php';
 
-    checkSession();
+    SessionManager::checkSession();
 
     $dummyProducts = [
             [

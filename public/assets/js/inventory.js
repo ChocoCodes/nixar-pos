@@ -52,7 +52,7 @@ const renderRows = (data) => {
     `
         <tr>
             <td>${ product.product_name }</td>
-            <td>${ product.make } ${ product.model }</td>
+            <td>${ product.car_make_model }</td>
             <td>${ product.year }</td>
             <td>${ product.type }</td>
             <td>${ product.category }</td>
@@ -142,8 +142,8 @@ const updatePagination = (totalPages, currentPage) => {
 }
 
 /* ================= FILTER SEARCH FUNCTIONS ================= */
-const searchByFilters = () => {
-    const productCategory = document.querySelector('input[name="category"]:checked')?.value || null;
+const searchByFilters = async (page = 1) => {
+    const productMaterial = document.querySelector('input[name="category"]:checked')?.value || null;
     const carModel = document.getElementById('carModel').value.trim() || null;
     const carType = document.getElementById('carType').value !== "default" ? 
                     document.getElementById('carType').value : null;
@@ -151,28 +151,50 @@ const searchByFilters = () => {
     const priceRange = document.getElementById('priceValue').value || null;
 
     const filterValues = {
-        productCategory, 
+        productMaterial, 
         carModel, 
         carType, 
         isInStock, 
         priceRange
     }
 
-    const filter = buildFilter({ ...filterValues });
-    console.log("Active Filters ", filter);
+    const params = buildFilterParams({ ...filterValues });
+    console.log(params)
+    
+    try {
+        const response = await fetch(`../handlers/filter_products.php?${ params }&limit=${ LIMIT }&page=${ page }`);
+        const filtered = await response.json();
+        console.log('Filtered response:', filtered);
+        console.log(`SQL: ${ filtered.sql } Params: ${ filtered.params } Types: ${ filtered.types }`);
+        if(!filtered.inventory || filtered.inventory.length == 0) {
+            inventoryTbl.innerHTML = `
+                <tr><td colspan="7" style="text-align:center;">No data found.</td></tr>
+            `;
+            return;
+        }
+
+        renderRows(filtered.inventory);
+        updatePagination(filtered.totalPages, filtered.currentPage);
+    } catch(err) {
+        console.error(err);
+        inventoryTbl.innerHTML = `
+            <tr><td colspan="7" style="text-align:center;">${ err.message }</td></tr>
+        `;
+    }
 }
 
-const buildFilter = ({ productCategory, carModel, carType, isInStock, priceRange }) => {
+const buildFilterParams = ({ productMaterial, carModel, carType, isInStock, priceRange }) => {
     const filter = {};
 
-    if(productCategory) filter.category = productCategory;
+    if(productMaterial) filter.material = productMaterial;
     if(carModel) filter.model = carModel;
     if(carType) filter.type = carType;
-    if(isInStock) filter.stock = isInStock === "inStock";
-    if(priceRange) filter.maxRange = priceRange;
+    if(isInStock) filter.stock = isInStock === "inStock" ? 1 : 0;
+    if(priceRange) filter.max_range = priceRange;
     
-    return filter;
-}
+    params = new URLSearchParams(filter).toString();
+    return params;
+} 
 
 const resetFilters = () => {
   document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
