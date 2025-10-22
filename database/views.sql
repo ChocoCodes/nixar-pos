@@ -1,13 +1,17 @@
--- Author: John Roland L. Octavio, Toby Javelona, Josh Dane Labistre
--- `views.sql` is intended to simplify PHP queries by creating database VIEWS
--- that perform multiple table JOINs when retrieving data in different tables.
+/*
+    Author: John Roland L. Octavio, Josh Dane M. Labistre, Ignatius Warren Benjamin D. Javelona
+
+    `views.sql` is intended to simplify PHP queries by creating database VIEWS 
+    that perform multiple table JOINs when retrieving data in different tables.
+*/
 
 USE nixar_autoglass_db;
 
+-- ================================== INVENTORY ==================
+
 CREATE OR REPLACE VIEW product_inventory_view AS
 SELECT np.product_name,
-       cm.make,
-       cm.model,
+       CONCAT(cm.make, ' ', cm.model) AS car_make_model,
        cm.year,
        cm.type,
        pm.category,

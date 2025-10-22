@@ -1,4 +1,4 @@
-<nav class="navbar w-100 d-flex justify-content-between align-items-center rounded-4 px-4">
+<nav class="navbar w-100 d-flex justify-content-between align-items-center rounded-3 px-4">
     <img
             src="../assets/svg/nixar-logo-white.svg"
             alt="nixar-logo-white"
@@ -29,8 +29,8 @@
             onclick="toggleMenu()"
     ></i>
     <div class="mobile-menu w-100 d-block d-md-none">
-        <div class="mobile-nav-links w-100 d-none justify-content-center align-items-center bg-white rounded-3 mt-2">
-            <ul class="w-100 d-flex flex-column align-items-center justify-content-evenly m-0 list-unstyled p-1">
+        <div class="mobile-nav-links w-100 d-none justify-content-center align-items-center color-deep-red rounded-3 mt-2">
+            <ul class="w-100 d-flex flex-column align-items-center text-white justify-content-evenly m-0 list-unstyled p-1">
                 <li class="mobile-nav-link">Inventory</li>
                 <li class="mobile-nav-link">Transactions</li>
                 <li class="nav-link py-2 px-4 rounded-pill">

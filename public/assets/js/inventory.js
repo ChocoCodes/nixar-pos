@@ -7,6 +7,14 @@ let queryString = '';
 const LIMIT = 10;
 let currentPage = 1;
 
+// Edit Modal Utils
+const categoryMap = {
+  'Glass': '0',
+  'Accessories': '1',
+  'Tints': '2',
+  'Mirrors': '3'
+};
+
 /* ================= INVENTORY SEARCH FUNCTIONS ================= */
 searchBox.addEventListener('input', () => {
     clearTimeout(searchTimeout)
@@ -52,16 +60,111 @@ const renderRows = (data) => {
     `
         <tr>
             <td>${ product.product_name }</td>
-            <td>${ product.make } ${ product.model }</td>
+            <td>${ product.car_make_model }</td>
             <td>${ product.year }</td>
             <td>${ product.type }</td>
             <td>${ product.category }</td>
             <td>${ product.current_stock }</td>
             <td>₱${ product.final_price }</td>
+            <td>
+              <button 
+                type="button" 
+                class="btn btn-edit" 
+                data-bs-toggle="modal" 
+                data-bs-target="#editProductModal"
+                data-id="${ product.id }"
+                data-name="${ product.product_name }"
+                data-model="${ product.model }"
+                data-year="${ product.year }"
+                data-material="${ product.material }"
+                data-type="${ product.type }"
+                data-category="${ product.category }"
+                data-stock="${ product.current_stock }"
+                data-price="${ product.final_price }"
+                data-image="${ product.image_path }"
+              >
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-delete"
+                data-bs-toggle="modal" 
+                data-bs-target="#deleteProductModal"
+                data-id="${ product.id }"
+                data-name="${ product.product_name }"
+              >
+                <i class="fa-solid fa-trash"></i>
+              </button>
+
+           </td>
         </tr>
     `).join('\n');
     inventoryTbl.innerHTML = htmlString;
+
+    // Attach click listeners for edit buttons
+    const editButtons = document.querySelectorAll('.btn-edit');
+    editButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        fillEditModal(btn.dataset);
+      });
+    });
+
+    // Attach click listeners for delete buttons
+    const deleteButtons = document.querySelectorAll('.btn-delete');
+    deleteButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        fillDeleteModal(btn.dataset);
+      });
+    });
+
 }
+
+// Fill edit modal with product data
+const fillEditModal = (data) => {
+  // Fill text fields
+  document.getElementById('productId').value = data.id;
+  document.getElementById('editProductName').value = data.name;
+  document.getElementById('editCarModel').value = data.model;
+  document.getElementById('editYear').value = data.year;
+  document.getElementById('editStocks').value = data.stock;
+  document.getElementById('editPrice').value = data.price;
+
+  // Select dropdown values
+  document.getElementById('editProductMaterial').value = data.material;
+  console.log(data.material);
+  document.getElementById('editCarTypes').value = data.type;
+  console.log(data.type);
+  document.getElementById('editProductCategory').value = categoryMap[data.category] || '0';;
+  console.log(data.category);
+
+  const preview = document.getElementById('editImagePreview');
+  if (data.image) {
+    preview.src = `../uploads/${data.image}`; // TODO: Update with actual image path
+    preview.style.display = 'block';
+  } else {
+    preview.src = '#';
+    preview.style.display = 'none';
+  }
+};
+
+const fillDeleteModal = (data) => {
+  const productNameSpan = document.getElementById('productToDelete');
+  const deleteForm = document.getElementById('deleteProductForm');
+
+  // Show product name in modal
+  productNameSpan.textContent = data.name;
+
+  // Store product ID in a hidden input (so it can be submitted)
+  let hiddenInput = deleteForm.querySelector('input[name="productId"]');
+  if (!hiddenInput) {
+    hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = 'productId';
+    deleteForm.appendChild(hiddenInput);
+  }
+  hiddenInput.value = data.id;
+};
+
 
 /* ================= INVENTORY PAGINATION FUNCTIONS ================= */
 const fetchInventory = async (page = 1) => {
@@ -138,8 +241,8 @@ const updatePagination = (totalPages, currentPage) => {
 }
 
 /* ================= FILTER SEARCH FUNCTIONS ================= */
-const searchByFilters = () => {
-    const productCategory = document.querySelector('input[name="category"]:checked')?.value || null;
+const searchByFilters = async (page = 1) => {
+    const productMaterial = document.querySelector('input[name="category"]:checked')?.value || null;
     const carModel = document.getElementById('carModel').value.trim() || null;
     const carType = document.getElementById('carType').value !== "default" ? 
                     document.getElementById('carType').value : null;
@@ -147,30 +250,78 @@ const searchByFilters = () => {
     const priceRange = document.getElementById('priceValue').value || null;
 
     const filterValues = {
-        productCategory, 
+        productMaterial, 
         carModel, 
         carType, 
         isInStock, 
         priceRange
     }
 
-    const filter = buildFilter({ ...filterValues });
+    const params = buildFilterParams({ ...filterValues });
+    console.log(params)
+    
+    try {
+        const response = await fetch(`../handlers/filter_products.php?${ params }&limit=${ LIMIT }&page=${ page }`);
+        const filtered = await response.json();
+        console.log('Filtered response:', filtered);
+        console.log(`SQL: ${ filtered.sql } Params: ${ filtered.params } Types: ${ filtered.types }`);
+        if(!filtered.inventory || filtered.inventory.length == 0) {
+            inventoryTbl.innerHTML = `
+                <tr><td colspan="7" style="text-align:center;">No data found.</td></tr>
+            `;
+            return;
+        }
 
-    console.log(filter);
+        renderRows(filtered.inventory);
+        updatePagination(filtered.totalPages, filtered.currentPage);
+    } catch(err) {
+        console.error(err);
+        inventoryTbl.innerHTML = `
+            <tr><td colspan="7" style="text-align:center;">${ err.message }</td></tr>
+        `;
+    }
 }
 
-const buildFilter = ({ productCategory, carModel, carType, isInStock, priceRange }) => {
+const buildFilterParams = ({ productMaterial, carModel, carType, isInStock, priceRange }) => {
     const filter = {};
 
-    if(productCategory) filter.category = productCategory;
+    if(productMaterial) filter.material = productMaterial;
     if(carModel) filter.model = carModel;
     if(carType) filter.type = carType;
-    if(isInStock) filter.stock = isInStock === "inStock";
-    if(priceRange) filter.maxRange = priceRange;
+    if(isInStock) filter.stock = isInStock === "inStock" ? 1 : 0;
+    if(priceRange) filter.max_range = priceRange;
     
-    return filter;
+    params = new URLSearchParams(filter).toString();
+    return params;
 } 
+
+const resetFilters = () => {
+  document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+  document.getElementById('carModel').value = '';
+  document.getElementById('carType').value = 'default';
+  document.getElementById('priceValue').value = '';
+  searchProducts();
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchInventory();
 });
+
+// Image preview for product forms
+document.getElementById('productImage').addEventListener('change', function(event) {
+  const file = event.target.files[0];
+  const preview = document.getElementById('imagePreview');
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    preview.src = '#';
+    preview.style.display = 'none';
+  }
+});
+

@@ -1,8 +1,7 @@
 <?php 
     include_once __DIR__ . '/../../includes/config/_init.php';  
-    include_once 'check_session.php';
 
-    checkSession();
+    SessionManager::checkSession();
 
     $Conn = DatabaseConnection::getInstance()->getConnection();
 
