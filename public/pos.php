@@ -9,68 +9,11 @@
 
     SessionManager::checkSession();
 
-    $dummyProducts = [
-            [
-                    'name' => 'Glass Cleaner',
-                    'price' => 120,
-                    'pic' => 'assets/img/sample.png',
-                    'category' => 'Car Care'
-            ],
-            [
-                    'name' => 'Glass Cleaner',
-                    'price' => 120,
-                    'pic' => 'assets/img/sample.png',
-                    'category' => 'Car Care'
-            ],
-            [
-                    'name' => 'Glass Cleaner',
-                    'price' => 120,
-                    'pic' => 'assets/img/sample.png',
-                    'category' => 'Car Care'
-            ],
-            [
-                    'name' => 'Glass Cleaner',
-                    'price' => 120,
-                    'pic' => 'assets/img/sample.png',
-                    'category' => 'Car Care'
-            ],
-            [
-                    'name' => 'Glass Cleaner',
-                    'price' => 120,
-                    'pic' => 'assets/img/sample.png',
-                    'category' => 'Car Care'
-            ],
-            [
-                    'name' => 'Glass Cleaner',
-                    'price' => 120,
-                    'pic' => 'assets/img/sample.png',
-                    'category' => 'Car Care'
-            ],
-            [
-                    'name' => 'Glass Cleaner',
-                    'price' => 120,
-                    'pic' => 'assets/img/sample.png',
-                    'category' => 'Car Care'
-            ],
-            [
-                    'name' => 'Glass Cleaner',
-                    'price' => 120,
-                    'pic' => 'assets/img/sample.png',
-                    'category' => 'Car Care'
-            ],
-            [
-                    'name' => 'Glass Cleaner',
-                    'price' => 120,
-                    'pic' => 'assets/img/sample.png',
-                    'category' => 'Car Care'
-            ],
-            [
-                    'name' => 'Glass Cleaner',
-                    'price' => 120,
-                    'pic' => 'assets/img/sample.png',
-                    'category' => 'Car Care'
-            ],
-    ];
+    $Conn = DatabaseConnection::getInstance()->getConnection();
+    $NixarProduct = new NixarProduct($Conn);
+
+    $Products = $NixarProduct->fetchPaginated();
+    $CategoryCounts = $NixarProduct->countPerCategory();
 ?>
     <div class="container-fluid p-0 m-0 py-3 px-4 d-flex flex-column align-items-center gap-2" style="height: 100vh; overflow: hidden;">
         <?php include_once '../includes/components/nav.php'; ?>
@@ -93,23 +36,23 @@
                     <div class="w-full d-flex flex-shrink-0 justify-content-between align-items-center gap-2 z-1 bg-white pb-2">
                         <div class="filter-tile">
                             <h6>All Items</h6>
-                            <p class="text-muted">0 Items</p>
+                            <p class="text-muted"><?= $CategoryCounts['all_products'] ?? 0 ?> Items</p>
                         </div>
                         <div class="filter-tile">
                             <h6>Glass</h6>
-                            <p class="text-muted">0 Items</p>
+                            <p class="text-muted"><?= $CategoryCounts['glass'] ?? 0 ?> Items</p>
                         </div>
                         <div class="filter-tile">
                             <h6>Tints</h6>
-                            <p class="text-muted">0 Items</p>
+                            <p class="text-muted"><?= $CategoryCounts['tints'] ?? 0 ?> Items</p>
                         </div>
                         <div class="filter-tile">
                             <h6>Rubber</h6>
-                            <p class="text-muted">0 Items</p>
+                            <p class="text-muted"><?= $CategoryCounts['rubber'] ?? 0 ?> Items</p>
                         </div>
                     </div>
-                    <div class="w-full overflow-y-auto row g-3" style="min-height: 0;">
-                        <?php foreach ($dummyProducts as $dummyProduct): ?>
+                    <div class="w-full overflow-y-auto row g-3 overflow-x-hidden" style="min-height: 0;">
+                        <?php foreach ($Products as $Product): ?>
                             <?php include '../includes/components/transaction-product-card.php'; ?>
                         <?php endforeach; ?>
                     </div>
