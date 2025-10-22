@@ -1,6 +1,6 @@
 <nav class="navbar w-100 d-flex justify-content-between align-items-center rounded-3 px-4">
     <img
-            src="../assets/svg/nixar-logo-white.svg"
+            src="assets/svg/nixar-logo-white.svg"
             alt="nixar-logo-white"
             width="150px"
     />
@@ -8,18 +8,18 @@
     <!--desktop menu-->
   <ul class="nav-links d-none d-md-flex gap-2 list-unstyled justify-content-evenly align-items-center m-0 p-1 rounded-pill">
     <li class="nav-link py-2 px-4 rounded-pill">
-      <a href="../../public/admin/inventory.php">Inventory</a>
+      <a href="../public/inventory.php">Inventory</a>
     </li>
     <li class="nav-link py-2 px-4 rounded-pill">
-      <a href="../../public/admin/transaction.php">Transaction</a>
+      <a href="../public/pos.php">Transaction</a>
     </li>
     <?php if(SessionManager::get('role') === 'admin'): ?>
       <li class="nav-link py-2 px-4 rounded-pill">
-        <a href="../../public/admin/reports.php">Reports</a>
+        <a href="../public/reports.php">Reports</a>
       </li>
     <?php endif; ?>
   </ul>
-    <a class="logout-btn d-none d-md-block" href="../../public/handlers/handle_logout.php">
+    <a class="logout-btn d-none d-md-block" href="../public/handlers/handle_logout.php">
         Log Out
     </a>
 

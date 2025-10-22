@@ -62,6 +62,7 @@
     $Rows = $Result->fetch_all(MYSQLI_ASSOC);
     $Stmt->close();
 
+    header("Content-Type: application/json");
     echo json_encode([
         'sql' => $BaseSql,
         'params' => $Params,

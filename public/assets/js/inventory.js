@@ -33,7 +33,7 @@ const searchProducts = (page = 1) => {
     queryString = query;
     currentPage = page;
 
-    fetch(`../handlers/search_products.php?q=${ encodeURIComponent(query) }&limit=${ LIMIT }&page=${ page }`)
+    fetch(`handlers/search_products.php?q=${ encodeURIComponent(query) }&limit=${ LIMIT }&page=${ page }`)
         .then(res => res.json())
         .then(data => {
             const rows = data.inventory;
@@ -169,7 +169,7 @@ const fillDeleteModal = (data) => {
 /* ================= INVENTORY PAGINATION FUNCTIONS ================= */
 const fetchInventory = async (page = 1) => {
     try {
-        const response = await fetch(`../handlers/fetch_inventory.php?limit=${ LIMIT }&page=${ page }`)
+        const response = await fetch(`handlers/fetch_inventory.php?limit=${ LIMIT }&page=${ page }`)
         const data = await response.json();
         
         if(data.length == 0) {
@@ -261,7 +261,7 @@ const searchByFilters = async (page = 1) => {
     console.log(params)
     
     try {
-        const response = await fetch(`../handlers/filter_products.php?${ params }&limit=${ LIMIT }&page=${ page }`);
+        const response = await fetch(`handlers/filter_products.php?${ params }&limit=${ LIMIT }&page=${ page }`);
         const filtered = await response.json();
         console.log('Filtered response:', filtered);
         console.log(`SQL: ${ filtered.sql } Params: ${ filtered.params } Types: ${ filtered.types }`);
