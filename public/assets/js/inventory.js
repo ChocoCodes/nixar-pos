@@ -178,7 +178,7 @@ const fetchInventory = async (page = 1) => {
             `;
             return;
         }
-
+        console.log(data);
         renderRows(data.inventory);
         updatePagination(data.totalPages, data.currentPage)
     } catch (err) {

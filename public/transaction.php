@@ -51,7 +51,7 @@
                             <p class="text-muted"><?= $CategoryCounts['rubber'] ?? 0 ?> Items</p>
                         </div>
                     </div>
-                    <div class="w-full overflow-y-auto row g-3 overflow-x-hidden" style="min-height: 0;">
+                    <div id="product-containers" class="w-full overflow-y-auto row g-3 overflow-x-hidden" style="min-height: 0;"  data-products="<?= json_encode($Products ) ?>">
                         <?php foreach ($Products as $Product): ?>
                             <?php include '../includes/components/transaction-product-card.php'; ?>
                         <?php endforeach; ?>
