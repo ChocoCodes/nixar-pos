@@ -1,8 +1,6 @@
 <?php 
     include_once __DIR__ . '/../../includes/config/_init.php';
 
-    $Conn = DatabaseConnection::getInstance()->getConnection();
-
     if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         try {
             $Sanitized = InputValidator::sanitizeArray($_POST);

@@ -3,10 +3,6 @@
     header("Content-Type: application/json");
     include_once __DIR__ . '/../../includes/config/_init.php';  
 
-    SessionManager::checkSession();
-
-    $Conn = DatabaseConnection::getInstance()->getConnection();
-
     $Query = isset($_GET['q']) ? InputValidator::sanitizeData($_GET['q']) : '';
     if($Query === '') {
         echo json_encode([]);
@@ -24,11 +20,17 @@
         $Count = $Inventory->countBySearchKeyword($Query);
         $TotalPages = ceil($Count / $Limit);
     
+        // Append base path for js to display
+        foreach($Rows as &$Product) {
+            $Product['product_img_url'] = $BASE_IMAGE_URL . $Product['product_img_url'];
+        }
+
         $Response = [
             'inventory' => $Rows,
             'totalPages' => $TotalPages,
             'currentPage' => $Page
         ];
+
         echo json_encode($Response);
     } catch (Exception $E) {
         error_log("Error: " . $E->getMessage());

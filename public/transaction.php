@@ -30,31 +30,32 @@
                           type="text"
                           placeholder="Search"
                           class="text-input"
+                          id="search-bar"
                         />
+                        <i class="fa-solid fa-magnifying-glass" id="icon-magnifying"></i>
                       </div>
                     </div>
                     <div class="w-full d-flex flex-shrink-0 justify-content-between align-items-center gap-2 z-1 bg-white pb-2">
-                        <div class="filter-tile">
+                        <div class="filter-tile" data-category="all">
                             <h6>All Items</h6>
                             <p class="text-muted"><?= $CategoryCounts['all_products'] ?? 0 ?> Items</p>
                         </div>
-                        <div class="filter-tile">
+                        <div class="filter-tile" data-category="Glass">
                             <h6>Glass</h6>
                             <p class="text-muted"><?= $CategoryCounts['glass'] ?? 0 ?> Items</p>
                         </div>
-                        <div class="filter-tile">
+                        <div class="filter-tile" data-category="Tints">
                             <h6>Tints</h6>
                             <p class="text-muted"><?= $CategoryCounts['tints'] ?? 0 ?> Items</p>
                         </div>
-                        <div class="filter-tile">
+                        <div class="filter-tile" data-category="Rubber">
                             <h6>Rubber</h6>
                             <p class="text-muted"><?= $CategoryCounts['rubber'] ?? 0 ?> Items</p>
                         </div>
+                        <input type="hidden" id="category" name="category" value="all">
                     </div>
-                    <div id="product-containers" class="w-full overflow-y-auto row g-3 overflow-x-hidden" style="min-height: 0;"  data-products="<?= json_encode($Products ) ?>">
-                        <?php foreach ($Products as $Product): ?>
-                            <?php include '../includes/components/transaction-product-card.php'; ?>
-                        <?php endforeach; ?>
+                    <!-- =============== PRODUCT CONTAINER =============== -->
+                    <div id="product-containers" class="w-full overflow-y-auto row g-3 overflow-x-hidden" style="min-height: 0;">
                     </div>
                 </div>
             </div>
@@ -73,4 +74,6 @@
             </div>
         </div>
     </div>
+    <!-- =============== TRANSACTION PAGE SPECIFIC SCRIPT =============== -->
+    <script src="assets/js/transaction.js?v=<?=filemtime('assets/js/transaction.js')?>"></script>
 <?php include_once '../includes/footer.php'; ?>

@@ -55,12 +55,14 @@
     
                 $Stmt->close();
     
-                $UpdatedProducts = $this->fetchPaginated();
-                return $UpdatedProducts;
+                return [
+                    'success' => true,
+                    'message' => "Product with SKU { $ProductSku } successfully deleted."
+                ];
             } catch (Exception $E) {
                 return [
-                    "status" => "error",
-                    "message" => $E->getMessage()
+                    'success' => false,
+                    'message' => "Error: ". $E->getMessage()
                 ];
             }
         }

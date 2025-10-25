@@ -23,7 +23,7 @@ searchBox.addEventListener('input', () => {
 
 const searchProducts = (page = 1) => {
     const query = searchBox.value.trim();
-    if (query === "") {
+    if (!query || query === "") {
         inventoryTbl.innerHTML = "";
         pagination.innerHTML = "";
         fetchInventory();
@@ -172,7 +172,7 @@ const fetchInventory = async (page = 1) => {
         const response = await fetch(`handlers/fetch_inventory.php?limit=${ LIMIT }&page=${ page }`)
         const data = await response.json();
         
-        if(data.length == 0) {
+        if(data.inventory.length === 0) {
             inventoryTbl.innerHTML = `
                 <tr><td colspan="7" style="text-align:center;">No data found.</td></tr>
             `;

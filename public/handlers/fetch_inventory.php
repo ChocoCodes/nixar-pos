@@ -1,5 +1,5 @@
 <?php 
-    // header("Content-Type: application/json");
+    header("Content-Type: application/json");
 
     include_once __DIR__ . '/../../includes/config/_init.php';  
     SessionManager::checkSession();
@@ -16,6 +16,11 @@
         $TotalProducts = $Inventory->getInventoryCount();
 
         $TotalPages = ceil($TotalProducts / $Limit);
+        
+        // Append base path for js to display
+        foreach($InventoryData as &$Product) {
+            $Product['product_img_url'] = $BASE_IMAGE_URL . $Product['product_img_url'];
+        }
 
         $Response = [
             'inventory' => $InventoryData,
@@ -25,6 +30,8 @@
 
         echo json_encode($Response);
     } catch (Exception $E) {
+        error_log("Error: " . $E->getMessage());
+        error_log("Trace: " . $E->getTraceAsString());
         echo json_encode([
             'status' => 'error',
             'message' => $E->getMessage()
