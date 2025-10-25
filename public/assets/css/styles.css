@@ -329,8 +329,18 @@ a {
 }
 
 /* ===== PRODUCT MODALS ===== */
-.custom-modal-w {
-	width: 30%;
+.btn-dashed, .btn-dashed:hover {
+	border: 2px dashed var(--text-muted);
+	background-color: transparent;
+	color: var(--text-muted);
+}
+
+.btn-dashed:hover, .btn-dashed:active {
+	background-color: var(--input-background);
+}
+
+.btn-dashed:focus {
+	box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
 }
 
 /* ===== BOOTSTRAP OVERRIDES ===== */
@@ -392,7 +402,7 @@ a {
 	color: var(--primary-red);
 }
 
-/* pagination colors */
+/* pagination */
 .pagination .page-link {
 	color: var(--primary-red);
 	border-color: #dee2e6;
