@@ -1,5 +1,6 @@
 <?php
   include_once __DIR__ . '/../includes/config/_init.php';  
+
   $PageTitle = "Admin - Inventory | NIXAR POS";
   $CssPath = "assets/css/styles.css";
   $JSPath = "assets/js/scripts.js";
@@ -22,6 +23,10 @@
     'rubberMetalComposite' => 'Rubber and Metal Composite'
   ];
 
+  $Conn = DatabaseConnection::getInstance()->getConnection();
+  $Supplier = new Supplier($Conn);
+  $SupplierData = $Supplier->fetchAll();
+  
   include_once '../includes/head.php';
   
   SessionManager::checkSession();

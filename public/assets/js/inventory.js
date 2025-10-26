@@ -1,3 +1,4 @@
+/* ================= INVENTORY REFERENCES AND VARIABLES ================= */
 const searchBox = document.getElementById('search-input');
 const inventoryTbl = document.getElementById('container-inventory-data');
 const pagination = document.getElementById('pagination-container');
@@ -7,12 +8,16 @@ let queryString = '';
 const LIMIT = 10;
 let currentPage = 1;
 
-// Two step form elements
+/* ================= FORM REFERENCES AND VARIABLES ================= */
 const step1 = document.getElementById(`step1`);
 const step2 = document.getElementById(`step2`);
 const nextBtn = document.getElementById(`nextStep`);
 const prevBtn = document.getElementById(`prevStep`);
 const submitBtn = document.getElementById(`submitProduct`);
+
+const editProductForm = document.getElementById('editProductForm');
+const addProductForm = document.getElementById('addProductForm');
+
 
 /* ================= INVENTORY SEARCH FUNCTIONS ================= */
 searchBox.addEventListener('input', () => {
@@ -287,6 +292,9 @@ const resetFilters = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchInventory();
+
+    if (addProductForm) handleProductForm(addProductForm);
+    if (editProductForm) handleProductForm(editProductForm);
 });
 
 /* ================= PRODUCT IMAGE UPLOAD FUNCTIONS ================= */
@@ -320,8 +328,9 @@ addBtn.addEventListener('click', () => {
   const newInput = document.createElement('div');
   newInput.className = 'd-flex align-items-stretch gap-2 mb-2 car-model-input';
   newInput.innerHTML = `
-    <input type="text" class="text-input flex-grow-1" placeholder="Enter car model">
-    <input type="number" class="text-input" min="1900" max="2050" placeholder="Year">
+    <input type="text" class="text-input flex-grow-1" placeholder="Enter car make" name="car_make[]">
+    <input type="text" class="text-input flex-grow-1" placeholder="Enter car model" name="car_model[]">
+    <input type="number" class="text-input" min="1900" max="2050" placeholder="Year" name="car_year[]">
     <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center remove-model">
       <i class="fa-solid fa-trash text-white"></i>
     </button>
@@ -336,9 +345,22 @@ document.addEventListener('click', e => {
   }
 });
 
+const validateStep = (step) => {
+  const inputs = step.querySelectorAll('input, select');
+  for (const input of inputs) {
+    if (!input.checkValidity()) {
+      input.reportValidity();
+      return false;
+    }
+  }
+  return true;
+}
 
 /* ================= TWO STEP FORM FUNCTIONS ================= */
 nextBtn.addEventListener('click', () => {
+  // Do not proceed to the next step if there are empty inputs
+  if(!validateStep(step1)) return;
+
   step1.style.display = 'none';
   step2.style.display = 'block';
   nextBtn.style.display = 'none';
@@ -354,5 +376,33 @@ prevBtn.addEventListener('click', () => {
   submitBtn.style.display = 'none';
 });
 
+/* ================= INVENTORY FORMS FUNCTION ================= */
+const handleProductForm = (form) => {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
+    const endpoint = form.getAttribute('action');
+    const formData = new FormData(form);
 
+    
+    console.log('Endpoint: ' + endpoint);
+    console.log('Form Data: ' + formData);
+    console.log([...formData.entries()]);
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+      if (!result.ok) {
+        throw new Error(`An HTTP Error has occured! Message: ${ result.message }`);
+      }
+
+      fetchInventory();
+    } catch (err) {
+      console.error(err.message);
+    }
+  })
+}

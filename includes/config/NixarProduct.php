@@ -125,9 +125,8 @@
                 $Sql = "SELECT COUNT(np.nixar_product_sku) AS product_count,
                                pm.category
                         FROM nixar_products np
-                        LEFT JOIN product_materials pm
+                        JOIN product_materials pm
                             ON np.product_material_id = pm.product_material_id
-                        WHERE pm.category IN ('Glass', 'Rubber', 'Tints')
                         GROUP BY pm.category";
     
                 $Stmt = $this->Conn->query($Sql);
