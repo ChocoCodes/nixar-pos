@@ -1,7 +1,9 @@
 <?php 
     header("Content-Type: application/json");
     include_once __DIR__ . '/../../includes/config/_init.php';  
+    SessionManager::checkSession();
 
+    $Conn = DatabaseConnection::getInstance()->getConnection();
     try {
         $Sanitized = InputValidator::sanitizeArray($_GET);
         $Category = $Sanitized['category'];
@@ -12,7 +14,7 @@
 
         $Stmt = $Conn->prepare($Sql);
         if(!$Stmt) {
-            throw new Exception("Failed to prepare query: " . $this->Conn->error);
+            throw new Exception("Failed to prepare query: " . $Conn->error);
         }
         $Stmt->bind_param("s", $Category);
         $Stmt->execute();
