@@ -128,6 +128,7 @@
                         FROM nixar_products np
                         JOIN product_materials pm
                             ON np.product_material_id = pm.product_material_id
+                        WHERE np.is_deleted = 0
                         GROUP BY pm.category";
     
                 $Stmt = $this->Conn->query($Sql);

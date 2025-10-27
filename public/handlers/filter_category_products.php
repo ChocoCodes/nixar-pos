@@ -18,10 +18,11 @@
                 JOIN inventory i 
                     ON np.nixar_product_sku = i.nixar_product_sku
                 JOIN product_suppliers ps
-                    ON np.product_supplier_id = ps.product_supplier_id";
+                    ON np.product_supplier_id = ps.product_supplier_id
+                WHERE np.is_deleted = 0";
 
         if ($Category !== 'all') {
-            $Sql .= " WHERE pm.category = ?";
+            $Sql .= " AND pm.category = ?";
         }
 
         $Stmt = $Conn->prepare($Sql);
