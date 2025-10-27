@@ -24,7 +24,7 @@ JOIN product_compatibility pc ON np.nixar_product_sku = pc.nixar_product_sku
 JOIN car_models cm ON pc.car_model_id = cm.car_model_id
 JOIN product_materials pm ON np.product_material_id = pm.product_material_id
 JOIN inventory i ON np.nixar_product_sku = i.nixar_product_sku
-JOIN product_suppliers ps ON np.nixar_product_sku = ps.nixar_product_sku
+JOIN product_suppliers ps ON np.product_supplier_id = ps.product_supplier_id
 WHERE np.is_deleted = 0;
 
 CREATE OR REPLACE VIEW low_stock_items_view AS  
