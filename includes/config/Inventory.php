@@ -6,16 +6,44 @@
             $this->Conn = $Conn;
         }
 
-        // TODO: fetchInventory
-        public function fetchInventory($Limit = 10, $Offset = 0): array {
-            $Sql = "SELECT * FROM product_inventory_view ORDER BY current_stock DESC, product_name ASC LIMIT ?, ?";
-            $Stmt = $this->Conn->prepare($Sql);
-            if(!$Stmt) {
-                throw new Exception("Failed to execute query: ". $this->Conn->error);
-            }
-            $Stmt->bind_param("ii", $Offset, $Limit);
-            $Stmt->execute();
+        public function create(array $InventoryMeta) {
+            try {
+                $Sql = "INSERT INTO inventory(nixar_product_sku, current_stock, min_threshold) VALUES (?, ?, ?)";
+                $Stmt = $this->Conn->prepare($Sql);
+                if (!$Stmt) {
+                    throw new Exception('Failed to prepare INSERT statement: ' . $this->Conn->error);
+                }
 
+                $Stmt->bind_param("sii", $InventoryMeta['product_sku'], $InventoryMeta['current_stock'], $InventoryMeta['min_threshold']);
+                $Status = $Stmt->execute();
+                $Stmt->close();
+
+                return $Status;
+            } catch (Exception $E) {
+                return [
+                    "status" => "error",
+                    "message" => $E->getMessage()
+                ];
+            }
+        }
+        // TODO: fetchInventory
+        public function fetchInventory(?int $Limit = null, int $Offset = 0): array {
+            $Sql = "SELECT * FROM product_inventory_view ORDER BY current_stock DESC, product_name ASC";
+            if ($Limit !== null) {
+                $Sql .= " LIMIT ? OFFSET ?";
+                $Stmt = $this->Conn->prepare($Sql);
+                if(!$Stmt) {
+                    throw new Exception("Failed to execute query: ". $this->Conn->error);
+                }
+                $Stmt->bind_param("ii", $Limit, $Offset);
+            } else {
+                $Stmt = $this->Conn->prepare($Sql);
+                if(!$Stmt) {
+                    throw new Exception("Failed to execute query: ". $this->Conn->error);
+                }
+            }
+
+            $Stmt->execute();
             $Result = $Stmt->get_result();
             // Fetch all inventory data as an associative array
             $Rows = $Result->fetch_all(MYSQLI_ASSOC);
@@ -29,7 +57,7 @@
         public function searchInventoryByKeyword(string $Query, int $Limit, int $Offset) {
             $Like = "%{$Query}%";
             $MatchSql = "SELECT * FROM product_inventory_view 
-                WHERE model LIKE ? 
+                WHERE car_make_model LIKE ? 
                   OR type LIKE ? 
                   OR product_name LIKE ?
                 ORDER BY current_stock DESC
@@ -58,7 +86,7 @@
             $Like = "%{$Keyword}%";
             $Sql = "SELECT COUNT(*) AS total
                         FROM product_inventory_view
-                        WHERE model LIKE ?
+                        WHERE car_make_model LIKE ?
                         OR type LIKE ?
                         OR product_name LIKE ?";
             $Stmt = $this->Conn->prepare($Sql);
