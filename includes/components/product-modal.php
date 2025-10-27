@@ -75,7 +75,7 @@
               </div>
               <div class="w-50">
                 <label for="<?= $prefix ?>threshold" class="form-label">Minimum Threshold</label>
-                <input type="number" class="text-input" id="<?= $prefix ?>threshold" min="1" placeholder="Enter # of stocks" name="min_threshold" required>
+                <input type="number" class="text-input" id="<?= $prefix ?>threshold" min="1" placeholder="Enter min. # of stocks" name="min_threshold" required>
               </div>
               <div class="w-50">
                 <label for="<?= $prefix ?>markUp" class="form-label">Mark-up Percentage</label>

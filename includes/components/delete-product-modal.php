@@ -12,7 +12,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn " data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
                 <button type="submit" class="btn btn-secondary" form="deleteProductForm">Delete Product</button>
             </div>
         </div>

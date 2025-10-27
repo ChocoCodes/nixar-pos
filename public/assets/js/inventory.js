@@ -17,7 +17,7 @@ const submitBtn = document.getElementById(`submitProduct`);
 
 const editProductForm = document.getElementById('editProductForm');
 const addProductForm = document.getElementById('addProductForm');
-
+const deleteProductForm = document.getElementById('deleteProductForm');
 
 /* ================= INVENTORY SEARCH FUNCTIONS ================= */
 searchBox.addEventListener('input', () => {
@@ -137,18 +137,17 @@ const fillEditModal = (data) => {
 const fillDeleteModal = (data) => {
   console.log('delete modal: ' + JSON.stringify(data));
   const productNameSpan = document.getElementById('productToDelete');
-  const deleteForm = document.getElementById('deleteProductForm');
 
   // Show product name in modal
   productNameSpan.textContent = data.product_name;
 
   // Store product ID in a hidden input (so it can be submitted)
-  let hiddenInput = deleteForm.querySelector('input[name="productId"]');
+  let hiddenInput = deleteProductForm.querySelector('input[name="product_sku"]');
   if (!hiddenInput) {
     hiddenInput = document.createElement('input');
     hiddenInput.type = 'hidden';
-    hiddenInput.name = 'productId';
-    deleteForm.appendChild(hiddenInput);
+    hiddenInput.name = 'product_sku';
+    deleteProductForm.appendChild(hiddenInput);
   }
   hiddenInput.value = data.nixar_product_sku;
 };
@@ -295,6 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (addProductForm) handleProductForm(addProductForm);
     if (editProductForm) handleProductForm(editProductForm);
+    if (deleteProductForm) handleDeleteProduct();
 });
 
 /* ================= PRODUCT IMAGE UPLOAD FUNCTIONS ================= */
@@ -377,6 +377,36 @@ prevBtn.addEventListener('click', () => {
 });
 
 /* ================= INVENTORY FORMS FUNCTION ================= */
+const handleDeleteProduct = () => {
+  const modalEl = document.querySelector('#deleteProductModal');
+  let modal = bootstrap.Modal.getInstance(modalEl);
+  if (!modal) modal = new bootstrap.Modal(modalEl);
+  deleteProductForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const endpoint = deleteProductForm.getAttribute('action');
+    const formData = new FormData(deleteProductForm);
+    console.log([...formData.entries()]);
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+      if(!result.success) {
+        throw new Error(`An HTTP Error occured: ${ result.message }`);
+      }
+      // Re-fetch inventory to update display
+      fetchInventory();
+      if(modal) modal.hide();
+    } catch (err) {
+      console.error(err);
+    }
+  })
+}
+
 const handleProductForm = (form) => {
   const modalEl = form.closest('.modal');
   const modal = bootstrap.Modal.getInstance(modalEl);
