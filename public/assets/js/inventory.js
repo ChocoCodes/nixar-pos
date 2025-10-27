@@ -65,11 +65,9 @@ const renderRows = (data) => {
     return `
       <tr>
         <td>${product.product_name}</td>
-        <td>${product.car_make_model}</td>
-        <td>${product.year}</td>
-        <td>${product.type}</td>
         <td>${product.category}</td>
         <td>${product.current_stock}</td>
+        <td>${product.mark_up}%</td>
         <td>₱${product.final_price}</td>
         <td>
           <button 

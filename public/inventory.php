@@ -139,17 +139,15 @@
           <button class="btn" onClick="searchProducts()">Search</button>
         </div>
         
-<!--=================  INVENTORY TABLE  =================-->
+        <!--=================  INVENTORY TABLE  =================-->
         <div class="table-responsive" id="container-inventory-tbl">
           <table class="table table-striped bg-white">
             <thead class="color-primary-red">
             <tr>
               <th>Product Name</th>
-              <th>Car Model</th>
-              <th>Year</th>
-              <th>Car Type</th>
               <th>Category</th>
               <th>Stocks</th>
+              <th>Mark Up</th>
               <th>Price</th>
               <th>Actions</th>
             </tr>
