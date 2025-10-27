@@ -61,7 +61,7 @@ const searchProducts = (page = 1) => {
 const renderRows = (data) => {
   const htmlString = data.map(product => {
     const productData = encodeURIComponent(JSON.stringify(product));
-
+    console.log(productData);
     return `
       <tr>
         <td>${product.product_name}</td>
@@ -106,6 +106,7 @@ const renderRows = (data) => {
   document.querySelectorAll('.btn-delete').forEach(btn => {
     btn.addEventListener('click', () => {
       const product = JSON.parse(decodeURIComponent(btn.dataset.product));
+      console.log(product);
       fillDeleteModal(product);
     });
   });
@@ -114,7 +115,7 @@ const renderRows = (data) => {
 
 // Autofill edit modal with product data
 const fillEditModal = (data) => {
-  document.getElementById('editproductId').value = data.id;
+  document.getElementById('editproductId').value = data.nixar_product_sku;
   document.getElementById('editproductName').value = data.product_name;
   document.getElementById('editcarModel').value = data.car_make_model;
   document.getElementById('edityear').value = data.year;
@@ -134,11 +135,12 @@ const fillEditModal = (data) => {
 };
 
 const fillDeleteModal = (data) => {
+  console.log('delete modal: ' + JSON.stringify(data));
   const productNameSpan = document.getElementById('productToDelete');
   const deleteForm = document.getElementById('deleteProductForm');
 
   // Show product name in modal
-  productNameSpan.textContent = data.name;
+  productNameSpan.textContent = data.product_name;
 
   // Store product ID in a hidden input (so it can be submitted)
   let hiddenInput = deleteForm.querySelector('input[name="productId"]');
@@ -148,7 +150,7 @@ const fillDeleteModal = (data) => {
     hiddenInput.name = 'productId';
     deleteForm.appendChild(hiddenInput);
   }
-  hiddenInput.value = data.id;
+  hiddenInput.value = data.nixar_product_sku;
 };
 
 /* ================= INVENTORY PAGINATION FUNCTIONS ================= */
@@ -376,6 +378,8 @@ prevBtn.addEventListener('click', () => {
 
 /* ================= INVENTORY FORMS FUNCTION ================= */
 const handleProductForm = (form) => {
+  const modalEl = form.closest('.modal');
+  const modal = bootstrap.Modal.getInstance(modalEl);
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -394,11 +398,14 @@ const handleProductForm = (form) => {
       });
 
       const result = await response.json();
-      if (!result.ok) {
+      if (!result.success) {
         throw new Error(`An HTTP Error has occured! Message: ${ result.message }`);
       }
 
       fetchInventory();
+      // Hide and Reset Form
+      if(modal) modal.hide();
+      form.reset();
     } catch (err) {
       console.error(err.message);
     }

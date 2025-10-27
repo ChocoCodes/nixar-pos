@@ -11,6 +11,7 @@ USE nixar_autoglass_db;
 
 CREATE OR REPLACE VIEW product_inventory_view AS
 SELECT np.product_name,
+       np.nixar_product_sku,
        np.product_img_url,
        pm.category,
        pm.material_name,

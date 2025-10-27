@@ -6,6 +6,26 @@
             $this->Conn = $Conn;
         }
 
+        public function create(array $InventoryMeta) {
+            try {
+                $Sql = "INSERT INTO inventory(nixar_product_sku, current_stock, min_threshold) VALUES (?, ?, ?)";
+                $Stmt = $this->Conn->prepare($Sql);
+                if (!$Stmt) {
+                    throw new Exception('Failed to prepare INSERT statement: ' . $this->Conn->error);
+                }
+
+                $Stmt->bind_param("sii", $InventoryMeta['product_sku'], $InventoryMeta['current_stock'], $InventoryMeta['min_threshold']);
+                $Status = $Stmt->execute();
+                $Stmt->close();
+
+                return $Status;
+            } catch (Exception $E) {
+                return [
+                    "status" => "error",
+                    "message" => $E->getMessage()
+                ];
+            }
+        }
         // TODO: fetchInventory
         public function fetchInventory(?int $Limit = null, int $Offset = 0): array {
             $Sql = "SELECT * FROM product_inventory_view ORDER BY current_stock DESC, product_name ASC";

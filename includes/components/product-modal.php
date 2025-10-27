@@ -8,6 +8,9 @@
   $submitBtnText = $mode === 'add' ? 'Add Product' : 'Update Product';
   $showSteps = $mode === 'add'; // Only show steps for add mode
   $EndPoint = $mode === 'add' ? 'handle_add_product.php' : 'handle_edit_product.php';
+  
+  $Product = new NixarProduct($Conn);
+  $ProductMaterials = $Product->fetchMaterials();
 ?>
 
 <div class="modal fade" id="<?= $modalId ?>" tabindex="-1" aria-labelledby="<?= $modalId ?>Label" aria-hidden="true">
@@ -19,7 +22,7 @@
       </div>
 
       <div class="modal-body">
-        <form action="../../public/handlers/<?= $EndPoint ?>" enctype="multipart/form-data" id="<?= $formId ?>">
+        <form action="/nixar-pos/public/handlers/<?= $EndPoint ?>" enctype="multipart/form-data" id="<?= $formId ?>">
           <?php if ($mode === 'edit'): ?>
             <input type="hidden" id="<?= $prefix ?>productId" name="productId">
           <?php endif; ?>
@@ -49,9 +52,9 @@
             <div class="mb-3 d-flex gap-3">
               <div class="w-50">
                 <label for="<?= $prefix ?>productMaterial" class="form-label">Material</label>
-                <select class="form-select" id="<?= $prefix ?>productMaterial" name="product_material">
-                  <?php foreach($ProductMaterials as $Id => $Material): ?>
-                    <option value="<?= $Material ?>"><?= $Material ?></option>
+                <select class="form-select" id="<?= $prefix ?>productMaterial" name="product_material_id">
+                  <?php foreach($ProductMaterials as $Material): ?>
+                    <option value="<?= $Material['product_material_id'] ?>"><?= $Material['material_name'] ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -71,10 +74,14 @@
                 <input type="number" class="text-input" id="<?= $prefix ?>stocks" min="1" placeholder="Enter # of stocks" name="stock_count" required>
               </div>
               <div class="w-50">
-                <label for="<?= $prefix ?>price" class="form-label">Mark-up Percentage</label>
+                <label for="<?= $prefix ?>threshold" class="form-label">Minimum Threshold</label>
+                <input type="number" class="text-input" id="<?= $prefix ?>threshold" min="1" placeholder="Enter # of stocks" name="min_threshold" required>
+              </div>
+              <div class="w-50">
+                <label for="<?= $prefix ?>markUp" class="form-label">Mark-up Percentage</label>
                 <div class="d-flex gap-2 align-items-center">
                   <span>₱</span>
-                  <input type="number" class="text-input" id="<?= $prefix ?>price" min="1" max="100" placeholder="Enter price" name="mark_up" required>
+                  <input type="number" class="text-input" id="<?= $prefix ?>markUp  " min="1" max="100" placeholder="Enter price" name="mark_up" required>
                 </div>
               </div>
             </div>

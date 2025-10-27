@@ -11,12 +11,13 @@
         $Image = $_FILES['product_image'] ?? null;
         $ProductName = $Sanitized['product_name'];
         $ProductSku = $Sanitized['product_sku'];
-        $Material = $Sanitized['product_material'];
+        $MaterialId = $Sanitized['product_material_id'];
         $CarType = $Sanitized['car_type'];
         $StockCount = $Sanitized['stock_count'];
         $Markup = $Sanitized['mark_up'];
         $SupplierId = $Sanitized['product_supplier_id'];
         $BasePrice = $Sanitized['base_price'];
+        $Threshold = $Sanitized['min_threshold'];
         // Car Compatibility
         $CarMake = $_POST['car_make'];
         $CarModel = $_POST['car_model'];
@@ -37,24 +38,70 @@
             $Dir = __DIR__ . '/../assets/img/uploads/';
             $ImgPath = basename($Image['name']);
             $FileName = time(). '_' . uniqid() . '_' . $ImgPath;
-            $SavePath = "{$Dir}{$Filename}";
+            $SavePath = "{$Dir}{$FileName}";
             // Save image to `public/img/uploads`
             if(move_uploaded_file($Image['tmp_name'], $SavePath)) {
                 $UploadFileName = $FileName;
             }
         }
+
         // begin transaction
         $Conn->autocommit(false);
         try {
+            $Product = new NixarProduct($Conn);
+            $Supplier = new Supplier($Conn);
+            $Model = new CarModel($Conn);
+            $Inventory = new Inventory($Conn);
+
             $Conn->begin_transaction();
             // Insert supplier info
-            // insert car models
+            $SupplierInfo = [
+                'id' => $SupplierId,
+                'sku' => $ProductSku,
+                'base_price' => $BasePrice
+            ];
+            $SupplierInsertId = $Supplier->add($SupplierInfo, true);
+            // Insert product information
+            $ProductMeta = [
+                'product_sku' => $ProductSku,
+                'material_id' => $MaterialId,
+                'supplier_id' => $SupplierInsertId,
+                'product_name' => $ProductName,
+                'image_url' => $UploadFileName,
+                'mark_up' => $Markup
+            ];
+            $Status = $Product->create($ProductMeta);
+            error_log("Product creation status: " . var_export($Status, true));
+            if (!$Status) {
+                throw new Exception('Failed to add product.');
+            }
+            // Insert inventory
+            $InventoryMeta = [
+                'product_sku' => $ProductSku,
+                'current_stock' => $StockCount,
+                'min_threshold' => $Threshold
+            ];
+            $InventoryStatus = $Inventory->create($InventoryMeta);
+            error_log("Inventory creation status: " . var_export($InventoryStatus, true));
+            if (!$Status) {
+                throw new Exception('Failed to add inventory product.');
+            }
+            // Insert car models
+            $ProductCompatibleId = [];
+            for ($I = 0; $I < count($CompatibleCars); $I++) {
+                $ProductCompatibleId[] = $Model->add($CompatibleCars[$I], true);
+            }
             // Insert Product Compatibility
-            // insert product information
+            foreach ($ProductCompatibleId as $CompatibleId) {
+                $Result = $Product->insertCompatible($ProductSku, $CompatibleId);
+            }
             // commit if success, else rollback
-            echo json_encode(['success' => true, 'message' => 'Product successfully added']);
+            $Conn->commit();
+            echo json_encode(['success' => true, 'message' => 'Product successfully added.']);
         } catch (Exception $E) {
             $Conn->rollback();
+            error_log("Error: " . $E->getMessage());
+            error_log("Trace: " . $E->getTraceAsString());
             echo json_encode(['success' => false, 'message' => $E->getMessage()]);
         } finally {
             $Conn->autocommit(true);
