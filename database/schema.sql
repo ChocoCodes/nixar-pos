@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS nixar_products (
     product_material_id INTEGER,
     product_name VARCHAR(60) NOT NULL,
     product_img_url VARCHAR(255) NOT NULL DEFAULT 'default-product.png',
-    mark_up FLOAT NOT NULL,
+    mark_up INT NOT NULL,
     is_deleted TINYINT(1) DEFAULT 0,
 
     FOREIGN KEY (product_material_id) REFERENCES product_materials(product_material_id)
