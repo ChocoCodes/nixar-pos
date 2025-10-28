@@ -242,7 +242,7 @@ const populateCheckoutModal = () => {
         `;
     }).join('');
 
-    receipt.innerHTML += items;
+    receipt.innerHTML = items;
     receiptSubtotal.textContent = `₱${subtotal}`;
     receiptTotal.textContent = `₱${subtotal}`;
 }
