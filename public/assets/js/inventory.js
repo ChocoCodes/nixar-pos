@@ -115,18 +115,20 @@ const renderRows = (data) => {
 
 // Autofill edit modal with product data
 const fillEditModal = (data) => {
+  console.log('fillEditModal: ' + data.product_img_url);
   document.getElementById('editproductName').value = data.product_name;
   document.getElementById('editproductSku').value = data.nixar_product_sku;
-  document.getElementById('editcarModel').value = data.car_make_model;
-  document.getElementById('edityear').value = data.year;
+  document.getElementById('editproductMaterial').value = String(data.product_material_id);
   document.getElementById('editstocks').value = data.current_stock;
-  document.getElementById('editprice').value = data.final_price;
-  document.getElementById('editproductMaterial').value = data.product_material_id;
-  document.getElementById('editcarTypes').value = data.type;
+  document.getElementById('editthreshold').value = data.min_threshold;
+  document.getElementById('editmarkUp').value = data.mark_up;
+  document.getElementById('editproductSupplier').value = String(data.supplier_id);
+  document.getElementById('editbasePrice').value = data.base_price;
 
   const preview = document.getElementById('editimagePreview');
-  if (data.image_path) {
-    preview.src = `../uploads/${data.image_path}`; // TODO: Adjust path
+  if (data.product_img_url) {
+    preview.src = data.product_img_url;
+    preview.alt = `Image of ${ data.product_name }`;
     preview.style.display = 'block';
   } else {
     preview.src = '#';
@@ -289,7 +291,13 @@ const resetFilters = () => {
   searchProducts();
 }
 
+let addCarTypes;
 document.addEventListener('DOMContentLoaded', () => {
+    addCarTypes = document.getElementById('carTypes');
+    if(!addCarTypes) {
+      console.log('No data found in dataset');
+      return;
+    }
     fetchInventory();
 
     if (addProductForm) handleProductForm(addProductForm);
@@ -325,12 +333,22 @@ document.addEventListener('DOMContentLoaded', () => {
 const addBtn = document.getElementById(`addCarModelBtn`);
 const container = document.getElementById(`carModelContainer`);
 addBtn.addEventListener('click', () => {
+  // Extract car-type data from initial select
+  const ds = addCarTypes.dataset.carTypes;
+  console.log(ds);
+  const carTypeData = JSON.parse(ds);
+  // Build option string values from car-type data attribute
+  const optionsHtmlString = carTypeData.map(type => `<option value=${ type }>${ type }</option>`).join('\n');
   const newInput = document.createElement('div');
   newInput.className = 'd-flex align-items-stretch gap-2 mb-2 car-model-input';
   newInput.innerHTML = `
     <input type="text" class="text-input flex-grow-1" placeholder="Enter car make" name="car_make[]">
     <input type="text" class="text-input flex-grow-1" placeholder="Enter car model" name="car_model[]">
     <input type="number" class="text-input" min="1900" max="2050" placeholder="Year" name="car_year[]">
+    <select class="form-select" name="car_type[]" required>
+      <option value="" disabled>Car Type</option>
+      ${ optionsHtmlString }
+    </select>
     <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center remove-model">
       <i class="fa-solid fa-trash text-white"></i>
     </button>
@@ -409,7 +427,8 @@ const handleDeleteProduct = () => {
 
 const handleProductForm = (form) => {
   const modalEl = form.closest('.modal');
-  const modal = bootstrap.Modal.getInstance(modalEl);
+  let modal = bootstrap.Modal.getInstance(modalEl);
+  if (!modal) modal = new bootstrap.Modal(modalEl);
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 

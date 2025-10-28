@@ -8,20 +8,25 @@
 USE nixar_autoglass_db;
 
 -- ================================== INVENTORY ==================
-
 CREATE OR REPLACE VIEW product_inventory_view AS
 SELECT np.product_name,
        np.nixar_product_sku,
        np.product_img_url,
        pm.category,
        pm.material_name,
+       pm.product_material_id,
+       i.min_threshold,
        i.current_stock,
+	   ps.base_price,
+       s.supplier_id,
+       s.supplier_name,
        np.mark_up,
        ROUND(ps.base_price + (ps.base_price * (np.mark_up / 100)), 2) AS final_price
 FROM nixar_products np
 JOIN product_materials pm ON np.product_material_id = pm.product_material_id
 JOIN inventory i ON np.nixar_product_sku = i.nixar_product_sku
-JOIN product_suppliers ps ON np.product_supplier_id = ps.product_supplier_id;
+JOIN product_suppliers ps ON np.product_supplier_id = ps.product_supplier_id
+JOIN suppliers s ON ps.supplier_id = s.supplier_id
 WHERE np.is_deleted = 0;
 
 CREATE OR REPLACE VIEW low_stock_items_view AS  

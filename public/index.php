@@ -25,7 +25,7 @@
       </form>
     </div>
   </div>
-  <div class="col-xl-8 bg-danger d-none d-xl-flex justify-content-center align-items-center p-0">
+  <div class="col-xl-8 d-none d-xl-flex justify-content-center align-items-center p-0">
     <img src="/nixar-pos/public/assets/img/nixar-front.jpg" alt="Image of Nixar" class="w-100 vh-100 object-fit-cover">
   </div>
 </div>

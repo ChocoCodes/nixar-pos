@@ -12,7 +12,6 @@
         $ProductName = $Sanitized['product_name'];
         $ProductSku = $Sanitized['product_sku'];
         $MaterialId = $Sanitized['product_material_id'];
-        $CarType = $Sanitized['car_type'];
         $StockCount = $Sanitized['stock_count'];
         $Markup = $Sanitized['mark_up'];
         $SupplierId = $Sanitized['product_supplier_id'];
@@ -22,6 +21,7 @@
         $CarMake = $_POST['car_make'];
         $CarModel = $_POST['car_model'];
         $CarYear = $_POST['car_year'];
+        $CarType = $_POST['car_type'];
         // Transform Car Details into an array
         $CompatibleCars = [];
         for($I = 0; $I < count($CarMake); $I++) {
@@ -29,7 +29,7 @@
                 'make' => $CarMake[$I],
                 'model' => $CarModel[$I],
                 'year' => $CarYear[$I],
-                'type' => $CarType
+                'type' => $CarType[$I]
             ];
         }
         // Save image to `../assets/img/uploads/` and store base image url
