@@ -15,6 +15,11 @@
     'Glass', 'Accessories', 'Tints', 'Mirrors'
   ];
   
+  
+  $Conn = DatabaseConnection::getInstance()->getConnection();
+  $Supplier = new Supplier($Conn);
+  $SupplierData = $Supplier->fetchAll();
+  
   $ProductMaterials = [
     'laminatedGlass' => 'Laminated Glass', 
     'temperedGlass' => 'Tempered Glass', 
@@ -22,10 +27,6 @@
     'plasticAcrylicComposite' => 'Plastic/Acrylic Composite', 
     'rubberMetalComposite' => 'Rubber and Metal Composite'
   ];
-
-  $Conn = DatabaseConnection::getInstance()->getConnection();
-  $Supplier = new Supplier($Conn);
-  $SupplierData = $Supplier->fetchAll();
   
   include_once '../includes/head.php';
   
