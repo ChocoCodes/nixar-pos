@@ -115,13 +115,13 @@ const renderRows = (data) => {
 
 // Autofill edit modal with product data
 const fillEditModal = (data) => {
-  document.getElementById('editproductId').value = data.nixar_product_sku;
   document.getElementById('editproductName').value = data.product_name;
+  document.getElementById('editproductSku').value = data.nixar_product_sku;
   document.getElementById('editcarModel').value = data.car_make_model;
   document.getElementById('edityear').value = data.year;
   document.getElementById('editstocks').value = data.current_stock;
   document.getElementById('editprice').value = data.final_price;
-  document.getElementById('editproductMaterial').value = data.material_name;
+  document.getElementById('editproductMaterial').value = data.product_material_id;
   document.getElementById('editcarTypes').value = data.type;
 
   const preview = document.getElementById('editimagePreview');

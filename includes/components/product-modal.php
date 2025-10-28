@@ -23,10 +23,6 @@
 
       <div class="modal-body">
         <form action="/nixar-pos/public/handlers/<?= $EndPoint ?>" enctype="multipart/form-data" id="<?= $formId ?>">
-          <?php if ($mode === 'edit'): ?>
-            <input type="hidden" id="<?= $prefix ?>productId" name="productId">
-          <?php endif; ?>
-
           <!-- STEP 1: Product Details -->
           <div id="<?= $prefix ?>step1" class="step">
             <div class="mb-3">
@@ -44,7 +40,7 @@
                 <input type="text" class="text-input" id="<?= $prefix ?>productName" placeholder="Enter product name" name="product_name" required>
               </div>
               <div class="w-50">
-                <label for="<?= $prefix ?>productName" class="form-label">Product SKU</label>
+                <label for="<?= $prefix ?>productSku" class="form-label">Product SKU</label>
                 <input type="text" class="text-input" id="<?= $prefix ?>productSku" placeholder="e.g. NX-ABC-001" name="product_sku" pattern="^NX-[A-Za-z]{3}-\d+$" required>
               </div>
             </div>
@@ -105,7 +101,6 @@
             </div>
           </div>
           
-
           <!-- STEP 2: Car Compatibility Info (only for add mode) -->
           <?php if ($showSteps): ?>
           <div id="<?= $prefix ?>step2" class="step" style="display:none;">
@@ -133,18 +128,6 @@
                 </div>
               </div>
               <button type="button" class="btn-dashed btn w-100" id="<?= $prefix ?>addCarModelBtn">+ Add Model</button>
-            </div>
-          </div>
-          <?php else: ?>
-          <!-- Edit mode: Single car compatibility -->
-          <div class="mb-3 d-flex gap-3">
-            <div class="w-50">
-              <label for="<?= $prefix ?>carModel" class="form-label">Compatible Car Model</label>
-              <input type="text" class="text-input" id="<?= $prefix ?>carModel" placeholder="Enter car model">
-            </div>
-            <div class="w-50">
-              <label for="<?= $prefix ?>year" class="form-label">Year</label>
-              <input type="number" class="text-input" id="<?= $prefix ?>year" min="1900" max="2050" placeholder="Enter year">
             </div>
           </div>
           <?php endif; ?>
