@@ -63,14 +63,14 @@
                 <div class="w-100 h-100 d-flex flex-column justify-content-start gap-2 rounded-3 border p-3">
                     <h2>Order Detail</h2>
                     <p class="total-order">0 selected</p>
-                    <div id="order-container" class="flex-grow-1 border shadow-sm rounded-2 px-2 d-flex flex-column justify-content-start gap-2">
+                    <div id="order-container" class="flex-grow-1 border shadow-sm rounded-2 px-2 d-flex flex-column justify-content-start gap-2 overflow-y-auto">
 
                     </div>
                     <div class="w-100 d-flex justify-content-between align-items-center">
                         <p>Total Price:</p>
                         <strong id="total-price">₱ 0</strong>
                     </div>
-                    <button class="btn" onclick="window.location.href='checkout.php'">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#checkoutModal">
                         Proceed to Payment
                         <i class="fa-solid fa-chevron-right text-white"></i>
                     </button>
@@ -78,6 +78,8 @@
             </div>
         </div>
     </div>
+    <!-- =============== CHECKOUT MODAL =============== -->
+    <?php include_once '../includes/components/checkout-modal.php'?>
     <!-- =============== TRANSACTION PAGE SPECIFIC SCRIPT =============== -->
     <script src="assets/js/transaction.js?v=<?=filemtime('assets/js/transaction.js')?>"></script>
 <?php include_once '../includes/footer.php'; ?>

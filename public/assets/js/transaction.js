@@ -86,7 +86,7 @@ const createProductCard = (data) => {
                         <i class="fa-solid fa-plus"></i>
                     </button>
                     <div class="quantity-display px-4 py-1 rounded-pill text-center">
-                        0
+                        ${ cart[data.nixar_product_sku]?.quantity || 0 }
                     </div>
                     <button class="transaction-btn remove-btn position-absolute end-0">
                         <i class="fa-solid fa-minus"></i>
@@ -185,6 +185,68 @@ const attachCartEventListeners = () => {
     });
 }
 
+const updateCheckoutTotals = () => {
+    const subtotal = Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
+    const discountInput = document.querySelector('.discount-input');
+    const receiptDiscount = document.querySelector('.receipt-discount');
+    const receiptTotal = document.querySelector('.receipt-total');
+    const discount = parseFloat(discountInput.value).toFixed(2) || 0;
+    const total = Math.max(0, subtotal - discount);
+
+    document.querySelector('.total-display').textContent = `₱${total}`;
+    receiptDiscount.textContent = `₱${discount}`;
+    receiptTotal.textContent = `₱${total}`;
+}
+
+const populateCheckoutModal = () => {
+    const tableBody = document.getElementById('checkout-table-body');
+    const subtotalElement = document.querySelector('.subtotal-display');
+    const totalElement = document.querySelector('.total-display');
+
+    if (Object.keys(cart).length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No items in cart</td></tr>';
+        return;
+    }
+
+    // order details
+    const rows = Object.values(cart).map(item => {
+        const itemTotal = (item.price * item.quantity).toFixed(2);
+        return `
+            <tr>
+                <td class="text-muted">${item.name}</td>
+                <td class="text-center text-muted">${item.quantity}</td>
+                <td class="text-end text-muted">₱${parseFloat(item.price).toFixed(2)}</td>
+                <td class="text-end text-muted">₱${itemTotal}</td>
+            </tr>
+        `;
+    }).join('');
+
+    const subtotal = Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
+
+    tableBody.innerHTML = rows;
+    subtotalElement.textContent = `₱${subtotal}`;
+    totalElement.textContent = `₱${subtotal}`;
+
+    // receipt
+    const receipt = document.getElementById('receipt');
+    const receiptSubtotal = document.querySelector('.receipt-subtotal');
+    const receiptTotal = document.querySelector('.receipt-total');
+
+    const items = Object.values(cart).map(item => {
+        const itemTotal = (item.price * item.quantity).toFixed(2);
+        return `
+            <div class="w-100 d-flex justify-content-between">
+                <p class="text-muted">${item.quantity} x ${item.name}</p>
+                <p class="text-muted">₱${itemTotal}</p>
+            </div>
+        `;
+    }).join('');
+
+    receipt.innerHTML += items;
+    receiptSubtotal.textContent = `₱${subtotal}`;
+    receiptTotal.textContent = `₱${subtotal}`;
+}
+
 const searchProducts = (page = 1) => {
     const query = searchBar.value.trim();
     // add query check
@@ -207,4 +269,15 @@ const searchProducts = (page = 1) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchProducts();
+
+    const checkoutModal = document.getElementById('checkoutModal');
+    checkoutModal.addEventListener('show.bs.modal', () => {
+        populateCheckoutModal();
+
+        const discountInput = document.querySelector('.discount-input');
+        const receiptDiscount = document.querySelector('.receipt-discount');
+        discountInput.value = '0';
+        receiptDiscount.textContent = '₱0';
+        discountInput.addEventListener('blur', updateCheckoutTotals);
+    });
 })
