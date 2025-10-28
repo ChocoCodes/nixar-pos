@@ -29,6 +29,8 @@ JOIN product_suppliers ps ON np.product_supplier_id = ps.product_supplier_id
 JOIN suppliers s ON ps.supplier_id = s.supplier_id
 WHERE np.is_deleted = 0;
 
+-- ============== INVENTORY REPORT LIST METRICS ==============
+
 CREATE OR REPLACE VIEW low_stock_items_view AS  
 SELECT  
     np.nixar_product_sku, 
@@ -62,3 +64,32 @@ JOIN product_materials pm ON np.product_material_id = pm.product_material_id
 GROUP BY np.nixar_product_sku, np.product_name 
 ORDER BY total_revenue DESC 
 LIMIT 5; 
+
+-- ============== SALES REPORT METRICS ==================
+CREATE OR REPLACE VIEW sales_report_view AS 
+SELECT 
+	SUM(total_amount) AS total_revenue, 
+	COUNT(receipt_id) AS total_transactions,
+	AVG(total_amount) AS avg_transaction_value,
+    0 AS profit_performance
+FROM receipts AS r;
+
+-- ============== SALES REPORT LIST METRICS ==============
+
+CREATE OR REPLACE VIEW category_performance_view AS 
+SELECT 
+    category, 
+    COUNT(category) AS category_performance
+FROM product_materials
+GROUP BY category
+ORDER BY category_performance DESC
+LIMIT 5;
+
+CREATE OR REPLACE VIEW sales_by_time_view AS 
+SELECT
+	DATE_FORMAT(created_at, '%l %p') AS hour_label,  
+	COUNT(*) AS total_orders
+FROM receipts
+GROUP BY hour_label, HOUR(created_at)
+ORDER BY HOUR(created_at)
+LIMIT 5;
