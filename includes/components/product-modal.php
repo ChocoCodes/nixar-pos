@@ -23,9 +23,6 @@
 
       <div class="modal-body">
         <form action="/nixar-pos/public/handlers/<?= $EndPoint ?>" enctype="multipart/form-data" id="<?= $formId ?>">
-          <?php if ($mode === 'edit'): ?>
-            <input type="hidden" id="<?= $prefix ?>productId" name="productId">
-          <?php endif; ?>
 
           <!-- STEP 1: Product Details -->
           <div id="<?= $prefix ?>step1" class="step">
@@ -49,7 +46,7 @@
               </div>
               <div class="w-50">
                 <label for="<?= $prefix ?>productName" class="form-label">Product SKU</label>
-                <input type="text" class="text-input" id="<?= $prefix ?>productSku" placeholder="e.g. NX-ABC-001" name="product_sku" pattern="^NX-[A-Za-z]{3}-\d+$" required>
+                <input type="text" class="text-input" id="<?= $prefix ?>productSku" placeholder="e.g. NX-ABC-001" name="product_sku" pattern="^NX-[A-Za-z]{3}-\d+$" <?= $mode === 'edit' ? 'readonly' : 'required' ?>>
               </div>
             </div>
 
@@ -152,7 +149,7 @@
           <button type="button" class="btn" id="<?= $prefix ?>nextStep">Next</button>
           <button type="submit" class="btn" form="<?= $formId ?>" id="submitProduct" style="display:none;"><?= $submitBtnText ?></button>
         <?php else: ?>
-          <button type="submit" class="btn" form="<?= $formId ?>"><?= $submitBtnText ?></button>
+          <button type="submit" class="btn" form="<?= $formId ?>" id="editProductButton"><?= $submitBtnText ?></button>
         <?php endif; ?>
       </div>
     </div>

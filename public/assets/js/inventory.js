@@ -7,7 +7,6 @@ let searchTimeout;
 let queryString = '';
 const LIMIT = 10;
 let currentPage = 1;
-
 /* ================= FORM REFERENCES AND VARIABLES ================= */
 const step1 = document.getElementById(`step1`);
 const step2 = document.getElementById(`step2`);
@@ -116,6 +115,7 @@ const renderRows = (data) => {
 // Autofill edit modal with product data
 const fillEditModal = (data) => {
   console.log('fillEditModal: ' + data.product_img_url);
+
   document.getElementById('editproductName').value = data.product_name;
   document.getElementById('editproductSku').value = data.nixar_product_sku;
   document.getElementById('editproductMaterial').value = String(data.product_material_id);
@@ -128,9 +128,10 @@ const fillEditModal = (data) => {
   const imageInput = document.getElementById('editproductImage');
   const preview = document.getElementById('editimagePreview');
   const displayUrl = document.getElementById('editProductImageUrl');
+
   if (data.product_img_url) {
-    displayUrl.textContent = data.product_img_url;
-    preview.src = data.product_img_url;
+    displayUrl.textContent = data.product_img_url.match(/[^\/]+$/)[0]; // Remove directory serve path ;
+    preview.src = data.product_img_url 
     preview.alt = `Image of ${ data.product_name }`;
     preview.style.display = 'block';
   } else {
@@ -143,7 +144,7 @@ const fillEditModal = (data) => {
     if (file) {
       if (displayUrl) displayUrl.style.display = 'none';
     }
-  })
+  });
 };
 
 const fillDeleteModal = (data) => {
@@ -450,7 +451,10 @@ const handleProductForm = (form) => {
     console.log('Form Data: ' + formData);
     console.log([...formData.entries()]);
 
-    try {
+    /* 
+
+    */    
+   try {
       const response = await fetch(endpoint, {
         method: 'POST',
         body: formData

@@ -48,7 +48,7 @@
                 'sku' => $ProductSku,
                 'base_price' => $BasePrice
             ];
-            $SupplierInsertId = $Supplier->add($SupplierInfo, true);
+            $SupplierInsertId = $Supplier->add($SupplierInfo);
             // Insert product information
             $ProductMeta = [
                 'product_sku' => $ProductSku,
@@ -58,9 +58,9 @@
                 'image_url' => $UploadFileName,
                 'mark_up' => $Markup
             ];
-            $Status = $Product->create($ProductMeta);
+            $Result = $Product->create($ProductMeta);
             error_log("Product creation status: " . var_export($Status, true));
-            if (!$Status) {
+            if (!$Result['success']) {
                 throw new Exception('Failed to add product.');
             }
             // Insert inventory
@@ -69,15 +69,15 @@
                 'current_stock' => $StockCount,
                 'min_threshold' => $Threshold
             ];
-            $InventoryStatus = $Inventory->create($InventoryMeta);
+            $InventoryResult = $Inventory->create($InventoryMeta);
             error_log("Inventory creation status: " . var_export($InventoryStatus, true));
-            if (!$Status) {
+            if (!$InventoryResult['success']) {
                 throw new Exception('Failed to add inventory product.');
             }
             // Insert car models
             $ProductCompatibleId = [];
             for ($I = 0; $I < count($CompatibleCars); $I++) {
-                $ProductCompatibleId[] = $Model->add($CompatibleCars[$I], true);
+                $ProductCompatibleId[] = $Model->add($CompatibleCars[$I]);
             }
             // Insert Product Compatibility
             foreach ($ProductCompatibleId as $CompatibleId) {

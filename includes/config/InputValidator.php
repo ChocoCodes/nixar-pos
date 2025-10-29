@@ -23,12 +23,13 @@
 
     class Image {
         public static function uploadToDirectory(array $Image) {
+            $DEFAULT_IMG = 'default-product.png';
             // No image detected
             if (empty($Image) || $Image['error'] !== 0) {
-                return null;
+                return $DEFAULT_IMG;
             }
 
-            $Dir = __DIR__ . '/../assets/img/uploads/';
+            $Dir = __DIR__ . '/../../public/assets/img/uploads/';
             $ImgPath = basename($Image['name']);
             $FileName = time(). '_' . uniqid() . '_' . $ImgPath;
             $SavePath = "{$Dir}{$FileName}";
@@ -36,7 +37,7 @@
             if(move_uploaded_file($Image['tmp_name'], $SavePath)) {
                 return $FileName;
             }
-            return null;
+            return $DEFAULT_IMG;
         }
     }
 ?>
