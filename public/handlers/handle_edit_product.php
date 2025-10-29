@@ -29,7 +29,7 @@
             ];
             $Result = $Product->update($ProductData);
             if(!$Result['success']) {
-                throw new Exception("Failed to update product: {$Sanitized['product_sku']}.");
+                throw new Exception("Failed to update product: {$Sanitized['product_sku']}. Message: {$Result['message']}");
             }
             // Perform UPDATE operation on Inventory Data
             $InventoryData = [
@@ -45,11 +45,11 @@
             $ProductSupplierData = [
                 'nixar_product_sku' => $Sanitized['product_sku'],
                 'supplier_id' => $Sanitized['product_supplier_id'],
-                'base_price' => $Sanitized['base_price']
+                'base_price' => (int)$Sanitized['base_price']
             ];
             $ProductSupplierResult = $Supplier->updateProductSupplier($ProductSupplierData);
             if(!$ProductSupplierResult['success']) {
-                throw new Exception("Failed to update product supplier of: {$Sanitized['product_sku']}.");
+                throw new Exception("Failed to update product supplier of: {$Sanitized['product_sku']}");
             }
             
             $Conn->commit();
@@ -58,6 +58,7 @@
                 'message' => "Product {$Sanitized['product_sku']} updated successfully."
             ]);
         } catch (Exception $E) {
+            error_log("Error editing product: " . $E->getMessage());
             $Conn->rollback();
             echo json_encode([
                 'success' => false,

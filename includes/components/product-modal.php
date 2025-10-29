@@ -22,7 +22,7 @@
       </div>
 
       <div class="modal-body">
-        <form action="/nixar-pos/public/handlers/<?= $EndPoint ?>" enctype="multipart/form-data" id="<?= $formId ?>">
+        <form method="POST" action="/nixar-pos/public/handlers/<?= $EndPoint ?>" enctype="multipart/form-data" id="<?= $formId ?>">
 
           <!-- STEP 1: Product Details -->
           <div id="<?= $prefix ?>step1" class="step">

@@ -64,8 +64,8 @@
                 if ($Stmt->affected_rows === 0) {
                     $Stmt->close();
                     return [
-                        'success' => false,
-                        'message' => "No product found with SKU {$UpdateData['nixar_product_sku']}."
+                        'success' => true,
+                        'message' => "No rows affected."
                     ];
                 }
                 
@@ -75,6 +75,7 @@
                     'message' => "Product with SKU " . $UpdateData['nixar_product_sku'] . " successfully updated."
                 ];
             } catch (Exception $E) {
+                error_log("Error updating product: " . $E->getMessage());
                 return [
                     'success' => false,
                     'message' => "Error: ". $E->getMessage()

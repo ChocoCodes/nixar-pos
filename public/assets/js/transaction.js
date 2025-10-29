@@ -260,6 +260,7 @@ const searchProducts = (page = 1) => {
     fetch(`handlers/search_products.php?q=${ encodeURIComponent(query) }&limit=${ LIMIT }&page=${ page }`)
         .then(res => res.json())
         .then(data => {
+            console.log(data);
             renderProducts(data.inventory);
         })
         .catch(err => {

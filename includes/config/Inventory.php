@@ -93,16 +93,14 @@
         public function searchInventoryByKeyword(string $Query, int $Limit, int $Offset) {
             $Like = "%{$Query}%";
             $MatchSql = "SELECT * FROM product_inventory_view 
-                WHERE car_make_model LIKE ? 
-                  OR type LIKE ? 
-                  OR product_name LIKE ?
+                WHERE product_name LIKE ?
                 ORDER BY current_stock DESC
                 LIMIT ? OFFSET ?";
             $Stmt = $this->Conn->prepare($MatchSql);
             if(!$Stmt) {
                 throw new Exception("Failed to execute query: ". $this->Conn->error);
             }
-            $Stmt->bind_param("sssii", $Like, $Like, $Like, $Limit, $Offset);
+            $Stmt->bind_param("sii", $Like,$Limit, $Offset);
             $Stmt->execute();
             
             $Result = $Stmt->get_result();
@@ -122,14 +120,12 @@
             $Like = "%{$Keyword}%";
             $Sql = "SELECT COUNT(*) AS total
                         FROM product_inventory_view
-                        WHERE car_make_model LIKE ?
-                        OR type LIKE ?
-                        OR product_name LIKE ?";
+                        WHERE product_name LIKE ?";
             $Stmt = $this->Conn->prepare($Sql);
             if(!$Stmt) {
                 throw new Exception("Failed to execute query: ". $this->Conn->error);
             }
-            $Stmt->bind_param("sss", $Like, $Like, $Like);
+            $Stmt->bind_param("s", $Like);
             $Stmt->execute();
             
             $Result = $Stmt->get_result();

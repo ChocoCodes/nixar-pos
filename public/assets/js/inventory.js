@@ -57,6 +57,7 @@ const searchProducts = (page = 1) => {
             `;
         });
 }
+
 const renderRows = (data) => {
   const htmlString = data.map(product => {
     const productData = encodeURIComponent(JSON.stringify(product));
