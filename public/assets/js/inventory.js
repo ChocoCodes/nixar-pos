@@ -125,8 +125,11 @@ const fillEditModal = (data) => {
   document.getElementById('editproductSupplier').value = String(data.supplier_id);
   document.getElementById('editbasePrice').value = data.base_price;
 
+  const imageInput = document.getElementById('editproductImage');
   const preview = document.getElementById('editimagePreview');
+  const displayUrl = document.getElementById('editProductImageUrl');
   if (data.product_img_url) {
+    displayUrl.textContent = data.product_img_url;
     preview.src = data.product_img_url;
     preview.alt = `Image of ${ data.product_name }`;
     preview.style.display = 'block';
@@ -134,6 +137,13 @@ const fillEditModal = (data) => {
     preview.src = '#';
     preview.style.display = 'none';
   }
+
+  imageInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (displayUrl) displayUrl.style.display = 'none';
+    }
+  })
 };
 
 const fillDeleteModal = (data) => {

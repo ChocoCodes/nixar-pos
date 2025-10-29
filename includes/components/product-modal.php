@@ -32,9 +32,12 @@
             <div class="mb-3">
               <label for="<?= $prefix ?>productImage" class="form-label">Product Image</label>
               <input class="form-control" type="file" id="<?= $prefix ?>productImage" accept="image/*" name="product_image">
-              <div class="mt-3 text-center d-flex justify-content-center">
-                <img id="<?= $prefix ?>imagePreview" src="#" alt="Image Preview"
+              <div class="mt-3 text-center d-flex flex-column justify-content-center gap-1">
+                <img id="<?= $prefix ?>imagePreview" src="#" alt="Image Preview" class="mx-auto"
                      style="display:none; max-width:200px; max-height:200px; border-radius:8px; object-fit:cover;">
+                <?php if ($mode === 'edit'): ?>
+                  <small id="editProductImageUrl"></small>
+                <?php endif; ?>
               </div>
             </div>
 

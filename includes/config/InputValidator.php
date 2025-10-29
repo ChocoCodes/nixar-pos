@@ -21,4 +21,22 @@
         }
     }
 
+    class Image {
+        public static function uploadToDirectory(array $Image) {
+            // No image detected
+            if (empty($Image) || $Image['error'] !== 0) {
+                return null;
+            }
+
+            $Dir = __DIR__ . '/../assets/img/uploads/';
+            $ImgPath = basename($Image['name']);
+            $FileName = time(). '_' . uniqid() . '_' . $ImgPath;
+            $SavePath = "{$Dir}{$FileName}";
+            // Save image to `public/img/uploads`
+            if(move_uploaded_file($Image['tmp_name'], $SavePath)) {
+                return $FileName;
+            }
+            return null;
+        }
+    }
 ?>

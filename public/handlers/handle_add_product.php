@@ -33,27 +33,15 @@
             ];
         }
         // Save image to `../assets/img/uploads/` and store base image url
-        $UploadFileName = null;
-        if ($Image && $Image['error'] === 0) {
-            $Dir = __DIR__ . '/../assets/img/uploads/';
-            $ImgPath = basename($Image['name']);
-            $FileName = time(). '_' . uniqid() . '_' . $ImgPath;
-            $SavePath = "{$Dir}{$FileName}";
-            // Save image to `public/img/uploads`
-            if(move_uploaded_file($Image['tmp_name'], $SavePath)) {
-                $UploadFileName = $FileName;
-            }
-        }
+        $UploadFileName = Image::uploadToDirectory($Image);
 
-        // begin transaction
-        $Conn->autocommit(false);
+        $Conn->begin_transaction();
         try {
             $Product = new NixarProduct($Conn);
             $Supplier = new Supplier($Conn);
             $Model = new CarModel($Conn);
             $Inventory = new Inventory($Conn);
 
-            $Conn->begin_transaction();
             // Insert supplier info
             $SupplierInfo = [
                 'id' => $SupplierId,
@@ -103,8 +91,6 @@
             error_log("Error: " . $E->getMessage());
             error_log("Trace: " . $E->getTraceAsString());
             echo json_encode(['success' => false, 'message' => $E->getMessage()]);
-        } finally {
-            $Conn->autocommit(true);
         }
     }
 ?>
