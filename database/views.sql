@@ -25,7 +25,7 @@ SELECT np.product_name,
 FROM nixar_products np
 JOIN product_materials pm ON np.product_material_id = pm.product_material_id
 JOIN inventory i ON np.nixar_product_sku = i.nixar_product_sku
-JOIN product_suppliers ps ON np.product_supplier_id = ps.product_supplier_id
+JOIN product_suppliers ps ON np.nixar_product_sku = ps.nixar_product_sku
 JOIN suppliers s ON ps.supplier_id = s.supplier_id
 WHERE np.is_deleted = 0;
 

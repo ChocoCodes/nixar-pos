@@ -37,6 +37,7 @@
                 if (!$Stmt) {
                     throw new Exception('Failed to prepare INSERT statement: ' . $this->Conn->error);
                 }
+
                 $Stmt->bind_param(
                     "ids",
                     $SupplierInfo['supplier_id'],

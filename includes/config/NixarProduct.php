@@ -61,11 +61,10 @@
                 );
 
                 $Stmt->execute();
-                if ($Stmt->affected_rows === 0) {
-                    $Stmt->close();
+                if ($Stmt->errno) {
                     return [
-                        'success' => true,
-                        'message' => "No rows affected."
+                        'success' => false,
+                        'message' => "Database error: {$Stmt->error}"
                     ];
                 }
                 
