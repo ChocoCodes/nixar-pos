@@ -20,8 +20,9 @@ const deleteProductForm = document.getElementById('deleteProductForm');
 
 /* ================= INVENTORY SEARCH FUNCTIONS ================= */
 searchBox.addEventListener('input', () => {
-    clearTimeout(searchTimeout)
-    searchTimeout = setTimeout(searchProducts, 500);
+  clearTimeout(searchTimeout)
+  searchTimeout = setTimeout(searchProducts, 500);
+  console.log(`Search Value: ${searchBox.value} Query String: ${queryString}`);
 })
 
 const searchProducts = (page = 1) => {
@@ -49,6 +50,7 @@ const searchProducts = (page = 1) => {
             }
             renderRows(rows);
             updatePagination(data.totalPages, data.currentPage);
+            queryString = "";
         })
         .catch(err => {
             console.error(err);
