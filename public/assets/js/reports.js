@@ -1,28 +1,12 @@
-//for reports
-const salesBtn = document.getElementById("salesBtn");
-const inventoryBtn = document.getElementById("inventoryBtn");
-const financialBtn = document.getElementById("financialBtn");
-const reportArea = document.getElementById("reportArea");
-
-function clearActive() {
-    [salesBtn, inventoryBtn, financialBtn].forEach(btn => btn.classList.remove("active"));
-}
-
-salesBtn.onclick = () => {
-    clearActive();
-    salesBtn.classList.add("active");
-    reportArea.innerHTML = "<p>No sales recorded for the selected period.</p>";
-}
-
-inventoryBtn.onclick = () => {
-    clearActive();
-    inventoryBtn.classList.add("active");
-    reportArea.innerHTML = `<p>Reloading Inventory Report...</p>`;
-    setTimeout(() => location.reload(), 400);
-}
-
-financialBtn.onclick = () => {
-    clearActive();
-    financialBtn.classList.add("active");
-    reportArea.innerHTML = "<p>No finances recorded for the selected period</p>";
-}
+//for switching from inventory to sales(in dropdown)/vice versa
+document.getElementById('reportType').addEventListener('change', function() {
+    const sales = document.getElementById('salesReport');
+    const inventory = document.getElementById('inventoryReport');
+    if (this.value === 'sales') {
+        sales.style.display = 'block';
+        inventory.style.display = 'none';
+    } else {
+        sales.style.display = 'none';
+        inventory.style.display = 'block';
+    }
+});
