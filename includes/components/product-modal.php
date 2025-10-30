@@ -23,7 +23,9 @@
 
       <div class="modal-body">
         <form method="POST" action="/nixar-pos/public/handlers/<?= $EndPoint ?>" enctype="multipart/form-data" id="<?= $formId ?>">
-
+          <?php if($mode === 'edit'): ?>
+            <input type="hidden" name="product_supplier_id" id="productSupplierId">
+          <?php endif; ?>
           <!-- STEP 1: Product Details -->
           <div id="<?= $prefix ?>step1" class="step">
             <div class="mb-3">
@@ -85,7 +87,7 @@
             <div class="mb-3 d-flex gap-3">
               <div class="w-50">
                 <label for="<?= $prefix ?>productSupplier" class="form-label">Supplier</label>
-                <select class="form-select" id="<?= $prefix ?>productSupplier" name="product_supplier_id">
+                <select class="form-select" id="<?= $prefix ?>productSupplier" name="supplier_id">
                   <?php foreach($SupplierData as $Supplier): ?>
                     <option value="<?= $Supplier['supplier_id'] ?>"><?= $Supplier['supplier_name'] ?></option>
                   <?php endforeach; ?>

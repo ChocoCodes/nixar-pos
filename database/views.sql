@@ -21,6 +21,7 @@ SELECT np.product_name,
        s.supplier_id,
        s.supplier_name,
        np.mark_up,
+       ps.product_supplier_id,
        ROUND(ps.base_price + (ps.base_price * (np.mark_up / 100)), 2) AS final_price
 FROM nixar_products np
 JOIN product_materials pm ON np.product_material_id = pm.product_material_id

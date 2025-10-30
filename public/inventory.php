@@ -148,6 +148,7 @@
               <th>Product Name</th>
               <th>Category</th>
               <th>Stocks</th>
+              <th>Supplier</th>
               <th>Mark Up</th>
               <th>Price</th>
               <th>Actions</th>

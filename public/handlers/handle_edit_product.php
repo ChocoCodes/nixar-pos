@@ -45,8 +45,9 @@
             }
             // Perform UPDATE operation on Supplier Data
             $ProductSupplierData = [
+                'product_supplier_id' => $Sanitized['product_supplier_id'],
                 'nixar_product_sku' => $Sanitized['product_sku'],
-                'supplier_id' => $Sanitized['product_supplier_id'],
+                'supplier_id' => $Sanitized['supplier_id'],
                 'base_price' => (float)$Sanitized['base_price']
             ];
             

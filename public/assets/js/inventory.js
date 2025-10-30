@@ -61,12 +61,13 @@ const searchProducts = (page = 1) => {
 const renderRows = (data) => {
   const htmlString = data.map(product => {
     const productData = encodeURIComponent(JSON.stringify(product));
-    console.log(productData);
+    // console.log(productData);
     return `
       <tr>
         <td>${product.product_name}</td>
         <td>${product.category}</td>
         <td>${product.current_stock}</td>
+        <td>${product.supplier_name}</td>
         <td>${product.mark_up}%</td>
         <td>₱${product.final_price}</td>
         <td>
@@ -115,8 +116,9 @@ const renderRows = (data) => {
 
 // Autofill edit modal with product data
 const fillEditModal = (data) => {
-  console.log('fillEditModal: ' + data.product_img_url);
+  console.log('fillEditModal: ' + JSON.stringify(data));
 
+  document.getElementById('productSupplierId').value = data.product_supplier_id;
   document.getElementById('editproductName').value = data.product_name;
   document.getElementById('editproductSku').value = data.nixar_product_sku;
   document.getElementById('editproductMaterial').value = String(data.product_material_id);
