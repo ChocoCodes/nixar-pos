@@ -26,7 +26,7 @@ searchBox.addEventListener('input', () => {
 
 const searchProducts = (page = 1) => {
     const query = searchBox.value.trim();
-    if (!query || query === "") {
+    if (!query) {
         inventoryTbl.innerHTML = "";
         pagination.innerHTML = "";
         fetchInventory();
@@ -118,6 +118,7 @@ const renderRows = (data) => {
 const fillEditModal = (data) => {
   console.log('fillEditModal: ' + JSON.stringify(data));
 
+  document.getElementById('inventoryId').value = data.inventory_id
   document.getElementById('productSupplierId').value = data.product_supplier_id;
   document.getElementById('editproductName').value = data.product_name;
   document.getElementById('editproductSku').value = data.nixar_product_sku;
@@ -180,6 +181,8 @@ const fetchInventory = async (page = 1) => {
             `;
             return;
         }
+
+        currentPage = data.currentPage;
         console.log(data);
         renderRows(data.inventory);
         updatePagination(data.totalPages, data.currentPage)
@@ -431,7 +434,9 @@ const handleDeleteProduct = () => {
         throw new Error(`An HTTP Error occured: ${ result.message }`);
       }
       // Re-fetch inventory to update display
-      fetchInventory();
+      if (queryString) searchProducts(currentPage);
+      else fetchInventory(currentPage);
+
       if(modal) modal.hide();
     } catch (err) {
       console.error(err);
@@ -468,7 +473,9 @@ const handleProductForm = (form) => {
         throw new Error(`An HTTP Error has occured! Message: ${ result.message }`);
       }
 
-      fetchInventory();
+      // Refresh page
+      if (queryString) searchProducts(currentPage);
+      else fetchInventory(currentPage);
       // Hide and Reset Form
       if(modal) modal.hide();
       form.reset();

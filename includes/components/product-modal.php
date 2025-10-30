@@ -25,6 +25,7 @@
         <form method="POST" action="/nixar-pos/public/handlers/<?= $EndPoint ?>" enctype="multipart/form-data" id="<?= $formId ?>">
           <?php if($mode === 'edit'): ?>
             <input type="hidden" name="product_supplier_id" id="productSupplierId">
+            <input type="hidden" name="inventory_id" id="inventoryId">
           <?php endif; ?>
           <!-- STEP 1: Product Details -->
           <div id="<?= $prefix ?>step1" class="step">

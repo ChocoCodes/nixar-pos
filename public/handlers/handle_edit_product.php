@@ -34,7 +34,7 @@
             }
             // Perform UPDATE operation on Inventory Data
             $InventoryData = [
-                'nixar_product_sku' => $Sanitized['product_sku'],
+                'inventory_id' => $Sanitized['inventory_id'],
                 'stock_count' => $Sanitized['stock_count'],
                 'min_threshold' => $Sanitized['min_threshold']
             ];

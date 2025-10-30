@@ -34,7 +34,7 @@
                 $Sql = "UPDATE inventory SET current_stock = ?, 
                     min_threshold = ?, 
                     updated_at = ? 
-                    WHERE nixar_product_sku = ?";
+                    WHERE inventory_id = ?";
                 $Stmt = $this->Conn->prepare($Sql);
                 if (!$Stmt) {
                     throw new Exception('Failed to prepare UPDATE statement: ' . $this->Conn->error);
@@ -42,20 +42,21 @@
 
                 $UpdatedDate = date('Y-m-d H:i:s');
                 $Stmt->bind_param(
-                    "iiss",
+                    "iisi",
                     $InventoryData['stock_count'],
                     $InventoryData['min_threshold'],
                     $UpdatedDate,
-                    $InventoryData['nixar_product_sku']
+                    $InventoryData['inventory_id']
                 );
                 $Stmt->execute();
                 $Stmt->close();
 
                 return [
                     "success" => true,
-                    "message" => "Inventory for {$InventoryData['nixar_product_sku']} successfully updated."
+                    "message" => "Inventory successfully updated."
                 ];
             } catch (Exception $E) {
+                error_log("Error on Inventory: ". $E->getMessage());
                 return [
                     "success" => false,
                     "message" => $E->getMessage()
