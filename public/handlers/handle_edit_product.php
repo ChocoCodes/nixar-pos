@@ -28,8 +28,6 @@
                 'mark_up' => $Sanitized['mark_up']
             ];
 
-            error_log("Updating product SKU: {$Sanitized['product_sku']}");
-            error_log("Product data: " . json_encode($ProductData));
             $Result = $Product->update($ProductData);
             if(!$Result['success']) {
                 throw new Exception("Failed to update product: {$Sanitized['product_sku']}. Message: {$Result['message']}");
@@ -40,8 +38,7 @@
                 'stock_count' => $Sanitized['stock_count'],
                 'min_threshold' => $Sanitized['min_threshold']
             ];
-            error_log("Updating product SKU: {$Sanitized['product_sku']}");
-            error_log("Inventory data: " . json_encode($InventoryData));
+
             $InventoryResult = $Inventory->update($InventoryData);
             if(!$InventoryResult['success']) {
                 throw new Exception("Failed to update inventory: {$Sanitized['product_sku']}.");
@@ -52,8 +49,6 @@
                 'supplier_id' => $Sanitized['product_supplier_id'],
                 'base_price' => (float)$Sanitized['base_price']
             ];
-            error_log("Updating product SKU: {$Sanitized['product_sku']}");
-            error_log("Product Supplier data: " . json_encode($ProductSupplierData));
             
             $ProductSupplierResult = $Supplier->updateProductSupplier($ProductSupplierData);
             if(!$ProductSupplierResult['success']) {
