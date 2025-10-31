@@ -27,15 +27,16 @@
     }
 
     if(!empty($Filters['type'])) {
-        $BaseSql .= " AND type = ?";
-        $Params[] = $Filters['type'];
+        $BaseSql .= " AND compatible_cars LIKE ?";
+        $Params[] = "%{$Filters['type']}%";
         $Types .= 's';
     }
 
-    if(!empty($Filters['stock'])) {
-        if($Filters['stock'] === 1) {
+    if(isset($Filters['stock'])) {
+        $HasStocks = (int) $Filters['stock'];
+        if($HasStocks=== 1) {
             $BaseSql .= " AND current_stock > 0";
-        } else if($Filters['stock'] === 0) {
+        } else if($HasStocks === 0) {
             $BaseSql .= " AND current_stock = 0";
         }
     };

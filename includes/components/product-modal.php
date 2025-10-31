@@ -65,7 +65,7 @@
               </div>
               <div class="w-50">
                 <label for="<?= $prefix ?>stocks" class="form-label">Stocks</label>
-                <input type="number" class="text-input" id="<?= $prefix ?>stocks" min="1" placeholder="Enter # of stocks" name="stock_count" required>
+                <input type="number" class="text-input" id="<?= $prefix ?>stocks" min="0" placeholder="Enter # of stocks" name="stock_count" required>
               </div>
             </div>
 

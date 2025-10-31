@@ -80,11 +80,11 @@
         <div class="mb-4">
           <h6 class="fw-semibold mb-3">Stock Availability</h6>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="stockStatus" id="stock" value="inStock">
+            <input class="form-check-input" type="radio" name="stockStatus" id="stock" value="inStock">
             <label class="form-check-label" for="stock">Stock</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="stockStatus" id="outOfStock" value="notInStock">
+            <input class="form-check-input" type="radio" name="stockStatus" id="outOfStock" value="notInStock">
             <label class="form-check-label" for="outOfStock">Out of Stock</label>
           </div>
         </div>

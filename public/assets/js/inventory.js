@@ -263,7 +263,7 @@ const searchByFilters = async (page = 1) => {
         isInStock, 
         priceRange
     }
-
+    console.log(JSON.stringify(filterValues));
     const params = buildFilterParams({ ...filterValues });
     console.log(params)
     
