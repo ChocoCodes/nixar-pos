@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="w-50">
                                     <label for="payment-method" class="fw-semibold form-label text-muted small mb-0">Payment Method</label>
-                                    <select id="payment-method" class="text-input form-select" required>
+                                    <select id="payment-method" class="text-input form-select" name="payment_method" required>
                                         <option value="G-Cash">G-Cash</option>
                                         <option value="Cash">Cash</option>
                                         <option value="Card">Card</option>
@@ -154,6 +154,18 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
+                            </div>
+                            <div>
+                                <label for="plate_no" class="form-label text-muted small mb-0">Plate No.</label>
+                                <input
+                                    type="text"
+                                    id="plate_no"
+                                    class="text-input w-100"
+                                    placeholder="ABC-1234 or ABC-123"
+                                    name="plate_no"
+                                    pattern="^[A-Z]{3}-\d{3,4}$"
+                                    required
+                                />
                             </div>
                         </div>
                         <button type="submit" class="generate-btn btn w-100">Confirm</button>

@@ -289,17 +289,16 @@ const searchProducts = (page = 1) => {
         })
 }
 
-const handleCheckout = async (checkoutForm, endpoint, formData) => {
+const handleCheckout = async (checkoutForm, endpoint, checkoutData) => {
     // Reference checkout modal for toggle later
     const modalEl = checkoutForm.closest('.modal');
     let modal = bootstrap.Modal.getInstance(modalEl);
     if (!modal) modal = new bootstrap.Modal(modalEl);
 
-    /* 
     try {
         const response = await fetch(endpoint, {
             method: 'POST',
-            body: formData
+            body: checkoutData
         });
 
         const result = await response.json();
@@ -309,12 +308,10 @@ const handleCheckout = async (checkoutForm, endpoint, formData) => {
 
         modal.hide();
         checkoutForm.reset();
-        console.log('✅ Checkout success:', result.message);
+        console.log('Checkout success:', result.message);
     } catch(err) {
         console.error(err.message);
     }
-    
-    */
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -351,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
         custPhoneNo.addEventListener('input', () => {
             receiptPhoneNo.textContent = custPhoneNo.value;
         })
-        
+
         // Get all form-related information for processing
         const checkoutForm = document.getElementById('checkout-form');
         checkoutForm.addEventListener('submit', async (e) => {
@@ -360,7 +357,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const endpoint = checkoutForm.getAttribute('action');
             const formData = new FormData(checkoutForm);
             
-            console.log(...formData.entries());
+            const cartData = Object.values(cart);
+            const total = document.querySelector(".total-display").textContent.replace('₱','').trim();
+            formData.append('total_amount', parseFloat(total));
+            console.log('cart: ', JSON.stringify(cartData));
+            formData.append('checkout_products', JSON.stringify(cartData));
+            console.log('Entries: ', ...formData.entries());
             await handleCheckout(checkoutForm, endpoint, formData);
         });
 
