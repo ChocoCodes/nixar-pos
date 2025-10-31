@@ -3,18 +3,7 @@
 
   $PageTitle = "Admin - Inventory | NIXAR POS";
   $CssPath = "assets/css/styles.css";
-  $JSPath = "assets/js/scripts.js";
-
-  $CarTypes = [
-      'Sedan', 'Hatchback', 'SUV', 'Pickup', 'Coupe',
-      'Convertible', 'Van', 'Minivan', 'Wagon', 'Jeep', 
-      'Truck', 'Electric Vehicle'
-  ];
-  
-  $ProductCategories = [
-    'Glass', 'Accessories', 'Tints', 'Mirrors'
-  ];
-  
+  $JSPath = "assets/js/scripts.js";  
   
   $Conn = DatabaseConnection::getInstance()->getConnection();
   $Supplier = new Supplier($Conn);

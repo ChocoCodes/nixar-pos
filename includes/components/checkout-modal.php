@@ -39,62 +39,117 @@
                         <!-- Customer Details -->
                         <h6 class="mt-4">Customer Details</h6>
                         <div class="w-100 d-flex flex-column gap-2">
-                            <div>
-                                <label for="customer-name" class="form-label text-muted small">Full Name</label>
-                                <input
+                            <div class="d-flex gap-2">
+                                <div class="w-50">
+                                    <label for="customer-name" class="form-label text-muted small mb-0">Full Name</label>
+                                    <input
                                         type="text"
                                         id="customer-name"
                                         class="text-input w-100"
                                         placeholder="Enter customer name"
-                                />
-                            </div>
-                            <div>
-                                <label for="customer-email" class="form-label text-muted small">Email Address</label>
-                                <input
+                                    />
+                                </div>
+                                <div class="w-50">
+                                    <label for="customer-email" class="form-label text-muted small mb-0">Email Address</label>
+                                    <input
                                         type="email"
                                         id="customer-email"
                                         class="text-input w-100"
                                         placeholder="customer@example.com"
-                                />
+                                    />
+                                </div>
                             </div>
                             <div>
-                                <label for="customer-address" class="form-label text-muted small">Address</label>
+                                <label for="customer-address" class="fw-semibold form-label text-muted small">Address</label>
                                 <input
-                                        type="text"
-                                        id="customer-address"
-                                        class="text-input w-100"
-                                        placeholder="Street, City, Province"
+                                    type="text"
+                                    id="customer-address"
+                                    class="text-input w-100"
+                                    placeholder="Street, City, Province"
                                 />
                             </div>
-                            <div>
-                                <label for="customer-phone" class="form-label text-muted small">Phone Number</label>
-                                <input
+                            <div class="d-flex gap-2">
+                                <div class="w-50">
+                                    <label for="customer-phone" class="fw-semibold form-label text-muted small mb-0">Phone Number</label>
+                                    <input
                                         type="tel"
                                         id="customer-phone"
                                         class="text-input w-100"
                                         placeholder="09XX XXX XXXX"
-                                />
+                                    />
+                                </div>
+                                <div class="w-50">
+                                    <label for="payment-method" class="fw-semibold form-label text-muted small mb-0">Payment Method</label>
+                                    <select id="payment-method" class="text-input form-select">
+                                        <option>G-Cash</option>
+                                        <option>Cash</option>
+                                        <option>Card</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="w-100 my-4">
-                            <h6 class="fw-semibold">Payment Method</h6>
-                            <select class="form-select mt-2">
-                                <option>G-Cash</option>
-                                <option>Cash</option>
-                                <option>Card</option>
-                            </select>
+                        <!-- Customer Car Details -->
+                        <h6 class="mt-4">Car Details</h6>
+                        <div class="w-100 d-flex flex-column gap-2 mb-4">
+                            <div class="d-flex gap-2">
+                                <div class="w-50">
+                                    <label for="cust-car-make" class="form-label text-muted small mb-0">Make</label>
+                                    <input
+                                        type="text"
+                                        id="cust-car-make"
+                                        class="text-input w-100"
+                                        placeholder="Enter customer name"
+                                    />
+                                </div>
+                                <div class="w-50">
+                                    <label for="cust-car-model" class="form-label text-muted small mb-0">Model</label>
+                                    <input
+                                        type="email"
+                                        id="cust-car-model"
+                                        class="text-input w-100"
+                                        placeholder="customer@example.com"
+                                    />
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <div class="w-50">
+                                    <label for="cust-car-year" class="form-label text-muted small mb-0">Year</label>
+                                    <input
+                                        type="email"
+                                        id="customer-email"
+                                        class="text-input w-100"
+                                        placeholder="customer@example.com"
+                                    />
+                                </div>
+                                <div class="w-50">
+                                    <label for="cust-car-type" class="fw-semibold form-label text-muted small mb-0">Type</label>
+                                    <select id="cust-car-type" class="text-input form-select">
+                                        <option selected value="default" disabled>Select Car Type</option>
+                                        <?php foreach($CarTypes as $Type): ?>
+                                            <option value="<?= $Type ?>">
+                                                <?= $Type; ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <button class="generate-btn btn w-100">Confirm</button>
                     </div>
                     <div class="d-none col-7 color-placeholder-gray rounded-3 d-lg-flex justify-content-center align-items-center">
-                        <div class="bg-white w-50 rounded-3 p-2">
-                            <div class="w-100 text-center mb-3">
-                                <h6>Nixar Auto Glass & Car Tint</h6>
-                                <p class="text-muted fs-6">26 Lizares St, Bacolod, 6100 Negros Occidental</p>
-                                <p class="text-muted">(032) 432 3761</p>
-                                <p class="text-muted">ByteMe! point of sale & inventory solutions - Bacolod City</p>
-                            </div>
+                        <div class="bg-white w-75 rounded-3 p-2">
+                            <div class="w-100 text-center mb-3 d-flex flex-column gap-1">
+                                <h6 class="fs-4">Nixar Auto Glass & Car Tint</h6>
+                                <div>
+                                    <p class="text-muted fs-6">26 Lizares St, Bacolod, 6100 Negros Occidental</p>
+                                    <p class="text-muted"><span class="fw-semibold">TIN: </span>431-132-312-312</p>
+                                    <p class="text-muted"><span class="fw-semibold">Tel. No: </span>(032) 432 3761</p>
+                                    <p class="text-muted">ByteMe! Point-of Sales | Bacolod City</p>
+                                </div>
+                            </div>      
+                            <div class="w-100 d-flex justify-content-between align-items-center"></div>                      
+                            <!-- ========== RECEIPT DETAILS CONTAINER ============ -->    
                             <div id="receipt" class="mb-3"></div>
                             <div class="w-100 d-flex justify-content-between align-items-center">
                                 <p class="fw-semibold">Sub Total</p>
