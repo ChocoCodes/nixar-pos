@@ -60,12 +60,16 @@ const fetchProducts = async (page = 1) => {
 }
 
 const createProductCard = (data) => {
+    const isOutOfStock = data.current_stock <= 0;
+    
     return `
     <div class="col-12 col-lg-6 col-xxl-4">
         <div class="product-card w-100 h-100 border rounded-3 shadow-sm p-2 d-flex flex-column justify-content-between"
              data-sku="${ data.nixar_product_sku }"
              data-name="${ data.product_name }"
-             data-price="${ data.final_price }">
+             data-price="${ data.final_price }"
+             data-current-stock="${ data.current_stock }"
+            >
             <div class="w-100 d-flex flex-column align-items-center gap-2">
                 <div class="w-100 ratio ratio-4x3">
                     <img
@@ -79,13 +83,16 @@ const createProductCard = (data) => {
                     <p class="fs-5">${ data.category }</p>
                 </div>
             </div>
+            <div class="w-100 mt-auto"> 
+                <p class="fs-6">Stocks Available: <span class="fw-bold">${ data.current_stock }</span></p>
+            </div>
             <div class="w-100 d-flex align-items-center justify-content-between py-2">
                 <h3>₱ ${ data.final_price }</h3>
                 <div class="position-relative d-flex align-items-center">
-                    <button class="transaction-btn add-btn position-absolute start-0">
+                    <button class="transaction-btn add-btn position-absolute start-0" ${isOutOfStock ? "disabled" : ""}>
                         <i class="fa-solid fa-plus"></i>
                     </button>
-                    <div class="quantity-display px-4 py-1 rounded-pill text-center">
+                    <div class="quantity-display px-4 py-1 rounded-pill text-center" id="selectedCartStock">
                         ${ cart[data.nixar_product_sku]?.quantity || 0 }
                     </div>
                     <button class="transaction-btn remove-btn position-absolute end-0">
@@ -109,9 +116,10 @@ const extractCardData = (card) => {
     return {
         sku: card.dataset.sku,
         name: card.dataset.name,
-        price: card.dataset.price
-    }
-}
+        price: card.dataset.price,
+        current_stock: card.dataset.currentStock
+    };
+};
 
 const addToCart = (productData) => {
     if(cart[productData.sku]) {
@@ -165,13 +173,16 @@ const updateOrderContainer = () => {
 const attachCartEventListeners = () => {
     const addButtons = document.querySelectorAll('.add-btn');
     const removeButtons = document.querySelectorAll('.remove-btn');
-
     addButtons.forEach(btn => {
         btn.addEventListener('click', () => {
+            const currentSelectedCount = document.getElementById('selectedCartStock').textContent;
             const productData = extractCardData(btn.closest('.product-card'));
-            addToCart(productData);
-            updateQuantityDisplay(btn, productData.sku);
-            updateOrderContainer();
+
+            if (parseInt(currentSelectedCount) - 1 >= 0) {
+                addToCart(productData);
+                updateQuantityDisplay(btn, productData.sku);
+                updateOrderContainer();
+            }
         });
     });
 
@@ -250,7 +261,7 @@ const populateCheckoutModal = () => {
 const searchProducts = (page = 1) => {
     const query = searchBar.value.trim();
     // add query check
-    if(!query || query === "") {
+    if(!query) {
         productContainers.innerHTML = "";
         fetchProducts();
         return;
@@ -260,6 +271,7 @@ const searchProducts = (page = 1) => {
     fetch(`handlers/search_products.php?q=${ encodeURIComponent(query) }&limit=${ LIMIT }&page=${ page }`)
         .then(res => res.json())
         .then(data => {
+            console.log(data);
             renderProducts(data.inventory);
         })
         .catch(err => {

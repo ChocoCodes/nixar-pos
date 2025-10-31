@@ -80,11 +80,11 @@
         <div class="mb-4">
           <h6 class="fw-semibold mb-3">Stock Availability</h6>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="stockStatus" id="stock" value="inStock">
+            <input class="form-check-input" type="radio" name="stockStatus" id="stock" value="inStock">
             <label class="form-check-label" for="stock">Stock</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="stockStatus" id="outOfStock" value="notInStock">
+            <input class="form-check-input" type="radio" name="stockStatus" id="outOfStock" value="notInStock">
             <label class="form-check-label" for="outOfStock">Out of Stock</label>
           </div>
         </div>
@@ -136,7 +136,7 @@
         </div>
         
         <div class="d-flex gap-2 mb-4">
-          <input type="text" class="text-input" id="search-input" placeholder="Search by car model, type, or product...">
+          <input type="text" class="text-input" id="search-input" placeholder="Search by product name...">
           <button class="btn" onClick="searchProducts()">Search</button>
         </div>
         
@@ -148,6 +148,7 @@
               <th>Product Name</th>
               <th>Category</th>
               <th>Stocks</th>
+              <th>Supplier</th>
               <th>Mark Up</th>
               <th>Price</th>
               <th>Actions</th>
