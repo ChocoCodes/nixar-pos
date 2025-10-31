@@ -21,7 +21,7 @@
     }
 
     if(!empty($Filters['model'])) {
-        $BaseSql .= " AND car_make_model LIKE ?";
+        $BaseSql .= " AND compatible_cars LIKE ?";
         $Params[] = "%{$Filters['model']}%";
         $Types .= 's';
     }
@@ -62,6 +62,9 @@
         $Rows = $Result->fetch_all(MYSQLI_ASSOC);
         $Stmt->close();
 
+        foreach($Rows as &$Row) {
+            $Row['product_img_url'] = $BASE_IMAGE_URL . $Row['product_img_url'];
+        }
 
         echo json_encode([
             'sql' => $BaseSql,

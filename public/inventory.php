@@ -136,7 +136,7 @@
         </div>
         
         <div class="d-flex gap-2 mb-4">
-          <input type="text" class="text-input" id="search-input" placeholder="Search by car model, type, or product...">
+          <input type="text" class="text-input" id="search-input" placeholder="Search by product name...">
           <button class="btn" onClick="searchProducts()">Search</button>
         </div>
         
