@@ -60,8 +60,6 @@ const fetchProducts = async (page = 1) => {
 }
 
 const createProductCard = (data) => {
-    const isOutOfStock = data.current_stock <= 0;
-    
     return `
     <div class="col-12 col-lg-6 col-xxl-4">
         <div class="product-card w-100 h-100 border rounded-3 shadow-sm p-2 d-flex flex-column justify-content-between"
@@ -89,7 +87,7 @@ const createProductCard = (data) => {
             <div class="w-100 d-flex align-items-center justify-content-between py-2">
                 <h3>₱ ${ data.final_price }</h3>
                 <div class="position-relative d-flex align-items-center">
-                    <button class="transaction-btn add-btn position-absolute start-0" ${isOutOfStock ? "disabled" : ""}>
+                    <button class="transaction-btn add-btn position-absolute start-0">
                         <i class="fa-solid fa-plus"></i>
                     </button>
                     <div class="quantity-display px-4 py-1 rounded-pill text-center" id="selectedCartStock">
@@ -175,14 +173,18 @@ const attachCartEventListeners = () => {
     const removeButtons = document.querySelectorAll('.remove-btn');
     addButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            const currentSelectedCount = document.getElementById('selectedCartStock').textContent;
             const productData = extractCardData(btn.closest('.product-card'));
-
-            if (parseInt(currentSelectedCount) - 1 >= 0) {
-                addToCart(productData);
-                updateQuantityDisplay(btn, productData.sku);
-                updateOrderContainer();
-            }
+            
+            // Initial check if we have stock to be added for our cart
+            btn.disabled = parseInt(productData.current_stock) === 0;
+            
+            addToCart(productData);
+            updateQuantityDisplay(btn, productData.sku);
+            updateOrderContainer();
+        
+            // Re-check by fetching the updated count
+            const currentSelectedCount = parseInt(document.getElementById('selectedCartStock').textContent);
+            btn.disabled = currentSelectedCount >= productData.current_stock;
         });
     });
 
@@ -192,6 +194,14 @@ const attachCartEventListeners = () => {
             removeFromCart(productData);
             updateQuantityDisplay(btn, productData.sku);
             updateOrderContainer();
+
+            // Re-enable add button if selected stock count is below current stocks
+            const addBtn = btn.closest('.product-card').querySelector('.add-btn');
+            const currentSelectedCount = parseInt(document.getElementById('selectedCartStock').textContent);
+
+            if (currentSelectedCount < parseInt(productData.current_stock)) {
+                addBtn.disabled = false;
+            }
         });
     });
 }
@@ -215,7 +225,7 @@ const populateCheckoutModal = () => {
     const totalElement = document.querySelector('.total-display');
 
     if (Object.keys(cart).length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No items in cart</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No items in cart.</td></tr>';
         return;
     }
 
@@ -279,6 +289,31 @@ const searchProducts = (page = 1) => {
         })
 }
 
+const handleCheckout = async (checkoutForm, endpoint, checkoutData) => {
+    // Reference checkout modal for toggle later
+    const modalEl = checkoutForm.closest('.modal');
+    let modal = bootstrap.Modal.getInstance(modalEl);
+    if (!modal) modal = new bootstrap.Modal(modalEl);
+
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            body: checkoutData
+        });
+
+        const result = await response.json();
+        if (!result.success) {
+            throw new Error(result.message || 'Checkout failed.');
+        }
+
+        modal.hide();
+        checkoutForm.reset();
+        console.log('Checkout success:', result.message);
+    } catch(err) {
+        console.error(err.message);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchProducts();
 
@@ -291,5 +326,46 @@ document.addEventListener('DOMContentLoaded', () => {
         discountInput.value = '0';
         receiptDiscount.textContent = '₱0';
         discountInput.addEventListener('blur', updateCheckoutTotals);
+
+        // References of Customer Inputs for Receipt Display
+        const custName = document.getElementById('customer-name');
+        const custAddress = document.getElementById('customer-address');
+        const custPhoneNo = document.getElementById('customer-phone');
+        // References of Receipt Display for Customer Information
+        const receiptName = document.getElementById('cust-name');
+        const receiptPhoneNo = document.getElementById('cust-phone-no');
+        const receiptAddress = document.getElementById('cust-address');
+
+
+        custName.addEventListener('input', () => {
+            receiptName.textContent = custName.value;
+        })
+
+        custAddress.addEventListener('input', () => {
+            receiptAddress.textContent = custAddress.value;
+        })
+
+        custPhoneNo.addEventListener('input', () => {
+            receiptPhoneNo.textContent = custPhoneNo.value;
+        })
+
+        // Get all form-related information for processing
+        const checkoutForm = document.getElementById('checkout-form');
+        checkoutForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const endpoint = checkoutForm.getAttribute('action');
+            const formData = new FormData(checkoutForm);
+            
+            const cartData = Object.values(cart);
+            const total = document.querySelector(".total-display").textContent.replace('₱','').trim();
+            formData.append('total_amount', parseFloat(total));
+            console.log('cart: ', JSON.stringify(cartData));
+            formData.append('checkout_products', JSON.stringify(cartData));
+            console.log('Entries: ', ...formData.entries());
+            await handleCheckout(checkoutForm, endpoint, formData);
+        });
+
+
     });
 })
