@@ -1,9 +1,13 @@
-<?php $PageTitle = "Login | NIXAR POS"; ?>
+<?php
+    $PageTitle = "Login | NIXAR POS";
+    $CssPath = "assets/css/styles.css";
+    $JSPath = "assets/js/scripts.js";
+?>
 <?php include_once '../includes/head.php'; ?>
 <div class="container-fluid p-0 m-0 row h-100">
   <div class="col-xl-4 bg-light d-flex justify-content-center align-items-center ">
     <div class="d-flex flex-column gap-4 px-5">
-      <img src="assets/svg/nixar-logo.svg" alt="nixar-logo" class="w-50 ratio ratio-1x1 max-w-50">
+      <img src="assets/svg/nixar-logo-red.svg" alt="nixar-logo" class="w-50 ratio ratio-1x1 max-w-50">
       <div>
         <h2 class="mb-1 fs-1">Welcome to NIXAR POS</h2>
         <p class="text-muted">Manage sales, inventory, and transactions efficiently all in one place.</p>
@@ -21,6 +25,8 @@
       </form>
     </div>
   </div>
-  <div class="col bg-danger d-none fs-1 text-white d-xl-flex justify-content-center align-items-center">[Placeholder]</div>
+  <div class="col-xl-8 d-none d-xl-flex justify-content-center align-items-center p-0">
+    <img src="/nixar-pos/public/assets/img/nixar-front.jpg" alt="Image of Nixar" class="w-100 vh-100 object-fit-cover">
+  </div>
 </div>
 <?php include_once '../includes/footer.php'; ?>

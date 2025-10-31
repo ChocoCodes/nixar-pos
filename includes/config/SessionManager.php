@@ -9,12 +9,12 @@
             }
         }
 
-        public static function createUser($UserId, $Username, $Role) {
+        public static function createUser(array $User) {
             self::getInstance();
 
-            $_SESSION['user_id'] = $UserId;
-            $_SESSION['username'] = $Username;
-            $_SESSION['role'] = $Role;
+            foreach($User as $Key => $Value) {
+                $_SESSION[$Key] = $Value;
+            }
             $_SESSION['logged_in'] = true;
         }
 
@@ -46,6 +46,15 @@
         public static function has($Key) {
             self::getInstance();
             return isset($_SESSION[$Key]);
+        }
+
+        public static function checkSession() {
+            self::getInstance();
+
+            if (!SessionManager::has('logged_in') || SessionManager::get('logged_in') !== true) {
+                header("Location: /nixar-pos/public/index.php");
+                exit;
+            }
         }
     }
 ?>
