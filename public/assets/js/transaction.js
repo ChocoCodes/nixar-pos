@@ -289,6 +289,34 @@ const searchProducts = (page = 1) => {
         })
 }
 
+const handleCheckout = async (checkoutForm, endpoint, formData) => {
+    // Reference checkout modal for toggle later
+    const modalEl = checkoutForm.closest('.modal');
+    let modal = bootstrap.Modal.getInstance(modalEl);
+    if (!modal) modal = new bootstrap.Modal(modalEl);
+
+    /* 
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+        if (!result.success) {
+            throw new Error(result.message || 'Checkout failed.');
+        }
+
+        modal.hide();
+        checkoutForm.reset();
+        console.log('✅ Checkout success:', result.message);
+    } catch(err) {
+        console.error(err.message);
+    }
+    
+    */
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchProducts();
 
@@ -301,5 +329,41 @@ document.addEventListener('DOMContentLoaded', () => {
         discountInput.value = '0';
         receiptDiscount.textContent = '₱0';
         discountInput.addEventListener('blur', updateCheckoutTotals);
+
+        // References of Customer Inputs for Receipt Display
+        const custName = document.getElementById('customer-name');
+        const custAddress = document.getElementById('customer-address');
+        const custPhoneNo = document.getElementById('customer-phone');
+        // References of Receipt Display for Customer Information
+        const receiptName = document.getElementById('cust-name');
+        const receiptPhoneNo = document.getElementById('cust-phone-no');
+        const receiptAddress = document.getElementById('cust-address');
+
+
+        custName.addEventListener('input', () => {
+            receiptName.textContent = custName.value;
+        })
+
+        custAddress.addEventListener('input', () => {
+            receiptAddress.textContent = custAddress.value;
+        })
+
+        custPhoneNo.addEventListener('input', () => {
+            receiptPhoneNo.textContent = custPhoneNo.value;
+        })
+        
+        // Get all form-related information for processing
+        const checkoutForm = document.getElementById('checkout-form');
+        checkoutForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const endpoint = checkoutForm.getAttribute('action');
+            const formData = new FormData(checkoutForm);
+            
+            console.log(...formData.entries());
+            await handleCheckout(checkoutForm, endpoint, formData);
+        });
+
+
     });
 })

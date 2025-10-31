@@ -7,7 +7,12 @@
             </div>
             <div class="modal-body w-100">
                 <div class="row">
-                    <div class="col-12 col-lg-5 d-flex flex-column justify-content-start align-items-start gap-1">
+                    <form 
+                        method="POST"
+                        action="/nixar-pos/public/handlers/handle_checkout.php"
+                        id="checkout-form"
+                        class="col-12 col-lg-5 d-flex flex-column justify-content-start align-items-start gap-1"
+                    >
                         <!-- Order Details -->
                         <h6>Order Details</h6>
                         <table class="table table-bordered rounded-4 table-fixed">
@@ -29,7 +34,7 @@
                         </div>
                         <div class="w-100 d-flex justify-content-between align-items-center">
                             <p class="text-danger">Discount</p>
-                            <input type="number" class="text-end text-input discount-input" style="width: 30%;"/>
+                            <input type="number" class="text-end text-input discount-input" style="width: 30%;" name="discount"/>
                         </div>
                         <div class="w-100 d-flex justify-content-between align-items-center">
                             <p class="fw-medium">Total</p>
@@ -47,6 +52,8 @@
                                         id="customer-name"
                                         class="text-input w-100"
                                         placeholder="Enter customer name"
+                                        name="cust_name"
+                                        required
                                     />
                                 </div>
                                 <div class="w-50">
@@ -56,6 +63,8 @@
                                         id="customer-email"
                                         class="text-input w-100"
                                         placeholder="customer@example.com"
+                                        name="cust_email"
+                                        required
                                     />
                                 </div>
                             </div>
@@ -66,6 +75,8 @@
                                     id="customer-address"
                                     class="text-input w-100"
                                     placeholder="Street, City, Province"
+                                    name="cust_address"
+                                    required
                                 />
                             </div>
                             <div class="d-flex gap-2">
@@ -76,14 +87,16 @@
                                         id="customer-phone"
                                         class="text-input w-100"
                                         placeholder="09XX XXX XXXX"
+                                        name="cust_phone_no"
+                                        required
                                     />
                                 </div>
                                 <div class="w-50">
                                     <label for="payment-method" class="fw-semibold form-label text-muted small mb-0">Payment Method</label>
-                                    <select id="payment-method" class="text-input form-select">
-                                        <option>G-Cash</option>
-                                        <option>Cash</option>
-                                        <option>Card</option>
+                                    <select id="payment-method" class="text-input form-select" required>
+                                        <option value="G-Cash">G-Cash</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Card">Card</option>
                                     </select>
                                 </div>
                             </div>
@@ -94,37 +107,45 @@
                         <div class="w-100 d-flex flex-column gap-2 mb-4">
                             <div class="d-flex gap-2">
                                 <div class="w-50">
-                                    <label for="cust-car-make" class="form-label text-muted small mb-0">Make</label>
+                                    <label for="make" class="form-label text-muted small mb-0" >Make</label>
                                     <input
                                         type="text"
-                                        id="cust-car-make"
+                                        id="make"
                                         class="text-input w-100"
-                                        placeholder="Enter customer name"
+                                        placeholder="Toyota, Ford, etc..."
+                                        name="make"
+                                        required
                                     />
                                 </div>
                                 <div class="w-50">
-                                    <label for="cust-car-model" class="form-label text-muted small mb-0">Model</label>
+                                    <label for="model" class="form-label text-muted small mb-0">Model</label>
                                     <input
-                                        type="email"
-                                        id="cust-car-model"
+                                        type="text"
+                                        id="model"
                                         class="text-input w-100"
-                                        placeholder="customer@example.com"
+                                        placeholder="Vios, Mustang, etc..."
+                                        name="model"
+                                        required
                                     />
                                 </div>
                             </div>
                             <div class="d-flex gap-2">
                                 <div class="w-50">
-                                    <label for="cust-car-year" class="form-label text-muted small mb-0">Year</label>
+                                    <label for="year" class="form-label text-muted small mb-0">Year</label>
                                     <input
-                                        type="email"
-                                        id="customer-email"
+                                        type="number"
+                                        id="year"
                                         class="text-input w-100"
-                                        placeholder="customer@example.com"
+                                        min="1970"
+                                        max="3030"
+                                        placeholder="e.g. 2001"
+                                        name="year"
+                                        required
                                     />
                                 </div>
                                 <div class="w-50">
                                     <label for="cust-car-type" class="fw-semibold form-label text-muted small mb-0">Type</label>
-                                    <select id="cust-car-type" class="text-input form-select">
+                                    <select id="cust-car-type" class="text-input form-select" name="car_type" required>
                                         <option selected value="default" disabled>Select Car Type</option>
                                         <?php foreach($CarTypes as $Type): ?>
                                             <option value="<?= $Type ?>">
@@ -135,11 +156,12 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="generate-btn btn w-100">Confirm</button>
-                    </div>
+                        <button type="submit" class="generate-btn btn w-100">Confirm</button>
+                    </form>
                     <div class="d-none col-7 color-placeholder-gray rounded-3 d-lg-flex justify-content-center align-items-center">
-                        <div class="bg-white w-75 rounded-3 p-2">
-                            <div class="w-100 text-center mb-3 d-flex flex-column gap-1">
+                        <div class="bg-white w-75 rounded-3 p-4">
+                            <!-- ========== RECEIPT HEADER ============ -->    
+                            <div class="w-100 text-center mb-3 d-flex flex-column gap-1 border-bottom mb-1 pb-2">
                                 <h6 class="fs-4">Nixar Auto Glass & Car Tint</h6>
                                 <div>
                                     <p class="text-muted fs-6">26 Lizares St, Bacolod, 6100 Negros Occidental</p>
@@ -148,9 +170,21 @@
                                     <p class="text-muted">ByteMe! Point-of Sales | Bacolod City</p>
                                 </div>
                             </div>      
-                            <div class="w-100 d-flex justify-content-between align-items-center"></div>                      
+                            <!-- ========== RECEIPT CUSTOMER INFORMATION ============ -->
+                            <div class="w-100 d-flex flex-column justify-content-between align-items-left">
+                                <p class="fs-6 fw-semibold pb-2">Customer Information</p>
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-muted w-50">Sold To: <span class="fw-semibold" id="cust-name"></span></p>
+                                    <p class="text-muted w-50">Phone No: <span class="fw-semibold" id="cust-phone-no"></span></p>
+                                </div>
+                                <p class="text-muted">Address: <span class="fw-semibold" id="cust-address"></span></p>
+                            </div>
+                            <div class="w-100 d-flex justify-content-between align-items-center py-2 border-bottom mb-3">
+                                <p class="fs-6 fw-semibold">Qty x Product Name</p>
+                                <p class="fs-6 fw-semibold">Price</p>
+                            </div>                      
                             <!-- ========== RECEIPT DETAILS CONTAINER ============ -->    
-                            <div id="receipt" class="mb-3"></div>
+                            <div id="receipt" class="mb-3 border-bottom pb-4"></div>
                             <div class="w-100 d-flex justify-content-between align-items-center">
                                 <p class="fw-semibold">Sub Total</p>
                                 <p class="receipt-subtotal"></p>
