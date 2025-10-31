@@ -32,7 +32,7 @@
                     <img src="assets/img/uploads/default-product.png" alt="Total Revenue" style="width:60px;height:60px;object-fit:cover;">
                 </div>
                 <p class="text-muted" style="margin-top:10px;">Total Revenue</p>
-                <h2>PHP9,000</h2>
+                <h2 id="totalRevenue" >no data</h2>
             </div>
 
             <div class="metric-card filter-tile" style="flex: 1; min-width: 220px; text-align: center; padding: 20px;">
@@ -40,7 +40,7 @@
                     <img src="assets/img/uploads/default-product.png" alt="Number of Transactions" style="width:60px;height:60px;object-fit:cover;">
                 </div>
                 <p class="text-muted" style="margin-top:10px;">Number of Transactions</p>
-                <h2>67</h2>
+                <h2 id="numOfTransactions" >no data</h2>
             </div>
 
             <div class="metric-card filter-tile" style="flex: 1; min-width: 220px; text-align: center; padding: 20px;">
@@ -48,7 +48,7 @@
                     <img src="assets/img/uploads/default-product.png" alt="Average Transaction" style="width:60px;height:60px;object-fit:cover;">
                 </div>
                 <p class="text-muted" style="margin-top:10px;">Average Transaction Value</p>
-                <h2>PHP200</h2>
+                <h2 id="avgTransactionValue" >no data</h2>
             </div>
 
             <div class="metric-card filter-tile" style="flex: 1; min-width: 220px; text-align: center; padding: 20px;">
@@ -56,7 +56,7 @@
                     <img src="assets/img/uploads/default-product.png" alt="Profit Performance" style="width:60px;height:60px;object-fit:cover;">
                 </div>
                 <p class="text-muted" style="margin-top:10px;">Profit Performance (vs. last month)</p>
-                <h2>30%↑</h2>
+                <h2 id="profitPerformance" >no data</h2>
             </div>
         </div>
 
