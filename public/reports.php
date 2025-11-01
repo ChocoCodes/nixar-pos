@@ -32,7 +32,7 @@
                     <img src="assets/img/uploads/default-product.png" alt="Total Revenue" style="width:60px;height:60px;object-fit:cover;">
                 </div>
                 <p class="text-muted" style="margin-top:10px;">Total Revenue</p>
-                <h2>PHP9,000</h2>
+                <h2 id="totalRevenue"></h2>
             </div>
 
             <div class="metric-card filter-tile" style="flex: 1; min-width: 220px; text-align: center; padding: 20px;">
@@ -40,7 +40,7 @@
                     <img src="assets/img/uploads/default-product.png" alt="Number of Transactions" style="width:60px;height:60px;object-fit:cover;">
                 </div>
                 <p class="text-muted" style="margin-top:10px;">Number of Transactions</p>
-                <h2>67</h2>
+                <h2 id="numOfTransactions"></h2>
             </div>
 
             <div class="metric-card filter-tile" style="flex: 1; min-width: 220px; text-align: center; padding: 20px;">
@@ -48,7 +48,7 @@
                     <img src="assets/img/uploads/default-product.png" alt="Average Transaction" style="width:60px;height:60px;object-fit:cover;">
                 </div>
                 <p class="text-muted" style="margin-top:10px;">Average Transaction Value</p>
-                <h2>PHP200</h2>
+                <h2 id="avgTransactionValue"></h2>
             </div>
 
             <div class="metric-card filter-tile" style="flex: 1; min-width: 220px; text-align: center; padding: 20px;">
@@ -56,7 +56,7 @@
                     <img src="assets/img/uploads/default-product.png" alt="Profit Performance" style="width:60px;height:60px;object-fit:cover;">
                 </div>
                 <p class="text-muted" style="margin-top:10px;">Profit Performance (vs. last month)</p>
-                <h2>30%↑</h2>
+                <h2 id="profitPerformance"></h2>
             </div>
         </div>
 
@@ -65,22 +65,30 @@
             <div class="filter-tile" style="flex: 1; min-width: 300px; padding: 20px;">
                 <h4>Category Performance (desc) <i class="fa fa-arrows-alt-v" style="font-size: 15px;"></i></h4> 
                 <table style="width:100%; margin-top:10px;">
-                    <tr><td>1. Windshield Wash</td><td>300</td></tr>
-                    <tr><td>2. Viper Wiper</td><td>250</td></tr>
-                    <tr><td>3. Car Rear Extender</td><td>200</td></tr>
-                    <tr><td>4. Lorem Ipsum</td><td>150</td></tr>
-                    <tr><td>5. Windshield</td><td>100</td></tr>
+                    <thead>
+                    <tr>
+                    <th>Category</th>
+                    <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody id="sales-table-category">
+                    <!-- ===== HOST ALL CATEGORY PERFORMANCE FETCHED FROM JS ===== -->
+                    </tbody>
                 </table>
             </div>
 
             <div class="filter-tile" style="flex: 1; min-width: 300px; padding: 20px;">
                 <h4>Sales by Time of Day (desc) <i class="fa fa-arrows-alt-v" style="font-size: 15px;"></i></h4>
                 <table style="width:100%; margin-top:10px;">
-                    <tr><td>1. 9-10AM</td><td>300</td></tr>
-                    <tr><td>2. 10-11AM</td><td>250</td></tr>
-                    <tr><td>3. 2-3PM</td><td>200</td></tr>
-                    <tr><td>4. 5-6PM</td><td>150</td></tr>
-                    <tr><td>5. 1-2PM</td><td>100</td></tr>
+                    <thead>
+                    <tr>
+                    <th>Time</th>
+                    <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody id="sales-table-time">
+                    <!-- ===== HOST ALL SALES BY TIME FETCHED FROM JS ===== -->
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -95,7 +103,7 @@
                     <img src="assets/img/uploads/default-product.png" alt="Most Sold Item" style="width:60px;height:60px;object-fit:cover;">
                 </div>
                 <p class="text-muted" style="margin-top:10px;">Most Sold Item</p>
-                <h2>Windshield Glass</h2>
+                <h2 id="most-sold-item"></h2>
             </div>
 
             <div class="metric-card filter-tile" style="flex: 1; min-width: 220px; text-align: center; padding: 20px;">
@@ -103,7 +111,7 @@
                     <img src="assets/img/uploads/default-product.png" alt="Best-selling Item" style="width:60px;height:60px;object-fit:cover;">
                 </div>
                 <p class="text-muted" style="margin-top:10px;">Best-selling Item (by revenue)</p>
-                <h2>Wiper</h2>
+                <h2 id="best-selling-revenue"></h2>
             </div>
 
             <div class="metric-card filter-tile" style="flex: 1; min-width: 220px; text-align: center; padding: 20px;">
@@ -111,7 +119,7 @@
                     <img src="assets/img/uploads/default-product.png" alt="Best-selling Category" style="width:60px;height:60px;object-fit:cover;">
                 </div>
                 <p class="text-muted" style="margin-top:10px;">Best-selling Category</p>
-                <h2>Glass</h2>
+                <h2 id="best-selling-category"></h2>
             </div>
 
             <div class="metric-card filter-tile" style="flex: 1; min-width: 220px; text-align: center; padding: 20px;">
@@ -119,7 +127,7 @@
                     <img src="assets/img/uploads/default-product.png" alt="Low Stock Items" style="width:60px;height:60px;object-fit:cover;">
                 </div>
                 <p class="text-muted" style="margin-top:10px;">Low Stock Items</p>
-                <h2>9</h2>
+                <h2 id="low-stock"></h2>
             </div>
         </div>
 
@@ -128,33 +136,45 @@
             <div class="filter-tile" style="flex: 1; min-width: 300px; padding: 20px;">
                 <h4>Most Sold Items (by quantity) <i class="fa fa-arrows-alt-v" style="font-size: 15px;"></i></h4>
                 <table style="width:100%; margin-top:10px;">
-                    <tr><td>1. Windshield Wash</td><td>300</td></tr>
-                    <tr><td>2. Viper Wiper</td><td>250</td></tr>
-                    <tr><td>3. Car Rear Extender</td><td>200</td></tr>
-                    <tr><td>4. Lorem Ipsum</td><td>150</td></tr>
-                    <tr><td>5. Windshield</td><td>100</td></tr>
+                    <thead>
+                    <tr>
+                    <th>Name</th>
+                    <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody id="inventory-table-sold">
+                    <!-- ===== HOST ALL SALES BY TIME FETCHED FROM JS ===== -->
+                    </tbody>
                 </table>
             </div>
 
             <div class="filter-tile" style="flex: 1; min-width: 300px; padding: 20px;">
                 <h4>Best Selling (by revenue) <i class="fa fa-arrows-alt-v" style="font-size: 15px;"></i></h4>
                 <table style="width:100%; margin-top:10px;">
-                    <tr><td>1. Windshield Wash</td><td>300</td></tr>
-                    <tr><td>2. Viper Wiper</td><td>250</td></tr>
-                    <tr><td>3. Car Rear Extender</td><td>200</td></tr>
-                    <tr><td>4. Lorem Ipsum</td><td>150</td></tr>
-                    <tr><td>5. Windshield</td><td>100</td></tr>
+                    <thead>
+                    <tr>
+                    <th>Name</th>
+                    <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody id="inventory-table-selling">
+                    <!-- ===== HOST ALL SALES BY TIME FETCHED FROM JS ===== -->
+                    </tbody>
                 </table>
             </div>
 
             <div class="filter-tile" style="flex: 1; min-width: 300px; padding: 20px;">
                 <h4>Low in Stock</h4>
                 <table style="width:100%; margin-top:10px;">
-                    <tr><td>1. Windshield Wash</td><td>300</td></tr>
-                    <tr><td>2. Viper Wiper</td><td>250</td></tr>
-                    <tr><td>3. Car Rear Extender</td><td>200</td></tr>
-                    <tr><td>4. Lorem Ipsum</td><td>150</td></tr>
-                    <tr><td>5. Windshield</td><td>100</td></tr>
+                    <thead>
+                    <tr>
+                    <th>Name</th>
+                    <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody id="inventory-table-sock">
+                    <!-- ===== HOST ALL LOW STOCK ITEMS FETCHED FROM JS ===== -->
+                    </tbody>
                 </table>
             </div>
         </div>

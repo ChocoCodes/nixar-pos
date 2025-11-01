@@ -134,6 +134,70 @@
             $Stmt->close();
             return (int)$Row['total'];
         }
+
+        public function salesReportMetrics(){
+            $Sql = "SELECT * FROM sales_report_view";
+            $Result = $this->Conn->query($Sql);
+            $Rows = $Result->fetch_assoc();
+            return $Rows; 
+        }
+
+        public function salesListMetricsByCategory(){
+            $Sql = "SELECT * FROM category_performance_view";
+            $Result = $this->Conn->query($Sql);
+            $Rows = $Result->fetch_all(MYSQLI_ASSOC);
+            return $Rows; 
+        }
+
+        public function salesListMetricsByTime(){
+            $Sql = "SELECT * FROM sales_by_time_view";
+            $Result = $this->Conn->query($Sql);
+            $Rows = $Result->fetch_all(MYSQLI_ASSOC);
+            return $Rows; 
+        }
+        
+        public function inventoryListMetricsMostSold(){
+            $Sql = "SELECT * FROM most_sold_item_by_qty_view";
+            $Result = $this->Conn->query($Sql);
+            $Rows = $Result->fetch_all(MYSQLI_ASSOC);
+            return $Rows; 
+        }
+
+        public function inventoryListMetricsBestSelling(){
+            $Sql = "SELECT * FROM best_selling_item_by_revenue_view";
+            $Result = $this->Conn->query($Sql);
+            $Rows = $Result->fetch_all(MYSQLI_ASSOC);
+            return $Rows; 
+        }
+        
+        public function inventoryListMetricsStock(){
+            $Sql = "SELECT * FROM low_stock_items_view";
+            $Result = $this->Conn->query($Sql);
+            $Rows = $Result->fetch_all(MYSQLI_ASSOC);
+            return $Rows;
+        }
+
+        public function inventoryMetricsBestSellingItem(){
+            $Sql = "SELECT * FROM best_selling_item_by_revenue_view LIMIT 1";
+            $Result = $this->Conn->query($Sql);
+            $Row = $Result->fetch_assoc();
+            return $Row;
+        }
+        
+        public function inventoryMetricsSold(){
+            $Sql = "SELECT * FROM most_sold_item_by_qty_view LIMIT 1";
+            $Result = $this->Conn->query($Sql);
+            $Row = $Result->fetch_assoc();
+            return (string)$Row['product_name'];
+        }
+
+        public function inventoryMetricsStock(){
+            $Sql = "SELECT * FROM count_low_stock_items_view";
+            $Result = $this->Conn->query($Sql);
+            $Row = $Result->fetch_assoc();
+            return $Row;
+        }
+        
     }
 
 ?>
